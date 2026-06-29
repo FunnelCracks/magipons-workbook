@@ -3,6 +3,9 @@ import { LandingPage } from "./pages/LandingPage";
 import { LoginPage } from "./pages/LoginPage";
 import { WorkbookPage } from "./pages/WorkbookPage";
 import { DashboardPage } from "./pages/DashboardPage";
+import { AdminLoginPage } from "./pages/AdminLoginPage";
+import { AdminUserSelectPage } from "./pages/AdminUserSelectPage";
+import { AdminDashboardPage } from "./pages/AdminDashboardPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 function App() {
@@ -27,6 +30,9 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/admin" element={<AdminLoginPage />} />
+        <Route path="/admin/select" element={<AdminUserSelectPage />} />
+        <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
