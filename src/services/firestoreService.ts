@@ -132,12 +132,3 @@ export const getAllWorkbooks = async (): Promise<Workbook[]> => {
     return [];
   }
 };
-
-// Utility function to calculate completion percentage
-const calculateCompletion = (
-  _fieldPath: string,
-  _value: Record<string, unknown>
-): number => {
-  // This is a simplified version - in production, calculate based on all fields
-  return 0; // Will be improved later
-};
