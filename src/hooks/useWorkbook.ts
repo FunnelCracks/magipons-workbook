@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useAuth } from "./useAuth";
 import type { Workbook } from "../services/types";
 import {
   getWorkbookByUserId,
@@ -7,6 +8,7 @@ import {
 } from "../services/firestoreService";
 
 export const useWorkbook = (userId?: string) => {
+  const { user } = useAuth();
   const [workbook, setWorkbook] = useState<Workbook | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -22,7 +24,9 @@ export const useWorkbook = (userId?: string) => {
         let wb = await getWorkbookByUserId(userId);
         if (!wb) {
           // Create new workbook if none exists
-          wb = await createWorkbook(userId, "", "");
+          const userEmail = user?.email || "";
+          const userName = user?.displayName || "Usuario";
+          wb = await createWorkbook(userId, userEmail, userName);
         }
         setWorkbook(wb);
         setError(null);
@@ -34,7 +38,7 @@ export const useWorkbook = (userId?: string) => {
     };
 
     loadWorkbook();
-  }, [userId]);
+  }, [userId, user]);
 
   const updateField = async (fieldPath: string, value: unknown) => {
     if (!workbook) return;

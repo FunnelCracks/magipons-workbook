@@ -38,13 +38,19 @@ export const AdminDashboardPage: React.FC = () => {
     setLoading(false);
   };
 
+  const formatDate = (date: any): string => {
+    if (!date) return "N/A";
+    const d = date instanceof Date ? date : new Date(date);
+    return d.toLocaleDateString("es-ES");
+  };
+
   const exportToCSV = () => {
     const headers = ["Email", "Nombre", "Estado", "Fecha", "Completado"];
     const rows = filteredWorkbooks.map((w) => [
       w.userEmail,
       w.userName,
       w.status,
-      new Date(w.createdAt as any).toLocaleDateString(),
+      formatDate(w.createdAt),
       `${w.completionPercentage || 0}%`,
     ]);
 
@@ -203,7 +209,7 @@ export const AdminDashboardPage: React.FC = () => {
                         </span>
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-600">
-                        {new Date(workbook.createdAt as any).toLocaleDateString()}
+                        {formatDate(workbook.createdAt)}
                       </td>
                       <td className="px-6 py-4 text-sm">
                         <div className="w-full bg-gray-200 rounded-full h-2">
