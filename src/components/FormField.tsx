@@ -1,8 +1,7 @@
 import { useState } from "react";
 
+const INTER = "'Inter', system-ui, -apple-system, sans-serif";
 const ACCENT = "#26966a";
-const BORDER = "#263029";
-const FOCUS_SHADOW = "0 0 0 3px rgba(38,150,106,0.14)";
 
 interface FormFieldProps {
   label: string;
@@ -20,35 +19,34 @@ export const FormField: React.FC<FormFieldProps> = ({
 
   const inputBase: React.CSSProperties = {
     width: "100%",
-    padding: "11px 14px",
-    background: "#141918",
-    border: `1px solid ${focused ? ACCENT : BORDER}`,
-    borderRadius: "3px",
-    color: "#E8F0EB",
+    padding: "10px 12px",
+    background: "#111111",
+    border: `1px solid ${focused ? ACCENT : "#262626"}`,
+    borderRadius: "6px",
+    color: "#FFFFFF",
     fontSize: "14px",
-    lineHeight: "1.65",
-    fontFamily: "system-ui, -apple-system, 'Segoe UI', sans-serif",
+    lineHeight: "1.6",
+    fontFamily: INTER,
     outline: "none",
     boxSizing: "border-box",
-    boxShadow: focused ? FOCUS_SHADOW : "none",
-    transition: "border-color .15s, box-shadow .15s",
+    transition: "border-color .15s",
     caretColor: ACCENT,
   };
 
   return (
-    <div style={{ marginBottom: "24px" }}>
+    <div style={{ marginBottom: "28px" }}>
       <label style={{
         display: "block",
-        fontSize: "11px",
-        fontWeight: 600,
-        letterSpacing: ".08em",
-        textTransform: "uppercase",
-        color: focused ? "#6A8F7E" : "#4A5F55",
+        fontSize: "12px",
+        fontWeight: 500,
+        letterSpacing: ".04em",
+        color: focused ? "#71717A" : "#52525B",
         marginBottom: "8px",
+        fontFamily: INTER,
         transition: "color .15s",
       }}>
         {label}
-        {required && <span style={{ color: ACCENT, marginLeft: "4px" }}>*</span>}
+        {required && <span style={{ color: ACCENT, marginLeft: "3px" }}>*</span>}
       </label>
       {type === "textarea" ? (
         <textarea
@@ -58,7 +56,7 @@ export const FormField: React.FC<FormFieldProps> = ({
           rows={4}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          style={{ ...inputBase, resize: "vertical" as const, minHeight: "96px" }}
+          style={{ ...inputBase, resize: "vertical" as const, minHeight: "100px" }}
         />
       ) : (
         <input
