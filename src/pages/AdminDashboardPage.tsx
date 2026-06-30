@@ -237,7 +237,10 @@ export const AdminDashboardPage: React.FC = () => {
                         </p>
                       </td>
                       <td className="px-6 py-4 text-sm">
-                        <button className="text-blue-600 hover:text-blue-800 font-medium">
+                        <button
+                          onClick={() => navigate(`/admin/workbook/${workbook.id}`)}
+                          className="text-blue-600 hover:text-blue-800 font-medium"
+                        >
                           Ver
                         </button>
                       </td>

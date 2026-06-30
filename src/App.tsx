@@ -6,6 +6,7 @@ import { DashboardPage } from "./pages/DashboardPage";
 import { AdminLoginPage } from "./pages/AdminLoginPage";
 import { AdminUserSelectPage } from "./pages/AdminUserSelectPage";
 import { AdminDashboardPage } from "./pages/AdminDashboardPage";
+import { WorkbookDetailsPage } from "./pages/WorkbookDetailsPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
         <Route path="/admin" element={<AdminLoginPage />} />
         <Route path="/admin/select" element={<AdminUserSelectPage />} />
         <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+        <Route path="/admin/workbook/:workbookId" element={<WorkbookDetailsPage />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
