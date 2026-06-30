@@ -1,8 +1,7 @@
 import { auth, db } from "./firebaseConfig";
 import {
   GoogleAuthProvider,
-  signInWithRedirect,
-  getRedirectResult,
+  signInWithPopup,
   signOut as firebaseSignOut,
 } from "firebase/auth";
 import { doc, setDoc, serverTimestamp, getDoc } from "firebase/firestore";
@@ -10,12 +9,8 @@ import { doc, setDoc, serverTimestamp, getDoc } from "firebase/firestore";
 const googleProvider = new GoogleAuthProvider();
 
 export const loginWithGoogle = async () => {
-  await signInWithRedirect(auth, googleProvider);
-};
-
-export const handleRedirectResult = async () => {
-  const result = await getRedirectResult(auth);
-  return result?.user ?? null;
+  const result = await signInWithPopup(auth, googleProvider);
+  return result.user;
 };
 
 export const createOrUpdateUserDocument = async (user: any) => {
