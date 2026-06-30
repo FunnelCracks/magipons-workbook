@@ -2,6 +2,7 @@ import { db } from "./firebaseConfig";
 import {
   collection,
   doc,
+  getDoc,
   setDoc,
   updateDoc,
   query,
@@ -152,19 +153,32 @@ export const submitWorkbook = async (workbookId: string): Promise<void> => {
 
 export const getAllWorkbooks = async (): Promise<Workbook[]> => {
   try {
-    const q = query(
-      collection(db, "workbooks"),
-      orderBy("createdAt", "desc")
-    );
+    const q = query(collection(db, "workbooks"), orderBy("createdAt", "desc"));
     const snapshot = await getDocs(q);
-    return snapshot.docs.map((doc) => {
-      const data = doc.data();
-      return {
-        id: doc.id,
-        ...data,
-        completionPercentage: calculateCompletionPercentage(data.data),
-      };
-    }) as Workbook[];
+
+    const workbooks = snapshot.docs.map((d) => {
+      const data = d.data();
+      return { id: d.id, ...data, completionPercentage: calculateCompletionPercentage(data.data) } as Workbook;
+    });
+
+    // For workbooks missing email/name, fetch from users collection by userId
+    const enriched = await Promise.all(
+      workbooks.map(async (wb) => {
+        if (wb.userEmail || !wb.userId) return wb;
+        try {
+          const userSnap = await getDoc(doc(db, "users", wb.userId));
+          if (userSnap.exists()) {
+            const u = userSnap.data();
+            return { ...wb, userEmail: u.email || "", userName: u.name || "" };
+          }
+        } catch {
+          // ignore
+        }
+        return wb;
+      })
+    );
+
+    return enriched;
   } catch (error) {
     console.error("Error fetching workbooks:", error);
     return [];
