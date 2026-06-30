@@ -22,7 +22,7 @@ export const LoginPage: React.FC = () => {
         <p style={{ color: "#6b7280", textAlign: "center", marginBottom: "32px" }}>
           Inicia sesión para continuar con tu workbook
         </p>
-        <GoogleSignInButton onSuccess={() => navigate("/workbook/day0")} />
+        <GoogleSignInButton />
       </div>
     </div>
   );
