@@ -40,10 +40,10 @@ export const useWorkbook = (userId?: string) => {
     loadWorkbook();
   }, [userId, user]);
 
-  const updateField = async (fieldPath: string, value: unknown) => {
+  const updateField = async (fieldPath: string, value: unknown, fullData?: any) => {
     if (!workbook) return;
     try {
-      await updateWorkbookField(workbook.id, fieldPath, value);
+      await updateWorkbookField(workbook.id, fieldPath, value, fullData);
       setWorkbook((prev) =>
         prev
           ? {

@@ -162,6 +162,22 @@ export const WorkbookDetailsPage: React.FC = () => {
                 <p className="text-xs text-gray-500">Situación Actual</p>
                 <p className="text-gray-900">{workbook.data.day1.avatar.currentSituation || "N/A"}</p>
               </div>
+              <div className="p-3 bg-gray-50 rounded mt-2">
+                <p className="text-xs text-gray-500">Frase del Avatar</p>
+                <p className="text-gray-900">{workbook.data.day1.avatarPhrase || "N/A"}</p>
+              </div>
+            </div>
+
+            <div>
+              <p className="text-gray-600 text-sm font-medium mb-2">Promesa</p>
+              <div className="p-3 bg-gray-50 rounded">
+                <p className="text-xs text-gray-500">Transformación Prolongada</p>
+                <p className="text-gray-900">{workbook.data.day1.promise.transformation || "N/A"}</p>
+              </div>
+              <div className="p-3 bg-gray-50 rounded mt-2">
+                <p className="text-xs text-gray-500">¿A quién ayudas a conseguir qué?</p>
+                <p className="text-gray-900">{workbook.data.day1.promise.statement || "N/A"}</p>
+              </div>
             </div>
 
             <div>

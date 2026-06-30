@@ -1,15 +1,15 @@
-export function debounce(
-  func: (fieldPath: string, value: string) => void,
+export function debounce<T extends (...args: any[]) => void>(
+  func: T,
   delay: number
-) {
+): (...args: Parameters<T>) => void {
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
-  return (fieldPath: string, value: string) => {
+  return (...args: Parameters<T>) => {
     if (timeoutId) {
       clearTimeout(timeoutId);
     }
     timeoutId = setTimeout(() => {
-      func(fieldPath, value);
+      func(...args);
       timeoutId = null;
     }, delay);
   };

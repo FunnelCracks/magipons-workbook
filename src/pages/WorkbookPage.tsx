@@ -16,8 +16,8 @@ export const WorkbookPage: React.FC = () => {
   const [localData, setLocalData] = useState(workbook?.data || null);
 
   const debouncedUpdate = useCallback(
-    debounce((fieldPath: string, value: string) => {
-      updateField(fieldPath, value);
+    debounce((fieldPath: string, value: string, data: any) => {
+      updateField(fieldPath, value, data);
     }, 1000),
     [updateField]
   );
@@ -39,9 +39,9 @@ export const WorkbookPage: React.FC = () => {
       }
       current[keys[keys.length - 1]] = value;
       setLocalData(newData);
+      // Debounce Firebase update (add "data." prefix for Firestore path)
+      debouncedUpdate(`data.${fieldPath}`, value, newData);
     }
-    // Debounce Firebase update (add "data." prefix for Firestore path)
-    debouncedUpdate(`data.${fieldPath}`, value);
   };
 
   const handleSubmit = async () => {
@@ -170,6 +170,14 @@ export const WorkbookPage: React.FC = () => {
                 value={localData.day1.avatar.currentSituation || ""}
                 onChange={(value) =>
                   handleFieldChange("day1.avatar.currentSituation", value)
+                }
+                type="textarea"
+              />
+              <FormField
+                label="Frase del Avatar (Una frase que lo representa)"
+                value={localData.day1.avatarPhrase || ""}
+                onChange={(value) =>
+                  handleFieldChange("day1.avatarPhrase", value)
                 }
                 type="textarea"
               />
