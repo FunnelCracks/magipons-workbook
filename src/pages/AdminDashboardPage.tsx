@@ -40,8 +40,20 @@ export const AdminDashboardPage: React.FC = () => {
 
   const formatDate = (date: any): string => {
     if (!date) return "N/A";
-    const d = date instanceof Date ? date : new Date(date);
-    return d.toLocaleDateString("es-ES");
+    let d: Date;
+    if (date instanceof Date) {
+      d = date;
+    } else if (date && typeof date.toDate === "function") {
+      // Firestore Timestamp
+      d = date.toDate();
+    } else if (typeof date === "number") {
+      d = new Date(date);
+    } else if (typeof date === "string") {
+      d = new Date(date);
+    } else {
+      return "N/A";
+    }
+    return isNaN(d.getTime()) ? "N/A" : d.toLocaleDateString("es-ES");
   };
 
   const exportToCSV = () => {
