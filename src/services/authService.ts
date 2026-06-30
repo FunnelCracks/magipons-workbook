@@ -1,7 +1,7 @@
 import { auth, db } from "./firebaseConfig";
 import {
   GoogleAuthProvider,
-  signInWithRedirect,
+  signInWithPopup,
   signOut as firebaseSignOut,
 } from "firebase/auth";
 import { doc, setDoc, serverTimestamp, getDoc } from "firebase/firestore";
@@ -10,7 +10,8 @@ const googleProvider = new GoogleAuthProvider();
 
 export const loginWithGoogle = async () => {
   try {
-    await signInWithRedirect(auth, googleProvider);
+    const result = await signInWithPopup(auth, googleProvider);
+    return result.user;
   } catch (error) {
     console.error("Login error:", error);
     throw error;

@@ -14,12 +14,12 @@ export const LoginPage: React.FC = () => {
   }, [user, navigate]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">
-      <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2 text-center">
+    <div style={{ minHeight: "100vh", background: "linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%)", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 16px" }}>
+      <div style={{ background: "#ffffff", borderRadius: "12px", boxShadow: "0 20px 60px rgba(0,0,0,0.15)", padding: "48px", maxWidth: "440px", width: "100%" }}>
+        <h1 style={{ fontSize: "2rem", fontWeight: "700", color: "#111827", marginBottom: "8px", textAlign: "center" }}>
           Bienvenido
         </h1>
-        <p className="text-gray-600 text-center mb-8">
+        <p style={{ color: "#6b7280", textAlign: "center", marginBottom: "32px" }}>
           Inicia sesión para continuar con tu workbook
         </p>
         <GoogleSignInButton onSuccess={() => navigate("/workbook/day0")} />
