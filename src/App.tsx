@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { LandingPage } from "./pages/LandingPage";
 import { LoginPage } from "./pages/LoginPage";
+import { OnboardingPage } from "./pages/OnboardingPage";
 import { WorkbookPage } from "./pages/WorkbookPage";
 import { DashboardPage } from "./pages/DashboardPage";
 import { AdminLoginPage } from "./pages/AdminLoginPage";
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/onboarding" element={<OnboardingPage />} />
         <Route
           path="/workbook/day0"
           element={

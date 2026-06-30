@@ -151,6 +151,43 @@ export const submitWorkbook = async (workbookId: string): Promise<void> => {
   }
 };
 
+export const saveUserOnboarding = async (
+  userId: string,
+  firstName: string,
+  lastName: string,
+  phone: string
+): Promise<void> => {
+  try {
+    await setDoc(
+      doc(db, "users", userId),
+      { firstName, lastName, phone, onboardingCompleted: true, lastUpdated: serverTimestamp() },
+      { merge: true }
+    );
+    // Also stamp the user's workbook so admin dashboard shows it immediately
+    const wbQuery = query(collection(db, "workbooks"), where("userId", "==", userId));
+    const snap = await getDocs(wbQuery);
+    if (!snap.empty) {
+      await updateDoc(snap.docs[0].ref, {
+        userFirstName: firstName,
+        userLastName: lastName,
+        userPhone: phone,
+      });
+    }
+  } catch (error) {
+    console.error("Error saving onboarding:", error);
+    throw error;
+  }
+};
+
+export const hasCompletedOnboarding = async (userId: string): Promise<boolean> => {
+  try {
+    const userSnap = await getDoc(doc(db, "users", userId));
+    return userSnap.exists() && userSnap.data()?.onboardingCompleted === true;
+  } catch {
+    return false;
+  }
+};
+
 export const getAllWorkbooks = async (): Promise<Workbook[]> => {
   try {
     const q = query(collection(db, "workbooks"), orderBy("createdAt", "desc"));
@@ -161,15 +198,23 @@ export const getAllWorkbooks = async (): Promise<Workbook[]> => {
       return { id: d.id, ...data, completionPercentage: calculateCompletionPercentage(data.data) } as Workbook;
     });
 
-    // For workbooks missing email/name, fetch from users collection by userId
+    // Enrich from users collection: email, name, phone, firstName, lastName
     const enriched = await Promise.all(
       workbooks.map(async (wb) => {
-        if (wb.userEmail || !wb.userId) return wb;
+        if (!wb.userId) return wb;
+        if (wb.userEmail && wb.userPhone) return wb;
         try {
           const userSnap = await getDoc(doc(db, "users", wb.userId));
           if (userSnap.exists()) {
             const u = userSnap.data();
-            return { ...wb, userEmail: u.email || "", userName: u.name || "" };
+            return {
+              ...wb,
+              userEmail: wb.userEmail || u.email || "",
+              userName: wb.userName || u.name || "",
+              userFirstName: wb.userFirstName || u.firstName || "",
+              userLastName: wb.userLastName || u.lastName || "",
+              userPhone: wb.userPhone || u.phone || "",
+            };
           }
         } catch {
           // ignore

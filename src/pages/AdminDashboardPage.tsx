@@ -77,10 +77,12 @@ export const AdminDashboardPage: React.FC = () => {
   }, [workbooks, search]);
 
   const exportCSV = () => {
-    const headers = ["Email", "Nombre", "Estado", "Fecha", "Completado"];
+    const headers = ["Email", "Nombre", "Apellido", "Teléfono", "Estado", "Fecha", "Completado"];
     const rows = filtered.map((w) => [
       w.userEmail || "",
-      w.userName || "",
+      w.userFirstName || w.userName || "",
+      w.userLastName || "",
+      w.userPhone || "",
       w.status === "submitted" ? "Completado" : "En Progreso",
       formatDate(w.createdAt),
       `${w.completionPercentage || 0}%`,
@@ -151,7 +153,7 @@ export const AdminDashboardPage: React.FC = () => {
             <table style={s.table}>
               <thead>
                 <tr>
-                  {["Email", "Nombre", "Estado", "Fecha", "Completado", ""].map((h) => (
+                  {["Email", "Nombre y Apellido", "Teléfono", "Estado", "Fecha", "Completado", ""].map((h) => (
                     <th key={h} style={s.th}>{h}</th>
                   ))}
                 </tr>
@@ -160,6 +162,9 @@ export const AdminDashboardPage: React.FC = () => {
                 {filtered.length > 0 ? filtered.map((w) => {
                   const isDone = w.status === "submitted";
                   const pct = w.completionPercentage || 0;
+                  const fullName = (w.userFirstName && w.userLastName)
+                    ? `${w.userFirstName} ${w.userLastName}`
+                    : (w.userName || null);
                   return (
                     <tr
                       key={w.id}
@@ -167,7 +172,8 @@ export const AdminDashboardPage: React.FC = () => {
                       onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = "transparent"}
                     >
                       <td style={{ ...s.td, color: "#111827", fontWeight: 600 }}>{w.userEmail || <span style={{ color: "#A8ADCA" }}>—</span>}</td>
-                      <td style={{ ...s.td, color: "#374163" }}>{w.userName || <span style={{ color: "#A8ADCA" }}>—</span>}</td>
+                      <td style={{ ...s.td, color: "#374163" }}>{fullName || <span style={{ color: "#A8ADCA" }}>—</span>}</td>
+                      <td style={{ ...s.td, color: "#374163", fontSize: "12px" }}>{w.userPhone || <span style={{ color: "#A8ADCA" }}>—</span>}</td>
                       <td style={s.td}>
                         <span style={{
                           display: "inline-flex", alignItems: "center", gap: "6px",
@@ -201,7 +207,7 @@ export const AdminDashboardPage: React.FC = () => {
                     </tr>
                   );
                 }) : (
-                  <tr><td colSpan={6} style={s.empty}>No hay workbooks que coincidan</td></tr>
+                  <tr><td colSpan={7} style={s.empty}>No hay workbooks que coincidan</td></tr>
                 )}
               </tbody>
             </table>

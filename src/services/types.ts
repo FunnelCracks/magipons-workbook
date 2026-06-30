@@ -48,6 +48,9 @@ export interface Workbook {
   userId: string;
   userEmail: string;
   userName: string;
+  userFirstName?: string;
+  userLastName?: string;
+  userPhone?: string;
   status: "in_progress" | "submitted";
   data: WorkbookData;
   createdAt: Date;

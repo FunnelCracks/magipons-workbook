@@ -9,7 +9,7 @@ export const LoginPage: React.FC = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/workbook/day0");
+      navigate("/onboarding");
     }
   }, [user, navigate]);
 
