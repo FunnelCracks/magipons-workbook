@@ -7,14 +7,14 @@ const COBALT = "#3751C4";
 const BORDER = "#D8D9E4";
 
 const s = {
-  page: { minHeight: "100vh", background: "#EDEDF2", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" } as React.CSSProperties,
-  header: { background: "#fff", borderBottom: `1.5px solid ${BORDER}`, padding: "18px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" } as React.CSSProperties,
+  page: { minHeight: "100vh", width: "100%", background: "#EDEDF2", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" } as React.CSSProperties,
+  header: { background: "#fff", borderBottom: `1.5px solid ${BORDER}`, padding: "18px 32px", display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" } as React.CSSProperties,
   headerTitle: { fontSize: "20px", fontWeight: 900, color: "#111827", letterSpacing: "-.02em" } as React.CSSProperties,
   headerSub: { fontSize: "12px", color: "#6C739B", marginTop: "2px" } as React.CSSProperties,
   headerRight: { display: "flex", alignItems: "center", gap: "14px" } as React.CSSProperties,
   adminName: { fontSize: "13px", color: "#6C739B", fontWeight: 600 } as React.CSSProperties,
   logoutBtn: { padding: "8px 16px", border: `1.5px solid ${BORDER}`, borderRadius: "8px", background: "transparent", color: "#6C739B", fontSize: "13px", cursor: "pointer", fontFamily: "inherit" } as React.CSSProperties,
-  body: { maxWidth: "1060px", margin: "0 auto", padding: "28px 24px" } as React.CSSProperties,
+  body: { padding: "28px 32px" } as React.CSSProperties,
   stats: { display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "14px", marginBottom: "20px" } as React.CSSProperties,
   statCard: { background: "#fff", border: `1.5px solid ${BORDER}`, borderRadius: "10px", padding: "20px 24px" } as React.CSSProperties,
   statLabel: { fontSize: "12px", color: "#6C739B", fontWeight: 500, marginBottom: "8px" } as React.CSSProperties,
