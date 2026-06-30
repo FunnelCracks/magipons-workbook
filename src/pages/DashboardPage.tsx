@@ -3,6 +3,32 @@ import { useWorkbook } from "../hooks/useWorkbook";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "../services/authService";
 
+const ACCENT = "#26966a";
+const BG     = "#0C0F0E";
+const BORDER = "#263029";
+const TEXT_H = "#E8F0EB";
+const TEXT   = "#B8C4BE";
+const TEXT_M = "#4A5F55";
+
+const Field = ({ label, value }: { label: string; value?: string }) => (
+  <div style={{ marginBottom: "20px" }}>
+    <div style={{ fontSize: "11px", fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", color: TEXT_M, marginBottom: "6px" }}>
+      {label}
+    </div>
+    <div style={{ fontSize: "14px", color: value ? TEXT : TEXT_M, lineHeight: 1.65 }}>
+      {value || "Sin completar"}
+    </div>
+  </div>
+);
+
+const Divider = ({ label }: { label: string }) => (
+  <div style={{ display: "flex", alignItems: "center", gap: "14px", margin: "36px 0 24px" }}>
+    <div style={{ width: "20px", height: "1px", background: ACCENT, flexShrink: 0 }} />
+    <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: ACCENT, flexShrink: 0 }}>{label}</span>
+    <div style={{ height: "1px", flex: 1, background: BORDER }} />
+  </div>
+);
+
 export const DashboardPage: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -14,124 +40,118 @@ export const DashboardPage: React.FC = () => {
   };
 
   if (!workbook) {
-    return <div className="flex items-center justify-center h-screen">Cargando...</div>;
+    return (
+      <div style={{ minHeight: "100vh", background: BG, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <span style={{ color: TEXT_M, fontFamily: "system-ui, sans-serif", fontSize: "14px" }}>Cargando…</span>
+      </div>
+    );
   }
 
+  const isDone = workbook.status === "submitted";
+  const pct = workbook.completionPercentage || 0;
+
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6 flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Mi Workbook</h1>
-            <p className="text-gray-600 mt-2">
-              Estado: <span className="font-semibold">{workbook.status}</span>
-            </p>
+    <div style={{ minHeight: "100vh", background: BG, color: TEXT, fontFamily: "system-ui, -apple-system, 'Segoe UI', sans-serif", fontSize: "14px" }}>
+
+      {/* Header */}
+      <div style={{ borderBottom: `1px solid ${BORDER}`, position: "sticky", top: 0, background: BG, zIndex: 10 }}>
+        <div style={{ maxWidth: "700px", margin: "0 auto", padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: TEXT_M }}>Reto 3K · Workbook</span>
+            <span style={{
+              display: "inline-flex", alignItems: "center", gap: "5px",
+              padding: "3px 10px", borderRadius: "20px", fontSize: "11px", fontWeight: 700,
+              background: isDone ? "rgba(38,150,106,.15)" : "rgba(161,98,7,.15)",
+              color: isDone ? ACCENT : "#A16207",
+              border: `1px solid ${isDone ? "rgba(38,150,106,.3)" : "rgba(161,98,7,.3)"}`,
+            }}>
+              <span style={{ width: 5, height: 5, borderRadius: "50%", background: "currentColor", display: "inline-block" }} />
+              {isDone ? "Enviado" : "En progreso"}
+            </span>
           </div>
           <button
             onClick={handleSignOut}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+            style={{ padding: "7px 14px", background: "none", border: `1px solid ${BORDER}`, borderRadius: "3px", color: TEXT_M, fontSize: "12px", cursor: "pointer", fontFamily: "inherit" }}
           >
-            Cerrar Sesión
+            Cerrar sesión
           </button>
         </div>
+      </div>
 
-        {/* Content Sections */}
-        <div className="bg-white rounded-lg shadow-md p-6 space-y-8">
-          {/* Day 0 */}
-          <section>
-            <h2 className="text-2xl font-bold mb-4 pb-2 border-b border-gray-200">
-              Día 0: Visión
-            </h2>
-            <div className="space-y-4">
-              <div>
-                <h3 className="font-semibold text-gray-900">
-                  ¿Por qué quieres tener una membresía?
-                </h3>
-                <p className="text-gray-700 mt-1">{workbook.data.day0.motivation || "-"}</p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Monthly Recurring Happiness</h3>
-                <p className="text-gray-700 mt-1">${workbook.data.day0.mrh || "-"}</p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Día Ideal</h3>
-                <p className="text-gray-700 mt-1">{workbook.data.day0.idealDay || "-"}</p>
-              </div>
-            </div>
-          </section>
+      <div style={{ maxWidth: "700px", margin: "0 auto", padding: "48px 24px 80px" }}>
 
-          {/* Day 1 */}
-          <section>
-            <h2 className="text-2xl font-bold mb-4 pb-2 border-b border-gray-200">
-              Día 1: Las Bases
-            </h2>
-            <div className="space-y-4">
-              <div>
-                <h3 className="font-semibold text-gray-900">Nombre de la Membresía</h3>
-                <p className="text-gray-700 mt-1">{workbook.data.day1.membresiaName || "-"}</p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Avatar Psicológico</h3>
-                <div className="mt-2 ml-4 space-y-2 text-gray-700">
-                  <p>Edad: {workbook.data.day1.avatar.age || "-"}</p>
-                  <p>Preocupaciones: {workbook.data.day1.avatar.concerns || "-"}</p>
-                  <p>Sentimientos: {workbook.data.day1.avatar.feelings || "-"}</p>
-                  <p>Sueños: {workbook.data.day1.avatar.dreams || "-"}</p>
-                  <p>Situación actual: {workbook.data.day1.avatar.currentSituation || "-"}</p>
-                </div>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Estructura Mínima Viable</h3>
-                <div className="mt-2 ml-4 space-y-2 text-gray-700">
-                  <p>Soporte: {workbook.data.day1.structure.support || "-"}</p>
-                  <p>Contenido: {workbook.data.day1.structure.content || "-"}</p>
-                  <p>Comunidad: {workbook.data.day1.structure.community || "-"}</p>
-                  <p>Bonus: {workbook.data.day1.structure.bonus || "-"}</p>
-                </div>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Precio Mensual</h3>
-                <p className="text-gray-700 mt-1">${workbook.data.day1.price || "-"}</p>
-              </div>
+        {/* Title + completion */}
+        <div style={{ marginBottom: "48px" }}>
+          <h1 style={{ fontSize: "28px", fontWeight: 300, color: TEXT_H, letterSpacing: "-.03em", margin: "0 0 20px" }}>
+            Tu Workbook
+          </h1>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <div style={{ flex: 1, height: "2px", background: "#1A211E", borderRadius: "1px", overflow: "hidden" }}>
+              <div style={{ height: "100%", width: `${pct}%`, background: ACCENT, borderRadius: "1px", transition: "width .5s ease" }} />
             </div>
-          </section>
-
-          {/* Day 2 */}
-          <section>
-            <h2 className="text-2xl font-bold mb-4 pb-2 border-b border-gray-200">
-              Día 2: Estrategia de Venta
-            </h2>
-            <div className="space-y-4">
-              <div>
-                <h3 className="font-semibold text-gray-900">Precio Anual</h3>
-                <p className="text-gray-700 mt-1">{workbook.data.day2.annualPrice || "-"}</p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Cambios</h3>
-                <p className="text-gray-700 mt-1">{workbook.data.day2.changes || "-"}</p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Propuesta Única</h3>
-                <p className="text-gray-700 mt-1">{workbook.data.day2.uniqueProposal || "-"}</p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Estrategia Anual</h3>
-                <p className="text-gray-700 mt-1">{workbook.data.day2.annualStrategy || "-"}</p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Estrategia de Lanzamiento</h3>
-                <p className="text-gray-700 mt-1">{workbook.data.day2.launchStrategy || "-"}</p>
-              </div>
-            </div>
-          </section>
+            <span style={{ fontSize: "12px", color: TEXT_M, fontVariantNumeric: "tabular-nums", flexShrink: 0 }}>{pct}% completado</span>
+          </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="mt-6 flex gap-4">
+        {/* Day 0 */}
+        <div>
+          <h2 style={{ fontSize: "18px", fontWeight: 400, color: TEXT_H, letterSpacing: "-.01em", margin: "0 0 4px" }}>Día 0</h2>
+          <p style={{ fontSize: "12px", color: TEXT_M, margin: "0 0 4px" }}>Visión</p>
+          <div style={{ height: "1px", background: BORDER, margin: "16px 0 24px" }} />
+
+          <Field label="¿Por qué querés tener una membresía?" value={workbook.data.day0.motivation} />
+          <Field label="Monthly Recurring Happiness" value={workbook.data.day0.mrh ? `$${workbook.data.day0.mrh}` : undefined} />
+          <Field label="Día ideal en tu vida" value={workbook.data.day0.idealDay} />
+        </div>
+
+        {/* Day 1 */}
+        <div style={{ marginTop: "48px" }}>
+          <h2 style={{ fontSize: "18px", fontWeight: 400, color: TEXT_H, letterSpacing: "-.01em", margin: "0 0 4px" }}>Día 1</h2>
+          <p style={{ fontSize: "12px", color: TEXT_M, margin: "0 0 4px" }}>Las Bases</p>
+          <div style={{ height: "1px", background: BORDER, margin: "16px 0 24px" }} />
+
+          <Field label="Nombre de la membresía" value={workbook.data.day1.membresiaName} />
+
+          <Divider label="Avatar Psicológico" />
+          <Field label="Edad" value={workbook.data.day1.avatar.age} />
+          <Field label="Le preocupa sobre todo" value={workbook.data.day1.avatar.concerns} />
+          <Field label="Siente que" value={workbook.data.day1.avatar.feelings} />
+          <Field label="Sueña con" value={workbook.data.day1.avatar.dreams} />
+          <Field label="Pero ahora mismo" value={workbook.data.day1.avatar.currentSituation} />
+          <Field label="Frase del Avatar" value={workbook.data.day1.avatarPhrase} />
+
+          <Divider label="Promesa" />
+          <Field label="Transformación prolongada" value={workbook.data.day1.promise.transformation} />
+          <Field label="¿A quién ayudás a conseguir qué?" value={workbook.data.day1.promise.statement} />
+
+          <Divider label="Estructura Mínima Viable" />
+          <Field label="Soporte" value={workbook.data.day1.structure.support} />
+          <Field label="Contenido" value={workbook.data.day1.structure.content} />
+          <Field label="Comunidad" value={workbook.data.day1.structure.community} />
+          <Field label="Bonus" value={workbook.data.day1.structure.bonus} />
+
+          <Divider label="Precio" />
+          <Field label="Precio mensual" value={workbook.data.day1.price ? `$${workbook.data.day1.price}` : undefined} />
+        </div>
+
+        {/* Day 2 */}
+        <div style={{ marginTop: "48px" }}>
+          <h2 style={{ fontSize: "18px", fontWeight: 400, color: TEXT_H, letterSpacing: "-.01em", margin: "0 0 4px" }}>Día 2</h2>
+          <p style={{ fontSize: "12px", color: TEXT_M, margin: "0 0 4px" }}>Estrategia de Venta</p>
+          <div style={{ height: "1px", background: BORDER, margin: "16px 0 24px" }} />
+
+          <Field label="Precio anual" value={workbook.data.day2.annualPrice} />
+          <Field label="¿Qué cambiarías del Día 1?" value={workbook.data.day2.changes} />
+          <Field label="Propuesta única" value={workbook.data.day2.uniqueProposal} />
+          <Field label="Estrategia anual" value={workbook.data.day2.annualStrategy} />
+          <Field label="Estrategia de lanzamiento" value={workbook.data.day2.launchStrategy} />
+        </div>
+
+        {/* Actions */}
+        <div style={{ marginTop: "48px", paddingTop: "24px", borderTop: `1px solid ${BORDER}`, display: "flex", gap: "12px" }}>
           <button
             onClick={() => navigate("/workbook/day0")}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            style={{ padding: "10px 24px", background: ACCENT, border: "none", borderRadius: "3px", color: "#fff", fontSize: "13px", fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }}
           >
             Editar Workbook
           </button>
