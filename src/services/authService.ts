@@ -1,7 +1,7 @@
 import { auth, db } from "./firebaseConfig";
 import {
   GoogleAuthProvider,
-  signInWithPopup,
+  signInWithRedirect,
   signOut as firebaseSignOut,
 } from "firebase/auth";
 import { doc, setDoc, serverTimestamp, getDoc } from "firebase/firestore";
@@ -10,10 +10,15 @@ const googleProvider = new GoogleAuthProvider();
 
 export const loginWithGoogle = async () => {
   try {
-    const result = await signInWithPopup(auth, googleProvider);
-    const user = result.user;
+    await signInWithRedirect(auth, googleProvider);
+  } catch (error) {
+    console.error("Login error:", error);
+    throw error;
+  }
+};
 
-    // Create or update user document
+export const createOrUpdateUserDocument = async (user: any) => {
+  try {
     await setDoc(
       doc(db, "users", user.uid),
       {
@@ -23,10 +28,8 @@ export const loginWithGoogle = async () => {
       },
       { merge: true }
     );
-
-    return user;
   } catch (error) {
-    console.error("Login error:", error);
+    console.error("Error creating user document:", error);
     throw error;
   }
 };
