@@ -1,6 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const s = {
+  page: { minHeight: "100vh", background: "#EDEDF2", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 20px" } as React.CSSProperties,
+  card: { background: "#fff", border: "1.5px solid #D8D9E4", borderRadius: "12px", padding: "48px 40px", width: "100%", maxWidth: "400px", boxShadow: "0 4px 24px rgba(55,81,196,.08)" } as React.CSSProperties,
+  eyebrow: { fontSize: "11px", fontWeight: 800, letterSpacing: ".14em", textTransform: "uppercase" as const, color: "#3751C4", marginBottom: "8px" },
+  title: { fontSize: "26px", fontWeight: 900, color: "#111827", letterSpacing: "-.02em", marginBottom: "4px" },
+  sub: { fontSize: "13px", color: "#6C739B", marginBottom: "36px" },
+  label: { display: "block", fontSize: "12px", fontWeight: 700, color: "#374163", letterSpacing: ".04em", textTransform: "uppercase" as const, marginBottom: "8px" },
+  input: { width: "100%", padding: "12px 16px", border: "1.5px solid #D8D9E4", borderRadius: "8px", fontSize: "22px", letterSpacing: ".3em", textAlign: "center" as const, color: "#111827", outline: "none", fontFamily: "inherit", background: "#fff" } as React.CSSProperties,
+  error: { background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: "8px", padding: "10px 14px", fontSize: "13px", color: "#DC2626", marginTop: "12px" },
+  btn: { width: "100%", padding: "13px", background: "#3751C4", border: "none", borderRadius: "8px", color: "#fff", fontSize: "15px", fontWeight: 800, cursor: "pointer", marginTop: "20px", fontFamily: "inherit", letterSpacing: ".01em" } as React.CSSProperties,
+  footer: { textAlign: "center" as const, fontSize: "12px", color: "#A8ADCA", marginTop: "24px" },
+};
+
 export const AdminLoginPage: React.FC = () => {
   const [pin, setPin] = useState("");
   const [error, setError] = useState("");
@@ -10,60 +23,35 @@ export const AdminLoginPage: React.FC = () => {
     if (pin === "2026") {
       navigate("/admin/select");
     } else {
-      setError("PIN incorrecto");
+      setError("PIN incorrecto. Intentá de nuevo.");
       setPin("");
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      handleContinue();
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center px-4">
-      <div className="bg-white rounded-lg shadow-2xl p-8 w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">MAGIPONS</h1>
-          <p className="text-gray-600">Panel de Administración</p>
-        </div>
+    <div style={s.page}>
+      <div style={s.card}>
+        <p style={s.eyebrow}>Magipons</p>
+        <h1 style={s.title}>Panel Instructor</h1>
+        <p style={s.sub}>Ingresá el PIN para acceder</p>
 
-        <div className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              PIN de Acceso
-            </label>
-            <input
-              type="password"
-              value={pin}
-              onChange={(e) => {
-                setPin(e.target.value);
-                setError("");
-              }}
-              onKeyPress={handleKeyPress}
-              placeholder="••••"
-              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-center text-2xl tracking-widest"
-            />
-          </div>
+        <label style={s.label}>PIN de acceso</label>
+        <input
+          style={s.input}
+          type="password"
+          value={pin}
+          onChange={(e) => { setPin(e.target.value); setError(""); }}
+          onKeyDown={(e) => e.key === "Enter" && handleContinue()}
+          placeholder="····"
+          maxLength={6}
+        />
+        {error && <div style={s.error}>{error}</div>}
 
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
-              {error}
-            </div>
-          )}
+        <button style={s.btn} onClick={handleContinue}>
+          Continuar →
+        </button>
 
-          <button
-            onClick={handleContinue}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200"
-          >
-            Continuar →
-          </button>
-        </div>
-
-        <p className="text-center text-gray-500 text-xs mt-6">
-          Acceso restringido a administradores
-        </p>
+        <p style={s.footer}>Acceso restringido a instructores</p>
       </div>
     </div>
   );

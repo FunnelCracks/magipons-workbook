@@ -3,258 +3,205 @@ import { useNavigate } from "react-router-dom";
 import { getAllWorkbooks } from "../services/firestoreService";
 import type { Workbook } from "../services/types";
 
+const COBALT = "#3751C4";
+const BORDER = "#D8D9E4";
+
+const s = {
+  page: { minHeight: "100vh", background: "#EDEDF2", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" } as React.CSSProperties,
+  header: { background: "#fff", borderBottom: `1.5px solid ${BORDER}`, padding: "18px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" } as React.CSSProperties,
+  headerTitle: { fontSize: "20px", fontWeight: 900, color: "#111827", letterSpacing: "-.02em" } as React.CSSProperties,
+  headerSub: { fontSize: "12px", color: "#6C739B", marginTop: "2px" } as React.CSSProperties,
+  headerRight: { display: "flex", alignItems: "center", gap: "14px" } as React.CSSProperties,
+  adminName: { fontSize: "13px", color: "#6C739B", fontWeight: 600 } as React.CSSProperties,
+  logoutBtn: { padding: "8px 16px", border: `1.5px solid ${BORDER}`, borderRadius: "8px", background: "transparent", color: "#6C739B", fontSize: "13px", cursor: "pointer", fontFamily: "inherit" } as React.CSSProperties,
+  body: { maxWidth: "1060px", margin: "0 auto", padding: "28px 24px" } as React.CSSProperties,
+  stats: { display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "14px", marginBottom: "20px" } as React.CSSProperties,
+  statCard: { background: "#fff", border: `1.5px solid ${BORDER}`, borderRadius: "10px", padding: "20px 24px" } as React.CSSProperties,
+  statLabel: { fontSize: "12px", color: "#6C739B", fontWeight: 500, marginBottom: "8px" } as React.CSSProperties,
+  toolbar: { display: "flex", gap: "10px", marginBottom: "16px" } as React.CSSProperties,
+  searchInput: { flex: 1, background: "#fff", border: `1.5px solid ${BORDER}`, borderRadius: "8px", color: "#111827", padding: "10px 14px", fontSize: "13px", fontFamily: "inherit", outline: "none" } as React.CSSProperties,
+  csvBtn: { padding: "10px 22px", background: COBALT, border: "none", borderRadius: "8px", color: "#fff", fontSize: "13px", fontFamily: "inherit", cursor: "pointer", fontWeight: 700, whiteSpace: "nowrap" as const } as React.CSSProperties,
+  tableCard: { background: "#fff", border: `1.5px solid ${BORDER}`, borderRadius: "10px", overflow: "hidden" } as React.CSSProperties,
+  tableWrap: { overflowX: "auto" as const },
+  table: { width: "100%", borderCollapse: "collapse" as const, fontSize: "13px" } as React.CSSProperties,
+  th: { padding: "12px 18px", textAlign: "left" as const, fontSize: "11px", letterSpacing: ".06em", textTransform: "uppercase" as const, color: "#6C739B", fontWeight: 700, borderBottom: `1.5px solid ${BORDER}`, background: "#F7F7FB" } as React.CSSProperties,
+  td: { padding: "14px 18px", borderBottom: "1px solid #EDEDF2", verticalAlign: "middle" as const } as React.CSSProperties,
+  pctWrap: { display: "flex", alignItems: "center", gap: "10px" } as React.CSSProperties,
+  pctNum: { width: "36px", fontWeight: 800, color: "#111827", fontVariantNumeric: "tabular-nums" as const } as React.CSSProperties,
+  pctTrack: { flex: 1, height: "5px", background: "#E8E8F0", borderRadius: "3px", overflow: "hidden", minWidth: "60px" } as React.CSSProperties,
+  verBtn: { padding: "6px 14px", background: "transparent", border: `1.5px solid ${BORDER}`, borderRadius: "6px", color: COBALT, fontSize: "12px", fontFamily: "inherit", cursor: "pointer", fontWeight: 700 } as React.CSSProperties,
+  empty: { padding: "48px", textAlign: "center" as const, color: "#6C739B", fontSize: "14px" } as React.CSSProperties,
+  loading: { minHeight: "100vh", background: "#EDEDF2", display: "flex", alignItems: "center", justifyContent: "center" } as React.CSSProperties,
+};
+
+function pctBarColor(p: number) {
+  if (p >= 70) return "#0F7550";
+  if (p >= 30) return "#A16207";
+  return "#DC2626";
+}
+
+function formatDate(date: any): string {
+  if (!date) return "—";
+  let d: Date;
+  if (date instanceof Date) d = date;
+  else if (date?.toDate) d = date.toDate();
+  else if (typeof date === "number" || typeof date === "string") d = new Date(date);
+  else return "—";
+  return isNaN(d.getTime()) ? "—" : d.toLocaleDateString("es-AR");
+}
+
 export const AdminDashboardPage: React.FC = () => {
   const navigate = useNavigate();
   const [workbooks, setWorkbooks] = useState<Workbook[]>([]);
-  const [filteredWorkbooks, setFilteredWorkbooks] = useState<Workbook[]>([]);
+  const [filtered, setFiltered] = useState<Workbook[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchEmail, setSearchEmail] = useState("");
+  const [search, setSearch] = useState("");
   const [adminUser, setAdminUser] = useState("");
 
   useEffect(() => {
     const admin = sessionStorage.getItem("adminUser");
-    if (!admin) {
-      navigate("/admin");
-      return;
-    }
+    if (!admin) { navigate("/admin"); return; }
     setAdminUser(admin);
-    loadWorkbooks();
+    getAllWorkbooks().then((data) => { setWorkbooks(data); setLoading(false); });
   }, [navigate]);
 
   useEffect(() => {
-    let filtered = workbooks;
-    if (searchEmail) {
-      filtered = filtered.filter((w) =>
-        w.userEmail.toLowerCase().includes(searchEmail.toLowerCase())
-      );
-    }
-    setFilteredWorkbooks(filtered);
-  }, [workbooks, searchEmail]);
+    setFiltered(
+      search
+        ? workbooks.filter((w) =>
+            w.userEmail?.toLowerCase().includes(search.toLowerCase()) ||
+            w.userName?.toLowerCase().includes(search.toLowerCase())
+          )
+        : workbooks
+    );
+  }, [workbooks, search]);
 
-  const loadWorkbooks = async () => {
-    setLoading(true);
-    const data = await getAllWorkbooks();
-    setWorkbooks(data);
-    setLoading(false);
-  };
-
-  const formatDate = (date: any): string => {
-    if (!date) return "N/A";
-    let d: Date;
-    if (date instanceof Date) {
-      d = date;
-    } else if (date && typeof date.toDate === "function") {
-      // Firestore Timestamp
-      d = date.toDate();
-    } else if (typeof date === "number") {
-      d = new Date(date);
-    } else if (typeof date === "string") {
-      d = new Date(date);
-    } else {
-      return "N/A";
-    }
-    return isNaN(d.getTime()) ? "N/A" : d.toLocaleDateString("es-ES");
-  };
-
-  const exportToCSV = () => {
+  const exportCSV = () => {
     const headers = ["Email", "Nombre", "Estado", "Fecha", "Completado"];
-    const rows = filteredWorkbooks.map((w) => [
-      w.userEmail,
-      w.userName,
-      w.status,
+    const rows = filtered.map((w) => [
+      w.userEmail || "",
+      w.userName || "",
+      w.status === "submitted" ? "Completado" : "En Progreso",
       formatDate(w.createdAt),
       `${w.completionPercentage || 0}%`,
     ]);
-
-    const csv = [
-      headers.join(","),
-      ...rows.map((r) => r.map((cell) => `"${cell}"`).join(",")),
-    ].join("\n");
-
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = window.URL.createObjectURL(blob);
+    const csv = [headers, ...rows].map((r) => r.map((c) => `"${c}"`).join(",")).join("\n");
     const a = document.createElement("a");
-    a.href = url;
+    a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
     a.download = `workbooks-${new Date().toISOString().split("T")[0]}.csv`;
     a.click();
   };
 
-  const handleLogout = () => {
-    sessionStorage.removeItem("adminUser");
-    navigate("/admin");
-  };
-
-  const getStatusBadge = (status: string) => {
-    const colors = {
-      in_progress: "bg-yellow-100 text-yellow-800",
-      submitted: "bg-green-100 text-green-800",
-    };
-    return colors[status as keyof typeof colors] || "bg-gray-100 text-gray-800";
-  };
-
   if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Cargando workbooks...</p>
-        </div>
-      </div>
-    );
+    return <div style={s.loading}><p style={{ color: "#6C739B" }}>Cargando workbooks…</p></div>;
   }
 
+  const done = workbooks.filter((w) => w.status === "submitted").length;
+  const inProgress = workbooks.filter((w) => w.status !== "submitted").length;
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-            <p className="text-gray-600 text-sm mt-1">
-              Bienvenido,{" "}
-              <span className="font-semibold capitalize">{adminUser}</span>
-            </p>
-          </div>
+    <div style={s.page}>
+      <div style={s.header}>
+        <div>
+          <div style={s.headerTitle}>Admin Dashboard</div>
+          <div style={s.headerSub}>Reto 3K · Cohorte Junio 2026</div>
+        </div>
+        <div style={s.headerRight}>
+          <span style={s.adminName}>{adminUser.charAt(0).toUpperCase() + adminUser.slice(1)}</span>
           <button
-            onClick={handleLogout}
-            className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition"
+            style={s.logoutBtn}
+            onMouseEnter={(e) => { e.currentTarget.style.borderColor = COBALT; e.currentTarget.style.color = COBALT; }}
+            onMouseLeave={(e) => { e.currentTarget.style.borderColor = BORDER; e.currentTarget.style.color = "#6C739B"; }}
+            onClick={() => { sessionStorage.removeItem("adminUser"); navigate("/admin"); }}
           >
-            Cerrar Sesión
+            Cerrar sesión
           </button>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Filters */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <div className="flex flex-col md:flex-row gap-4 items-end">
-            <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Buscar por Email
-              </label>
-              <input
-                type="text"
-                value={searchEmail}
-                onChange={(e) => setSearchEmail(e.target.value)}
-                placeholder="ej: alumno@example.com"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+      <div style={s.body}>
+        <div style={s.stats}>
+          {[
+            { label: "Total workbooks", val: workbooks.length, color: COBALT },
+            { label: "En progreso",     val: inProgress,       color: "#A16207" },
+            { label: "Completados",     val: done,             color: "#0F7550" },
+          ].map(({ label, val, color }) => (
+            <div key={label} style={s.statCard}>
+              <div style={s.statLabel}>{label}</div>
+              <div style={{ fontSize: "36px", fontWeight: 900, color, fontVariantNumeric: "tabular-nums", letterSpacing: "-.03em", lineHeight: 1 }}>{val}</div>
             </div>
-            <button
-              onClick={exportToCSV}
-              className="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded-lg transition"
-            >
-              📥 Descargar CSV
-            </button>
-          </div>
+          ))}
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <p className="text-gray-600 text-sm">Total Workbooks</p>
-            <p className="text-3xl font-bold text-blue-600">{workbooks.length}</p>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <p className="text-gray-600 text-sm">En Progreso</p>
-            <p className="text-3xl font-bold text-yellow-600">
-              {workbooks.filter((w) => w.status === "in_progress").length}
-            </p>
-          </div>
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <p className="text-gray-600 text-sm">Completados</p>
-            <p className="text-3xl font-bold text-green-600">
-              {workbooks.filter((w) => w.status === "submitted").length}
-            </p>
-          </div>
+        <div style={s.toolbar}>
+          <input
+            style={s.searchInput}
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Buscar por email o nombre…"
+            onFocus={(e) => { e.currentTarget.style.borderColor = COBALT; e.currentTarget.style.boxShadow = "0 0 0 3px #3751C418"; }}
+            onBlur={(e) => { e.currentTarget.style.borderColor = BORDER; e.currentTarget.style.boxShadow = "none"; }}
+          />
+          <button style={s.csvBtn} onClick={exportCSV}>Descargar CSV</button>
         </div>
 
-        {/* Table */}
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-100 border-b border-gray-200">
+        <div style={s.tableCard}>
+          <div style={s.tableWrap}>
+            <table style={s.table}>
+              <thead>
                 <tr>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                    Email
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                    Nombre
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                    Estado
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                    Fecha Creación
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                    Completado
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
-                    Acciones
-                  </th>
+                  {["Email", "Nombre", "Estado", "Fecha", "Completado", ""].map((h) => (
+                    <th key={h} style={s.th}>{h}</th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
-                {filteredWorkbooks.length > 0 ? (
-                  filteredWorkbooks.map((workbook) => (
+                {filtered.length > 0 ? filtered.map((w) => {
+                  const isDone = w.status === "submitted";
+                  const pct = w.completionPercentage || 0;
+                  return (
                     <tr
-                      key={workbook.id}
-                      className="border-b border-gray-200 hover:bg-gray-50 transition"
+                      key={w.id}
+                      onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.background = "#F4F4FB"}
+                      onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = "transparent"}
                     >
-                      <td className="px-6 py-4 text-sm text-gray-900">
-                        {workbook.userEmail}
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-900">
-                        {workbook.userName || "N/A"}
-                      </td>
-                      <td className="px-6 py-4 text-sm">
-                        <span
-                          className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusBadge(
-                            workbook.status
-                          )}`}
-                        >
-                          {workbook.status === "in_progress"
-                            ? "En Progreso"
-                            : "Completado"}
+                      <td style={{ ...s.td, color: "#111827", fontWeight: 600 }}>{w.userEmail || <span style={{ color: "#A8ADCA" }}>—</span>}</td>
+                      <td style={{ ...s.td, color: "#374163" }}>{w.userName || <span style={{ color: "#A8ADCA" }}>—</span>}</td>
+                      <td style={s.td}>
+                        <span style={{
+                          display: "inline-flex", alignItems: "center", gap: "6px",
+                          padding: "4px 10px", borderRadius: "20px", fontSize: "11px", fontWeight: 700,
+                          background: isDone ? "#DCFCE7" : "#FEF3C7",
+                          color: isDone ? "#0F7550" : "#A16207",
+                        }}>
+                          <span style={{ width: 5, height: 5, borderRadius: "50%", background: "currentColor", display: "inline-block", flexShrink: 0 }} />
+                          {isDone ? "Completado" : "En progreso"}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-600">
-                        {formatDate(workbook.createdAt)}
-                      </td>
-                      <td className="px-6 py-4 text-sm">
-                        <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div
-                            className="bg-blue-600 h-2 rounded-full"
-                            style={{
-                              width: `${workbook.completionPercentage || 0}%`,
-                            }}
-                          ></div>
+                      <td style={{ ...s.td, color: "#6C739B", fontSize: "12px" }}>{formatDate(w.createdAt)}</td>
+                      <td style={s.td}>
+                        <div style={s.pctWrap}>
+                          <span style={s.pctNum}>{pct}%</span>
+                          <div style={s.pctTrack}>
+                            <div style={{ height: "100%", width: `${pct}%`, borderRadius: "3px", background: pctBarColor(pct) }} />
+                          </div>
                         </div>
-                        <p className="text-xs text-gray-500 mt-1">
-                          {workbook.completionPercentage || 0}%
-                        </p>
                       </td>
-                      <td className="px-6 py-4 text-sm">
+                      <td style={s.td}>
                         <button
-                          onClick={() => navigate(`/admin/workbook/${workbook.id}`)}
-                          className="text-blue-600 hover:text-blue-800 font-medium"
+                          style={s.verBtn}
+                          onMouseEnter={(e) => { e.currentTarget.style.background = "#F4F4FB"; e.currentTarget.style.borderColor = COBALT; }}
+                          onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = BORDER; }}
+                          onClick={() => navigate(`/admin/workbook/${w.id}`)}
                         >
                           Ver
                         </button>
                       </td>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td
-                      colSpan={6}
-                      className="px-6 py-8 text-center text-gray-500"
-                    >
-                      No hay workbooks que coincidan con tu búsqueda
-                    </td>
-                  </tr>
+                  );
+                }) : (
+                  <tr><td colSpan={6} style={s.empty}>No hay workbooks que coincidan</td></tr>
                 )}
               </tbody>
             </table>
