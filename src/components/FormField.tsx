@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const INTER = "'Inter', system-ui, -apple-system, sans-serif";
+const INTER = "'Montserrat', 'Inter', system-ui, sans-serif";
 const ACCENT = "#26966a";
 
 interface FormFieldProps {
@@ -20,10 +20,10 @@ export const FormField: React.FC<FormFieldProps> = ({
   const inputBase: React.CSSProperties = {
     width: "100%",
     padding: "10px 12px",
-    background: "#111111",
-    border: `1px solid ${focused ? ACCENT : "#262626"}`,
-    borderRadius: "6px",
-    color: "#FFFFFF",
+    background: "#FFFFFF",
+    border: `1px solid ${focused ? ACCENT : "#E5E5E5"}`,
+    borderRadius: "8px",
+    color: "#111111",
     fontSize: "14px",
     lineHeight: "1.6",
     fontFamily: INTER,
@@ -39,8 +39,9 @@ export const FormField: React.FC<FormFieldProps> = ({
         display: "block",
         fontSize: "12px",
         fontWeight: 500,
-        letterSpacing: ".04em",
-        color: focused ? "#71717A" : "#52525B",
+        color: focused ? "#525252" : "#A1A1AA",
+        textTransform: "uppercase" as const,
+        letterSpacing: ".06em",
         marginBottom: "8px",
         fontFamily: INTER,
         transition: "color .15s",

@@ -5,18 +5,14 @@ interface ProtectedRouteProps {
   children: React.ReactNode;
 }
 
+const IS_DEV = import.meta.env.DEV;
+
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { user, loading } = useAuth();
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-lg">Cargando...</div>
-      </div>
-    );
-  }
+  if (loading) return null;
 
-  if (!user) {
+  if (!user && !IS_DEV) {
     return <Navigate to="/login" />;
   }
 

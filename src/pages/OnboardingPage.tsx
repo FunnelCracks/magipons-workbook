@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { saveUserOnboarding, hasCompletedOnboarding } from "../services/firestoreService";
 
+const MONT   = "'Montserrat', system-ui, sans-serif";
+const ACCENT = "#26966a";
+const BG     = "#FAFAF9";
+
 const COUNTRIES = [
   { code: "AR", flag: "🇦🇷", name: "Argentina",       prefix: "+54"  },
   { code: "ES", flag: "🇪🇸", name: "España",           prefix: "+34"  },
@@ -21,25 +25,27 @@ const COUNTRIES = [
   { code: "BR", flag: "🇧🇷", name: "Brasil",           prefix: "+55"  },
 ];
 
-const BORDER = "#D8E0F0";
-const FOCUS_COLOR = "#4F46E5";
+const IS_DEV = import.meta.env.DEV;
 
 export const OnboardingPage: React.FC = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
 
   const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName]   = useState("");
-  const [country, setCountry]     = useState(COUNTRIES[0]);
-  const [phone, setPhone]         = useState("");
-  const [saving, setSaving]       = useState(false);
-  const [error, setError]         = useState<string | null>(null);
-  const [checking, setChecking]   = useState(true);
+  const [lastName,  setLastName]  = useState("");
+  const [country,   setCountry]   = useState(COUNTRIES[0]);
+  const [phone,     setPhone]     = useState("");
+  const [saving,    setSaving]    = useState(false);
+  const [error,     setError]     = useState<string | null>(null);
+  const [checking,  setChecking]  = useState(true);
 
   useEffect(() => {
     if (authLoading) return;
-    if (!user) { navigate("/login"); return; }
-
+    if (!user) {
+      if (IS_DEV) { setChecking(false); return; } // preview bypass
+      navigate("/login");
+      return;
+    }
     hasCompletedOnboarding(user.uid).then((done) => {
       if (done) navigate("/workbook/day0");
       else setChecking(false);
@@ -52,13 +58,16 @@ export const OnboardingPage: React.FC = () => {
       setError("Completá todos los campos.");
       return;
     }
-    if (!user) return;
+    if (!user) {
+      if (IS_DEV) { navigate("/intro"); return; }
+      return;
+    }
     setSaving(true);
     setError(null);
     try {
       const fullPhone = `${country.prefix} ${phone.trim()}`;
       await saveUserOnboarding(user.uid, firstName.trim(), lastName.trim(), fullPhone);
-      navigate("/workbook/day0");
+      navigate("/intro");
     } catch {
       setError("Error al guardar. Intentá de nuevo.");
       setSaving(false);
@@ -67,147 +76,104 @@ export const OnboardingPage: React.FC = () => {
 
   if (authLoading || checking) {
     return (
-      <div style={{ minHeight: "100vh", background: "#F5F6FA", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <p style={{ color: "#6B7280", fontFamily: "system-ui, sans-serif" }}>Cargando…</p>
+      <div style={{ minHeight: "100vh", background: BG, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <p style={{ color: "#A1A1AA", fontFamily: MONT, fontSize: "14px" }}>Cargando…</p>
       </div>
     );
   }
 
-  const inputStyle = (focused?: boolean): React.CSSProperties => ({
-    width: "100%",
-    padding: "11px 14px",
-    border: `1.5px solid ${focused ? FOCUS_COLOR : BORDER}`,
-    borderRadius: "8px",
-    fontSize: "15px",
-    color: "#111827",
-    background: "#fff",
-    outline: "none",
-    boxSizing: "border-box",
-    fontFamily: "system-ui, sans-serif",
-    boxShadow: focused ? `0 0 0 3px rgba(79,70,229,.12)` : "none",
-    transition: "border-color .15s, box-shadow .15s",
-  });
-
   return (
-    <div style={{ minHeight: "100vh", background: "linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%)", display: "flex", alignItems: "center", justifyContent: "center", padding: "20px", fontFamily: "system-ui, sans-serif" }}>
-      <div style={{ background: "#fff", borderRadius: "16px", boxShadow: "0 20px 60px rgba(79,70,229,.12)", padding: "48px 44px", width: "100%", maxWidth: "460px" }}>
+    <div style={{ minHeight: "100vh", background: BG, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 24px", fontFamily: MONT }}>
 
-        <div style={{ marginBottom: "32px" }}>
-          <p style={{ fontSize: "11px", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", color: "#4F46E5", marginBottom: "8px" }}>
-            RETO 3K · Magipons
-          </p>
-          <h1 style={{ fontSize: "26px", fontWeight: 900, color: "#111827", letterSpacing: "-.03em", marginBottom: "6px" }}>
-            ¡Bienvenido/a!
-          </h1>
-          <p style={{ fontSize: "14px", color: "#6B7280", lineHeight: 1.5 }}>
-            Antes de comenzar, completá tus datos de contacto.
-          </p>
-        </div>
+      {/* Wordmark */}
+      <div style={{ textAlign: "center", marginBottom: "48px" }}>
+        <p style={{ fontSize: "11px", fontWeight: 800, letterSpacing: ".18em", textTransform: "uppercase", color: ACCENT, margin: "0 0 6px" }}>
+          Workbook
+        </p>
+        <p style={{ fontSize: "22px", fontWeight: 900, letterSpacing: "-.02em", color: "#111111", textTransform: "uppercase", margin: 0 }}>
+          Reto 3K
+        </p>
+      </div>
+
+      {/* Card */}
+      <div style={{ maxWidth: "420px", width: "100%", background: "#FFFFFF", border: "1px solid #E5E5E5", borderRadius: "16px", padding: "40px 36px" }}>
+
+        <h2 style={{ fontSize: "20px", fontWeight: 800, color: "#111111", letterSpacing: "-.02em", margin: "0 0 6px" }}>
+          Antes de comenzar
+        </h2>
+        <p style={{ fontSize: "14px", color: "#A1A1AA", margin: "0 0 32px", lineHeight: 1.5 }}>
+          Completá tus datos para personalizar tu experiencia.
+        </p>
 
         <form onSubmit={handleSubmit}>
+
           {/* Nombre */}
-          <div style={{ marginBottom: "16px" }}>
-            <label style={{ display: "block", fontSize: "12px", fontWeight: 700, color: "#374151", marginBottom: "6px", letterSpacing: ".03em" }}>
-              NOMBRE
-            </label>
-            <FocusInput
-              type="text"
-              placeholder="Ej: María"
-              value={firstName}
-              onChange={setFirstName}
-              inputStyle={inputStyle}
-            />
-          </div>
+          <Field label="Nombre">
+            <FocusInput type="text" placeholder="Ej: María" value={firstName} onChange={setFirstName} />
+          </Field>
 
           {/* Apellido */}
-          <div style={{ marginBottom: "16px" }}>
-            <label style={{ display: "block", fontSize: "12px", fontWeight: 700, color: "#374151", marginBottom: "6px", letterSpacing: ".03em" }}>
-              APELLIDO
-            </label>
-            <FocusInput
-              type="text"
-              placeholder="Ej: González"
-              value={lastName}
-              onChange={setLastName}
-              inputStyle={inputStyle}
-            />
-          </div>
+          <Field label="Apellido">
+            <FocusInput type="text" placeholder="Ej: González" value={lastName} onChange={setLastName} />
+          </Field>
 
           {/* Teléfono */}
-          <div style={{ marginBottom: "28px" }}>
-            <label style={{ display: "block", fontSize: "12px", fontWeight: 700, color: "#374151", marginBottom: "6px", letterSpacing: ".03em" }}>
-              TELÉFONO
-            </label>
+          <Field label="Teléfono">
             <div style={{ display: "flex", gap: "8px" }}>
-              {/* Country selector */}
               <div style={{ position: "relative", flexShrink: 0 }}>
                 <select
                   value={country.code}
                   onChange={(e) => setCountry(COUNTRIES.find(c => c.code === e.target.value) || COUNTRIES[0])}
-                  style={{
-                    padding: "11px 36px 11px 12px",
-                    border: `1.5px solid ${BORDER}`,
-                    borderRadius: "8px",
-                    fontSize: "15px",
-                    color: "#111827",
-                    background: "#fff",
-                    outline: "none",
-                    cursor: "pointer",
-                    appearance: "none",
-                    fontFamily: "system-ui, sans-serif",
-                    minWidth: "110px",
-                  }}
+                  style={{ padding: "10px 32px 10px 12px", border: "1px solid #E5E5E5", borderRadius: "8px", fontSize: "14px", color: "#111111", background: "#fff", outline: "none", cursor: "pointer", appearance: "none", fontFamily: MONT, minWidth: "100px" }}
                 >
                   {COUNTRIES.map((c) => (
-                    <option key={c.code} value={c.code}>
-                      {c.flag} {c.prefix}
-                    </option>
+                    <option key={c.code} value={c.code}>{c.flag} {c.prefix}</option>
                   ))}
                 </select>
-                <span style={{ position: "absolute", right: "10px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", fontSize: "11px", color: "#9CA3AF" }}>▼</span>
+                <span style={{ position: "absolute", right: "10px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", fontSize: "10px", color: "#A1A1AA" }}>▼</span>
               </div>
-
-              {/* Phone number */}
-              <FocusInput
-                type="tel"
-                placeholder="Ej: 9 11 1234 5678"
-                value={phone}
-                onChange={setPhone}
-                inputStyle={inputStyle}
-              />
+              <FocusInput type="tel" placeholder="Ej: 9 11 1234 5678" value={phone} onChange={setPhone} />
             </div>
-          </div>
+          </Field>
 
           {error && (
-            <p style={{ color: "#DC2626", fontSize: "13px", marginBottom: "16px", textAlign: "center" }}>{error}</p>
+            <p style={{ color: "#DC2626", fontSize: "13px", margin: "-8px 0 20px", textAlign: "center" }}>{error}</p>
           )}
 
           <button
             type="submit"
             disabled={saving}
-            style={{
-              width: "100%", padding: "13px", background: saving ? "#A5B4FC" : "#4F46E5",
-              color: "#fff", border: "none", borderRadius: "10px", fontSize: "15px",
-              fontWeight: 700, cursor: saving ? "not-allowed" : "pointer",
-              fontFamily: "system-ui, sans-serif", transition: "background .2s",
-            }}
+            style={{ width: "100%", padding: "13px", background: saving ? "#D1D1CB" : "#111111", color: "#fff", border: "none", borderRadius: "10px", fontSize: "14px", fontWeight: 700, cursor: saving ? "not-allowed" : "pointer", fontFamily: MONT, letterSpacing: ".02em", transition: "background .2s, transform .15s" }}
+            onMouseEnter={e => { if (!saving) e.currentTarget.style.background = "#222222"; }}
+            onMouseLeave={e => { if (!saving) e.currentTarget.style.background = "#111111"; }}
+            onMouseDown={e => { if (!saving) e.currentTarget.style.transform = "scale(.98)"; }}
+            onMouseUp={e => { e.currentTarget.style.transform = "scale(1)"; }}
           >
-            {saving ? "Guardando…" : "Comenzar el workbook →"}
+            {saving ? "Guardando…" : "Comenzar el Workbook →"}
           </button>
         </form>
       </div>
+
+      <button
+        onClick={() => navigate("/")}
+        style={{ marginTop: "24px", background: "none", border: "none", fontSize: "13px", color: "#B0B0A8", cursor: "pointer", fontFamily: MONT }}
+      >
+        ← Volver
+      </button>
     </div>
   );
 };
 
-// Small helper to track focus without state in parent
-const FocusInput: React.FC<{
-  type: string;
-  placeholder: string;
-  value: string;
-  onChange: (v: string) => void;
-  inputStyle: (focused?: boolean) => React.CSSProperties;
-}> = ({ type, placeholder, value, onChange, inputStyle }) => {
+const Field: React.FC<{ label: string; children: React.ReactNode }> = ({ label, children }) => (
+  <div style={{ marginBottom: "20px" }}>
+    <label style={{ display: "block", fontSize: "11px", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", color: "#A1A1AA", marginBottom: "8px" }}>
+      {label}
+    </label>
+    {children}
+  </div>
+);
+
+const FocusInput: React.FC<{ type: string; placeholder: string; value: string; onChange: (v: string) => void }> = ({ type, placeholder, value, onChange }) => {
   const [focused, setFocused] = useState(false);
   return (
     <input
@@ -217,7 +183,7 @@ const FocusInput: React.FC<{
       onChange={(e) => onChange(e.target.value)}
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
-      style={inputStyle(focused)}
+      style={{ width: "100%", padding: "10px 12px", border: `1px solid ${focused ? ACCENT : "#E5E5E5"}`, borderRadius: "8px", fontSize: "14px", color: "#111111", background: "#fff", outline: "none", boxSizing: "border-box", fontFamily: MONT, transition: "border-color .15s", caretColor: ACCENT }}
     />
   );
 };
