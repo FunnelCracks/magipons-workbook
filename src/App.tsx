@@ -9,6 +9,7 @@ import { AdminUserSelectPage } from "./pages/AdminUserSelectPage";
 import { AdminDashboardPage } from "./pages/AdminDashboardPage";
 import { WorkbookDetailsPage } from "./pages/WorkbookDetailsPage";
 import { MapaIntroPage } from "./pages/MapaIntroPage";
+import { LanzamientoPage } from "./pages/LanzamientoPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { PageTransition } from "./components/PageTransition";
 
@@ -20,6 +21,7 @@ function AnimatedRoutes() {
       <Route path="/login" element={<PageTransition><LoginPage /></PageTransition>} />
       <Route path="/onboarding" element={<PageTransition><OnboardingPage /></PageTransition>} />
       <Route path="/intro" element={<PageTransition><MapaIntroPage /></PageTransition>} />
+      <Route path="/launch" element={<PageTransition><LanzamientoPage /></PageTransition>} />
       <Route
         path="/workbook/day0"
         element={

@@ -76,7 +76,7 @@ export const MapaIntroPage: React.FC = () => {
         {/* CTA */}
         <div className="bi" style={{ animationDelay: "1.1s" }}>
           <button
-            onClick={() => navigate("/workbook/day0")}
+            onClick={() => navigate("/launch")}
             style={{ width: "100%", padding: "14px", background: "#111111", border: "none", borderRadius: "10px", color: "#fff", fontSize: "15px", fontWeight: 700, fontFamily: MONT, letterSpacing: ".02em", cursor: "pointer", transition: "background .2s, transform .15s" }}
             onMouseEnter={e => (e.currentTarget.style.background = "#222222")}
             onMouseLeave={e => (e.currentTarget.style.background = "#111111")}
