@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllWorkbooks } from "../services/firestoreService";
+import { getAllWorkbooks, deleteWorkbook } from "../services/firestoreService";
 import type { Workbook } from "../services/types";
 
 const MONT   = "'Montserrat', system-ui, sans-serif";
@@ -44,6 +44,12 @@ export const AdminDashboardPage: React.FC = () => {
         : workbooks
     );
   }, [workbooks, search]);
+
+  const handleDelete = async (id: string, email: string) => {
+    if (!window.confirm(`¿Eliminar el workbook de ${email || id}? Esta acción no se puede deshacer.`)) return;
+    await deleteWorkbook(id);
+    setWorkbooks((prev) => prev.filter((w) => w.id !== id));
+  };
 
   const exportCSV = () => {
     const headers = ["Email", "Nombre", "Apellido", "Teléfono", "Estado", "Fecha", "Completado"];
@@ -195,14 +201,25 @@ export const AdminDashboardPage: React.FC = () => {
                         </div>
                       </td>
                       <td style={{ padding: "14px 18px", borderBottom: `1px solid ${BORDER}`, verticalAlign: "middle" }}>
-                        <button
-                          onClick={() => navigate(`/admin/workbook/${w.id}`)}
-                          style={{ padding: "6px 14px", background: "transparent", border: `1px solid ${BORDER}`, borderRadius: "6px", color: "#525252", fontSize: "12px", fontFamily: MONT, cursor: "pointer", fontWeight: 700, transition: "all .15s" }}
-                          onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#111111"; e.currentTarget.style.color = "#111111"; }}
-                          onMouseLeave={(e) => { e.currentTarget.style.borderColor = BORDER; e.currentTarget.style.color = "#525252"; }}
-                        >
-                          Ver
-                        </button>
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                          <button
+                            onClick={() => navigate(`/admin/workbook/${w.id}`)}
+                            style={{ padding: "6px 14px", background: "transparent", border: `1px solid ${BORDER}`, borderRadius: "6px", color: "#525252", fontSize: "12px", fontFamily: MONT, cursor: "pointer", fontWeight: 700, transition: "all .15s" }}
+                            onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#111111"; e.currentTarget.style.color = "#111111"; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.borderColor = BORDER; e.currentTarget.style.color = "#525252"; }}
+                          >
+                            Ver
+                          </button>
+                          <button
+                            onClick={() => handleDelete(w.id!, w.userEmail || "")}
+                            title="Eliminar workbook"
+                            style={{ width: "28px", height: "28px", display: "flex", alignItems: "center", justifyContent: "center", background: "transparent", border: `1px solid ${BORDER}`, borderRadius: "6px", color: "#A1A1AA", fontSize: "14px", cursor: "pointer", transition: "all .15s", flexShrink: 0 }}
+                            onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#DC2626"; e.currentTarget.style.color = "#DC2626"; e.currentTarget.style.background = "rgba(220,38,38,.06)"; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.borderColor = BORDER; e.currentTarget.style.color = "#A1A1AA"; e.currentTarget.style.background = "transparent"; }}
+                          >
+                            ×
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );

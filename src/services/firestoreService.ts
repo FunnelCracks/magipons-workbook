@@ -5,6 +5,7 @@ import {
   getDoc,
   setDoc,
   updateDoc,
+  deleteDoc,
   query,
   where,
   orderBy,
@@ -186,6 +187,10 @@ export const hasCompletedOnboarding = async (userId: string): Promise<boolean> =
   } catch {
     return false;
   }
+};
+
+export const deleteWorkbook = async (workbookId: string): Promise<void> => {
+  await deleteDoc(doc(db, "workbooks", workbookId));
 };
 
 export const getAllWorkbooks = async (): Promise<Workbook[]> => {
