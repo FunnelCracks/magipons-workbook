@@ -1514,7 +1514,7 @@ export const WorkbookPage: React.FC = () => {
                 </div>
               </div>
               <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cuál es el hero de landing?</p>
-              <FormField label="" value={localData.day3.landingHero || ""} onChange={(v) => handleFieldChange("day3.landingHero", v)} type="textarea" />
+              <FormField label="" value={localData.day3?.landingHero || ""} onChange={(v) => handleFieldChange("day3.landingHero", v)} type="textarea" />
             </Question>
 
             {/* Q2 Setter IA */}
@@ -1537,7 +1537,7 @@ export const WorkbookPage: React.FC = () => {
                 </p>
               </div>
               <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cuáles serían las dos primeras preguntas que harías a un lead que entra a tu WhatsApp?</p>
-              <FormField label="" value={localData.day3.setterQuestions || ""} onChange={(v) => handleFieldChange("day3.setterQuestions", v)} type="textarea" />
+              <FormField label="" value={localData.day3?.setterQuestions || ""} onChange={(v) => handleFieldChange("day3.setterQuestions", v)} type="textarea" />
             </Question>
 
             {/* Q3 Herramientas */}
@@ -1558,9 +1558,9 @@ export const WorkbookPage: React.FC = () => {
                 <CheckboxOption
                   key={tool}
                   label={tool}
-                  checked={(localData.day3.tools || []).includes(tool)}
+                  checked={(localData.day3?.tools || []).includes(tool)}
                   onChange={() => {
-                    const current = localData.day3.tools || [];
+                    const current = localData.day3?.tools || [];
                     const updated = current.includes(tool)
                       ? current.filter((t: string) => t !== tool)
                       : [...current, tool];
