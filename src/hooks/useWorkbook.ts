@@ -16,7 +16,7 @@ const DEV_WORKBOOK: Workbook = {
   completionPercentage: 0,
   createdAt: new Date(),
   data: {
-    day0: { motivation: "", mrh: "", idealDay: "" },
+    day0: { motivation: "", mrh: "", idealDay: "", situacion: [], facturacionRango: "" },
     day1: {
       membresiaName: "",
       avatar: { age: "", concerns: "", feelings: "", dreams: "", currentSituation: "" },

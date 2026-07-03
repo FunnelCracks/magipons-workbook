@@ -10,6 +10,31 @@ const INTER  = "'Montserrat', 'Inter', system-ui, sans-serif";
 const ACCENT = "#26966a";
 const BG     = "#FAFAF9";
 
+// ── Checkbox / Radio options ──────────────────────────────────────────────────
+const CheckboxOption = ({ label, checked, onChange }: { label: string; checked: boolean; onChange: () => void }) => (
+  <div
+    onClick={onChange}
+    style={{ display: "flex", alignItems: "flex-start", gap: "12px", padding: "12px 14px", border: `1px solid ${checked ? ACCENT : "#E5E5E5"}`, borderRadius: "8px", cursor: "pointer", marginBottom: "8px", background: checked ? "rgba(38,150,106,.05)" : "#fff", transition: "all .15s", userSelect: "none" }}
+  >
+    <div style={{ width: "18px", height: "18px", flexShrink: 0, marginTop: "1px", border: `2px solid ${checked ? ACCENT : "#D1D1CB"}`, borderRadius: "4px", background: checked ? ACCENT : "transparent", display: "flex", alignItems: "center", justifyContent: "center", transition: "all .15s" }}>
+      {checked && <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 3L9 1" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+    </div>
+    <span style={{ fontSize: "13px", color: "#111111", lineHeight: 1.55, fontFamily: INTER }}>{label}</span>
+  </div>
+);
+
+const RadioOption = ({ label, checked, onChange }: { label: string; checked: boolean; onChange: () => void }) => (
+  <div
+    onClick={onChange}
+    style={{ display: "flex", alignItems: "center", gap: "12px", padding: "12px 14px", border: `1px solid ${checked ? ACCENT : "#E5E5E5"}`, borderRadius: "8px", cursor: "pointer", marginBottom: "8px", background: checked ? "rgba(38,150,106,.05)" : "#fff", transition: "all .15s", userSelect: "none" }}
+  >
+    <div style={{ width: "18px", height: "18px", flexShrink: 0, border: `2px solid ${checked ? ACCENT : "#D1D1CB"}`, borderRadius: "50%", background: "transparent", display: "flex", alignItems: "center", justifyContent: "center", transition: "all .15s" }}>
+      {checked && <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: ACCENT }} />}
+    </div>
+    <span style={{ fontSize: "13px", color: "#111111", lineHeight: 1.55, fontFamily: INTER }}>{label}</span>
+  </div>
+);
+
 // ── Thin section divider ──────────────────────────────────────────────────────
 const Section = ({ title, description }: { title: string; description?: string }) => (
   <div style={{ marginTop: "56px", marginBottom: "36px" }}>
@@ -89,7 +114,7 @@ export const WorkbookPage: React.FC = () => {
     if (workbook?.data && !localData) setLocalData(workbook.data);
   }, [workbook?.data, localData]);
 
-  const handleFieldChange = (fieldPath: string, value: string) => {
+  const handleFieldChange = (fieldPath: string, value: string | string[]) => {
     if (!localData) return;
     const keys = fieldPath.split(".");
     const newData = JSON.parse(JSON.stringify(localData));
@@ -97,7 +122,7 @@ export const WorkbookPage: React.FC = () => {
     for (let i = 0; i < keys.length - 1; i++) cur = cur[keys[i]];
     cur[keys[keys.length - 1]] = value;
     setLocalData(newData);
-    debouncedUpdate(`data.${fieldPath}`, value, newData);
+    debouncedUpdate(`data.${fieldPath}`, value as string, newData);
   };
 
   const handleSubmit = async () => {
@@ -215,8 +240,11 @@ export const WorkbookPage: React.FC = () => {
               ]}
               outro="Tu respuesta no tiene que parecerse a ninguna. Pero si lees estas y reconoces algo, ya tienes por dónde empezar."
             >
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>
+                Ahora te toca a ti, ¿por qué quieres construir un modelo recurrente?
+              </p>
               <FormField
-                label="Tu respuesta"
+                label=""
                 value={localData.day0.motivation}
                 onChange={(v) => handleFieldChange("day0.motivation", v)}
                 type="textarea"
@@ -230,8 +258,11 @@ export const WorkbookPage: React.FC = () => {
               intro='Ejemplo: "5.000€ recurrentes al mes. No por el dinero en sí, sino porque a esa cifra puedo dejar de coger clientes que no me llenan, bloquear los viernes para mí, y saber que aunque me ponga enfermo/a una semana entera el ingreso entra igual. Es la cifra a la que dejo de vender mi tiempo por horas y empiezo a construir algo que es mío."'
               outro="Tu cifra puede ser 2.000€ o 20.000€. Lo importante no es el número, es qué pasa en tu vida cuando llega."
             >
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>
+                Ahora te toca a ti, ¿cuánto te gustaría facturar cada mes de forma recurrente?
+              </p>
               <FormField
-                label="Tu MRH soñado"
+                label=""
                 value={localData.day0.mrh || ""}
                 onChange={(v) => handleFieldChange("day0.mrh", v)}
                 type="textarea"
@@ -243,12 +274,62 @@ export const WorkbookPage: React.FC = () => {
               title="¿Cómo sería un día tuyo cuando ya tengas ese MRH funcionando?"
               hint="A las 9:00 estoy haciendo... A las 12:00... Por la tarde... Por la noche... Quiero ver tu vida concreta cuando llegues ahí."
             >
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>
+                Ahora te toca a ti, ¿cómo sería tu día ideal cuando tengas MRH?
+              </p>
               <FormField
-                label="Tu día ideal"
+                label=""
                 value={localData.day0.idealDay}
                 onChange={(v) => handleFieldChange("day0.idealDay", v)}
                 type="textarea"
               />
+            </Question>
+
+            <Question
+              number={4}
+              title="¿Cuál es tu situación HOY?"
+              hint="Marca lo que más se acerque a tu realidad ahora mismo. Si dudas entre dos, marca las dos."
+            >
+              {[
+                "Trabajo 1 a 1 y mi agenda está saturada (sesiones, consultas, mentorías individuales)",
+                "Tengo un negocio digital con ingresos irregulares (cursos, lanzamientos, picos de facturación)",
+                "Ya tengo una membresía o programa grupal funcionando pero quiero escalarlo",
+                "Estoy empezando, todavía no tengo clientes pagando",
+                "Otra (especificar abajo)",
+              ].map((option) => {
+                const current = localData.day0.situacion || [];
+                const checked = current.includes(option);
+                return (
+                  <CheckboxOption
+                    key={option}
+                    label={option}
+                    checked={checked}
+                    onChange={() => handleFieldChange("day0.situacion", checked ? current.filter(v => v !== option) : [...current, option])}
+                  />
+                );
+              })}
+            </Question>
+
+            <Question
+              number={5}
+              title="¿En qué rango facturas hoy?"
+              hint="Queremos entender tu punto de partida. No queremos evaluarte, queremos entenderte."
+            >
+              {[
+                "Todavía no facturo nada",
+                "Menos de 1.000€/mes",
+                "Entre 1.000€ y 3.000€/mes",
+                "Entre 3.000€ y 10.000€/mes",
+                "Entre 10.000€ y 25.000€/mes",
+                "Más de 25.000€/mes",
+              ].map((option) => (
+                <RadioOption
+                  key={option}
+                  label={option}
+                  checked={(localData.day0.facturacionRango || "") === option}
+                  onChange={() => handleFieldChange("day0.facturacionRango", option)}
+                />
+              ))}
             </Question>
           </div>
         )}

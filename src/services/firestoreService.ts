@@ -26,7 +26,7 @@ export const createWorkbook = async (
     userName,
     status: "in_progress" as const,
     data: {
-      day0: { motivation: "", mrh: "", idealDay: "" },
+      day0: { motivation: "", mrh: "", idealDay: "", situacion: [] as string[], facturacionRango: "" },
       day1: {
         membresiaName: "",
         avatar: {
@@ -89,6 +89,8 @@ export const calculateCompletionPercentage = (data: any): number => {
     data.day0?.motivation,
     data.day0?.mrh,
     data.day0?.idealDay,
+    (data.day0?.situacion?.length ?? 0) > 0 ? "ok" : "",
+    data.day0?.facturacionRango,
     data.day1?.membresiaName,
     data.day1?.avatar?.age,
     data.day1?.avatar?.concerns,

@@ -11,6 +11,8 @@ export interface WorkbookData {
     motivation: string;
     mrh: string;
     idealDay: string;
+    situacion: string[];
+    facturacionRango: string;
   };
   day1: {
     membresiaName: string;

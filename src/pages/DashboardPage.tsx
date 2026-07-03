@@ -111,6 +111,8 @@ export const DashboardPage: React.FC = () => {
           <Field label="¿Por qué querés tener una membresía?" value={workbook.data.day0.motivation} />
           <Field label="Monthly Recurring Happiness" value={workbook.data.day0.mrh ? `$${workbook.data.day0.mrh}` : undefined} />
           <Field label="Día ideal en tu vida" value={workbook.data.day0.idealDay} />
+          <Field label="Situación actual" value={(workbook.data.day0.situacion || []).join(" · ") || undefined} />
+          <Field label="Rango de facturación" value={workbook.data.day0.facturacionRango || undefined} />
         </DayBlock>
 
         {/* Day 1 */}

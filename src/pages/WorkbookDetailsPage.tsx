@@ -134,6 +134,8 @@ export const WorkbookDetailsPage: React.FC = () => {
           <Field label="¿Por qué quieres tener una membresía?" value={workbook.data.day0.motivation} />
           <Field label="Monthly Recurring Happiness (MRH)" value={workbook.data.day0.mrh ? `$${workbook.data.day0.mrh}` : undefined} />
           <Field label="Día ideal en tu vida" value={workbook.data.day0.idealDay} />
+          <Field label="Situación actual" value={(workbook.data.day0.situacion || []).join(" · ") || undefined} />
+          <Field label="¿En qué rango facturas hoy?" value={workbook.data.day0.facturacionRango || undefined} />
         </div>
 
         {/* Día 1 */}

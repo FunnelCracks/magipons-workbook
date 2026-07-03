@@ -35,7 +35,7 @@ export const FormField: React.FC<FormFieldProps> = ({
 
   return (
     <div style={{ marginBottom: "28px" }}>
-      <label style={{
+      {label && <label style={{
         display: "block",
         fontSize: "12px",
         fontWeight: 500,
@@ -48,7 +48,7 @@ export const FormField: React.FC<FormFieldProps> = ({
       }}>
         {label}
         {required && <span style={{ color: ACCENT, marginLeft: "3px" }}>*</span>}
-      </label>
+      </label>}
       {type === "textarea" ? (
         <textarea
           value={value}
