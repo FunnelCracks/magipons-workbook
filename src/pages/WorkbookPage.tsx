@@ -281,11 +281,11 @@ export const WorkbookPage: React.FC = () => {
         {currentDay === 0 && (
           <div>
             {/* Header */}
-            <div style={{ background: "#C0392B", borderRadius: "10px", padding: "20px 24px", marginBottom: "32px" }}>
-              <div style={{ fontSize: "13px", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", color: "rgba(255,255,255,.7)", marginBottom: "4px", fontFamily: INTER }}>
+            <div style={{ marginBottom: "32px" }}>
+              <div style={{ fontSize: "13px", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", color: "#A1A1AA", marginBottom: "4px", fontFamily: INTER }}>
                 Día 0
               </div>
-              <div style={{ fontSize: "26px", fontWeight: 900, color: "#fff", letterSpacing: "-.02em", fontFamily: INTER }}>
+              <div style={{ fontSize: "26px", fontWeight: 900, color: ACCENT, letterSpacing: "-.02em", fontFamily: INTER }}>
                 Visión
               </div>
             </div>
