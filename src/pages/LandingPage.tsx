@@ -84,7 +84,7 @@ export const LandingPage: React.FC = () => {
         </p>
 
         <p className="a-label" style={{ fontSize: "13px", fontWeight: 800, letterSpacing: ".18em", textTransform: "uppercase", color: ACCENT, margin: "0 0 16px" }}>
-          Workbook
+          Mapa
         </p>
 
         <h1 className="a-title" style={{ fontSize: "clamp(52px, 10vw, 88px)", fontWeight: 900, color: "#111111", letterSpacing: "-.02em", lineHeight: 1, margin: "0 0 16px", textTransform: "uppercase" }}>
@@ -113,7 +113,7 @@ export const LandingPage: React.FC = () => {
             onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.04)")}
             onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
           >
-            Comenzar mi Workbook
+            Comenzar mi Mapa
           </button>
         </div>
 

@@ -21,7 +21,7 @@ export const LoginPage: React.FC = () => {
       {/* Wordmark */}
       <div style={{ textAlign: "center", marginBottom: "48px" }}>
         <p style={{ fontSize: "11px", fontWeight: 800, letterSpacing: ".18em", textTransform: "uppercase", color: ACCENT, margin: "0 0 6px" }}>
-          Workbook
+          Mapa
         </p>
         <p style={{ fontSize: "22px", fontWeight: 900, letterSpacing: "-.02em", color: "#111111", textTransform: "uppercase", margin: 0 }}>
           Reto 3K
@@ -31,7 +31,7 @@ export const LoginPage: React.FC = () => {
       {/* Card */}
       <div style={{ maxWidth: "400px", width: "100%", background: "#FFFFFF", border: "1px solid #E5E5E5", borderRadius: "16px", padding: "40px 36px" }}>
         <h2 style={{ fontSize: "20px", fontWeight: 800, color: "#111111", letterSpacing: "-.02em", margin: "0 0 8px", textAlign: "center" }}>
-          Acceder al Workbook
+          Acceder al Mapa
         </h2>
         <p style={{ fontSize: "14px", color: "#A1A1AA", textAlign: "center", margin: "0 0 32px", lineHeight: 1.5 }}>
           Usá tu cuenta de Google para ingresar

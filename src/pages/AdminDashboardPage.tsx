@@ -8,6 +8,55 @@ const ACCENT = "#26966a";
 const BG     = "#FAFAF9";
 const BORDER = "#E5E5E5";
 
+// ── Lead scoring (max 18 pts) ─────────────────────────────────────────────────
+function computeLeadScore(w: Workbook): number {
+  const d = w.data;
+  if (!d) return 0;
+  let score = 0;
+
+  // Día 0·2 — MRH soñado (3 pts si rellenado)
+  if (d.day0?.mrh?.trim()) score += 3;
+
+  // Día 0·4 — Situación HOY (3/2/1/0)
+  const sit = d.day0?.situacion || "";
+  if (sit.includes("membresía o programa grupal")) score += 3;
+  else if (sit.includes("saturada") || sit.includes("irregulares")) score += 2;
+  else if (sit.includes("empezando") || sit.includes("Otra")) score += 1;
+
+  // Día 0·5 — Rango facturación (3/2/1/0)
+  const fac = d.day0?.facturacionRango || "";
+  if (fac === "Entre 3.000€ y 10.000€/mes" || fac === "Entre 10.000€ y 25.000€/mes" || fac === "Más de 25.000€/mes") score += 3;
+  else if (fac === "Entre 1.000€ y 3.000€/mes") score += 2;
+  else if (fac === "Menos de 1.000€/mes" || fac === "Todavía no facturo nada") score += 1;
+
+  // Día 1·2.2 — Fórmula (3 pts si rellenada)
+  if (d.day1?.formula?.trim()) score += 3;
+
+  // Día 1·3.1 — Modelo elegido (3/2/0)
+  const mod = d.day1?.modelType || "";
+  if (mod && !mod.includes("no lo tengo claro")) score += 3;
+  else if (mod.includes("no lo tengo claro")) score += 2;
+
+  // Día 2 — Los 10 primeros clientes (3 pts si al menos 1 fila con contenido)
+  const hasClients = (d.day2?.firstClients || []).some(
+    (c: any) => c?.name?.trim() || c?.reason?.trim()
+  );
+  if (hasClients) score += 3;
+
+  return score;
+}
+
+function scoreColor(s: number): string {
+  if (s >= 13) return ACCENT;
+  if (s >= 8)  return "#D97706";
+  return "#A1A1AA";
+}
+function scoreBg(s: number): string {
+  if (s >= 13) return "rgba(38,150,106,.1)";
+  if (s >= 8)  return "rgba(217,119,6,.1)";
+  return "#F5F5F3";
+}
+
 function formatDate(date: any): string {
   if (!date) return "—";
   let d: Date;
@@ -20,12 +69,13 @@ function formatDate(date: any): string {
 
 export const AdminDashboardPage: React.FC = () => {
   const navigate = useNavigate();
-  const [workbooks, setWorkbooks] = useState<Workbook[]>([]);
-  const [filtered,  setFiltered]  = useState<Workbook[]>([]);
-  const [loading,   setLoading]   = useState(true);
-  const [search,    setSearch]    = useState("");
-  const [adminUser, setAdminUser] = useState("");
-  const [searchFocused, setSearchFocused] = useState(false);
+  const [workbooks,       setWorkbooks]       = useState<Workbook[]>([]);
+  const [filtered,        setFiltered]        = useState<Workbook[]>([]);
+  const [loading,         setLoading]         = useState(true);
+  const [search,          setSearch]          = useState("");
+  const [adminUser,       setAdminUser]       = useState("");
+  const [searchFocused,   setSearchFocused]   = useState(false);
+  const [priorityFilter,  setPriorityFilter]  = useState<"alta" | "normal" | "baja" | null>(null);
 
   useEffect(() => {
     const admin = sessionStorage.getItem("adminUser");
@@ -35,15 +85,24 @@ export const AdminDashboardPage: React.FC = () => {
   }, [navigate]);
 
   useEffect(() => {
-    setFiltered(
-      search
-        ? workbooks.filter((w) =>
-            w.userEmail?.toLowerCase().includes(search.toLowerCase()) ||
-            w.userName?.toLowerCase().includes(search.toLowerCase())
-          )
-        : workbooks
-    );
-  }, [workbooks, search]);
+    let base = search
+      ? workbooks.filter((w) =>
+          w.userEmail?.toLowerCase().includes(search.toLowerCase()) ||
+          w.userName?.toLowerCase().includes(search.toLowerCase())
+        )
+      : [...workbooks];
+
+    if (priorityFilter) {
+      base = base.filter((w) => {
+        const s = computeLeadScore(w);
+        if (priorityFilter === "alta")   return s >= 21;
+        if (priorityFilter === "normal") return s >= 14 && s <= 20;
+        return s <= 13;
+      });
+    }
+
+    setFiltered(base);
+  }, [workbooks, search, priorityFilter]);
 
   const handleDelete = async (id: string, email: string) => {
     if (!window.confirm(`¿Eliminar el workbook de ${email || id}? Esta acción no se puede deshacer.`)) return;
@@ -52,7 +111,7 @@ export const AdminDashboardPage: React.FC = () => {
   };
 
   const exportCSV = () => {
-    const headers = ["Email", "Nombre", "Apellido", "Teléfono", "Estado", "Fecha", "Completado"];
+    const headers = ["Email", "Nombre", "Apellido", "Teléfono", "Estado", "Fecha", "Completado", "Score"];
     const rows = filtered.map((w) => [
       w.userEmail || "",
       w.userFirstName || w.userName || "",
@@ -61,6 +120,7 @@ export const AdminDashboardPage: React.FC = () => {
       w.status === "submitted" ? "Completado" : "En Progreso",
       formatDate(w.createdAt),
       `${w.completionPercentage || 0}%`,
+      `${computeLeadScore(w)}/18`,
     ]);
     const csv = [headers, ...rows].map((r) => r.map((c) => `"${c}"`).join(",")).join("\n");
     const a = document.createElement("a");
@@ -107,7 +167,7 @@ export const AdminDashboardPage: React.FC = () => {
       <div style={{ padding: "28px 32px" }}>
 
         {/* Stats */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "12px", marginBottom: "20px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "12px", marginBottom: "12px" }}>
           {[
             { label: "Total workbooks", val: workbooks.length, color: "#111111" },
             { label: "En progreso",     val: inProgress,       color: "#D97706" },
@@ -118,6 +178,47 @@ export const AdminDashboardPage: React.FC = () => {
               <div style={{ fontSize: "34px", fontWeight: 900, color, fontVariantNumeric: "tabular-nums", letterSpacing: "-.03em", lineHeight: 1 }}>{val}</div>
             </div>
           ))}
+        </div>
+
+        {/* Priority filters */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "12px", marginBottom: "20px" }}>
+          {([
+            { key: "alta",   label: "PRIORIDAD ALTA",   range: "21-27 pts", dot: ACCENT,    activeBg: "rgba(38,150,106,.07)",  activeBorder: ACCENT    },
+            { key: "normal", label: "PRIORIDAD NORMAL",  range: "14-20 pts", dot: "#D97706", activeBg: "rgba(217,119,6,.07)",   activeBorder: "#D97706" },
+            { key: "baja",   label: "NO PRIORIZAR",      range: "0-13 pts",  dot: "#DC2626", activeBg: "rgba(220,38,38,.07)",   activeBorder: "#DC2626" },
+          ] as const).map(({ key, label, range, dot, activeBg, activeBorder }) => {
+            const count = workbooks.filter((w) => {
+              const s = computeLeadScore(w);
+              if (key === "alta")   return s >= 21;
+              if (key === "normal") return s >= 14 && s <= 20;
+              return s <= 13;
+            }).length;
+            const active = priorityFilter === key;
+            return (
+              <div
+                key={key}
+                onClick={() => setPriorityFilter(active ? null : key)}
+                style={{
+                  background: active ? activeBg : "#fff",
+                  border: `1px solid ${active ? activeBorder : BORDER}`,
+                  borderRadius: "10px", padding: "16px 20px", cursor: "pointer",
+                  transition: "all .15s", userSelect: "none",
+                }}
+                onMouseEnter={(e) => { if (!active) e.currentTarget.style.borderColor = "#D1D1CB"; }}
+                onMouseLeave={(e) => { if (!active) e.currentTarget.style.borderColor = BORDER; }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "10px" }}>
+                  <span style={{ width: 7, height: 7, borderRadius: "50%", background: dot, flexShrink: 0 }} />
+                  <span style={{ fontSize: "10px", fontWeight: 800, color: active ? dot : "#A1A1AA", letterSpacing: ".09em", textTransform: "uppercase", transition: "color .15s" }}>{label}</span>
+                  {active && <span style={{ marginLeft: "auto", fontSize: "10px", fontWeight: 700, color: dot, background: activeBg, border: `1px solid ${activeBorder}`, borderRadius: "4px", padding: "1px 6px" }}>activo</span>}
+                </div>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
+                  <span style={{ fontSize: "30px", fontWeight: 900, color: active ? dot : "#111111", fontVariantNumeric: "tabular-nums", letterSpacing: "-.03em", lineHeight: 1, transition: "color .15s" }}>{count}</span>
+                  <span style={{ fontSize: "11px", color: "#A1A1AA", fontWeight: 600 }}>{range}</span>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         {/* Toolbar */}
@@ -147,7 +248,7 @@ export const AdminDashboardPage: React.FC = () => {
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
               <thead>
                 <tr>
-                  {["Email", "Nombre y Apellido", "Teléfono", "Estado", "Fecha", "Completado", ""].map((h) => (
+                  {["Email", "Nombre y Apellido", "Teléfono", "Estado", "Score", "Fecha", "Completado", ""].map((h) => (
                     <th key={h} style={{ padding: "12px 18px", textAlign: "left", fontSize: "11px", letterSpacing: ".08em", textTransform: "uppercase", color: "#A1A1AA", fontWeight: 700, borderBottom: `1px solid ${BORDER}`, background: BG, fontFamily: MONT }}>
                       {h}
                     </th>
@@ -162,6 +263,7 @@ export const AdminDashboardPage: React.FC = () => {
                     ? `${w.userFirstName} ${w.userLastName}`
                     : (w.userName || null);
                   const barColor = pct >= 70 ? ACCENT : pct >= 30 ? "#D97706" : "#E5E5E5";
+                  const ls       = computeLeadScore(w);
                   return (
                     <tr
                       key={w.id}
@@ -187,6 +289,17 @@ export const AdminDashboardPage: React.FC = () => {
                         }}>
                           <span style={{ width: 5, height: 5, borderRadius: "50%", background: "currentColor", display: "inline-block", flexShrink: 0 }} />
                           {isDone ? "Completado" : "En progreso"}
+                        </span>
+                      </td>
+                      <td style={{ padding: "14px 18px", borderBottom: `1px solid ${BORDER}`, verticalAlign: "middle" }}>
+                        <span style={{
+                          display: "inline-flex", alignItems: "center", gap: "4px",
+                          padding: "3px 10px", borderRadius: "20px", fontSize: "12px", fontWeight: 800,
+                          background: scoreBg(ls), color: scoreColor(ls), fontFamily: MONT,
+                          fontVariantNumeric: "tabular-nums",
+                        }}>
+                          {ls}
+                          <span style={{ fontSize: "10px", fontWeight: 600, opacity: .65 }}>/18</span>
                         </span>
                       </td>
                       <td style={{ padding: "14px 18px", borderBottom: `1px solid ${BORDER}`, color: "#A1A1AA", fontSize: "12px", verticalAlign: "middle" }}>
@@ -225,7 +338,7 @@ export const AdminDashboardPage: React.FC = () => {
                   );
                 }) : (
                   <tr>
-                    <td colSpan={7} style={{ padding: "48px", textAlign: "center", color: "#A1A1AA", fontSize: "14px" }}>
+                    <td colSpan={8} style={{ padding: "48px", textAlign: "center", color: "#A1A1AA", fontSize: "14px" }}>
                       No hay workbooks que coincidan
                     </td>
                   </tr>

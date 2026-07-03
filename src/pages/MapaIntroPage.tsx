@@ -32,7 +32,7 @@ export const MapaIntroPage: React.FC = () => {
         {/* Header */}
         <div className="bi" style={{ animationDelay: ".05s", marginBottom: "40px" }}>
           <p style={{ fontSize: "11px", fontWeight: 800, letterSpacing: ".18em", textTransform: "uppercase", color: ACCENT, margin: "0 0 10px" }}>
-            Workbook · Reto 3K
+            Mapa · Reto 3K
           </p>
           <h1 style={{ fontSize: "clamp(24px, 5vw, 32px)", fontWeight: 900, color: "#111111", letterSpacing: "-.02em", margin: 0, lineHeight: 1.2 }}>
             Cómo usar este MAPA
@@ -57,24 +57,12 @@ export const MapaIntroPage: React.FC = () => {
         {/* Closing paragraph */}
         <div className="bi" style={{ animationDelay: ".82s", background: "#F0F7F4", border: "1px solid #C8E6D8", borderRadius: "10px", padding: "18px 20px", marginBottom: "40px" }}>
           <p style={{ fontSize: "14px", color: "#2D6A4F", lineHeight: 1.7, margin: 0 }}>
-            Todo se queda registrado, puedes volver y rehacer las preguntas las veces que quieras.
-            Cuando creas que está finalizado, pulsa el botón <strong>CERRAR MAPA</strong>.
-            El equipo lo revisará y te dará feedback personalizado.
-          </p>
-        </div>
-
-        {/* Quote */}
-        <div className="bi" style={{ animationDelay: ".96s", borderLeft: `3px solid ${ACCENT}`, paddingLeft: "20px", marginBottom: "48px" }}>
-          <p style={{ fontSize: "15px", fontStyle: "italic", fontWeight: 600, color: "#111111", margin: "0 0 6px", lineHeight: 1.5 }}>
-            "Tanto si crees que puedes como si crees que no, estás en lo cierto."
-          </p>
-          <p style={{ fontSize: "13px", color: "#A1A1AA", margin: 0, fontWeight: 700 }}>
-            — Magi
+            Todo se queda registrado con tu cuenta de Google, puedes volver y rehacer las preguntas las veces que quieras. Una vez finalizado el mapa el equipo lo revisará y te dará un feedback personalizado.
           </p>
         </div>
 
         {/* CTA */}
-        <div className="bi" style={{ animationDelay: "1.1s" }}>
+        <div className="bi" style={{ animationDelay: ".96s" }}>
           <button
             onClick={() => navigate("/launch")}
             style={{ width: "100%", padding: "14px", background: "#111111", border: "none", borderRadius: "10px", color: "#fff", fontSize: "15px", fontWeight: 700, fontFamily: MONT, letterSpacing: ".02em", cursor: "pointer", transition: "background .2s, transform .15s" }}
@@ -83,7 +71,7 @@ export const MapaIntroPage: React.FC = () => {
             onMouseDown={e => (e.currentTarget.style.transform = "scale(.98)")}
             onMouseUp={e => (e.currentTarget.style.transform = "scale(1)")}
           >
-            Comenzar el Workbook →
+            Comenzar el Mapa →
           </button>
           <p style={{ fontSize: "12px", color: "#B0B0A8", textAlign: "center", margin: "14px 0 0" }}>
             Solo para participantes del Reto 3K · Julio 2026

@@ -111,30 +111,16 @@ export const DashboardPage: React.FC = () => {
           <Field label="¿Por qué querés tener una membresía?" value={workbook.data.day0.motivation} />
           <Field label="Monthly Recurring Happiness" value={workbook.data.day0.mrh ? `$${workbook.data.day0.mrh}` : undefined} />
           <Field label="Día ideal en tu vida" value={workbook.data.day0.idealDay} />
-          <Field label="Situación actual" value={(workbook.data.day0.situacion || []).join(" · ") || undefined} />
+          <Field label="Situación actual" value={workbook.data.day0.situacion || undefined} />
           <Field label="Rango de facturación" value={workbook.data.day0.facturacionRango || undefined} />
         </DayBlock>
 
         {/* Day 1 */}
         <DayBlock day="Día 1" subtitle="Las Bases">
-          <Field label="Nombre de la membresía" value={workbook.data.day1.membresiaName} />
-          <SectionDivider label="Avatar Psicológico" />
-          <Field label="Edad" value={workbook.data.day1.avatar.age} />
-          <Field label="Le preocupa sobre todo" value={workbook.data.day1.avatar.concerns} />
-          <Field label="Siente que" value={workbook.data.day1.avatar.feelings} />
-          <Field label="Sueña con" value={workbook.data.day1.avatar.dreams} />
-          <Field label="Pero ahora mismo" value={workbook.data.day1.avatar.currentSituation} />
-          <Field label="Frase del Avatar" value={workbook.data.day1.avatarPhrase} />
-          <SectionDivider label="Promesa" />
-          <Field label="Transformación prolongada" value={workbook.data.day1.promise.transformation} />
-          <Field label="¿A quién ayudás a conseguir qué?" value={workbook.data.day1.promise.statement} />
-          <SectionDivider label="Estructura Mínima Viable" />
-          <Field label="Soporte" value={workbook.data.day1.structure.support} />
-          <Field label="Contenido" value={workbook.data.day1.structure.content} />
-          <Field label="Comunidad" value={workbook.data.day1.structure.community} />
-          <Field label="Bonus" value={workbook.data.day1.structure.bonus} />
-          <SectionDivider label="Precio" />
-          <Field label="Precio mensual" value={workbook.data.day1.price ? `$${workbook.data.day1.price}` : undefined} />
+          <Field label="Nombre del modelo" value={workbook.data.day1.modelName} />
+          <Field label="Avatar psicológico" value={workbook.data.day1.avatarDescription} />
+          <Field label="Nivel de consciencia" value={workbook.data.day1.consciousnessLevel} />
+          <Field label="Frases del cliente" value={workbook.data.day1.clientPhrases} />
         </DayBlock>
 
         {/* Day 2 */}

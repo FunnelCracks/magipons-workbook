@@ -11,29 +11,22 @@ export interface WorkbookData {
     motivation: string;
     mrh: string;
     idealDay: string;
-    situacion: string[];
+    situacion: string;
     facturacionRango: string;
   };
   day1: {
-    membresiaName: string;
-    avatar: {
-      age: string;
-      concerns: string;
-      feelings: string;
-      dreams: string;
-      currentSituation: string;
-    };
-    avatarPhrase: string;
-    promise: {
-      transformation: string;
-      statement: string;
-    };
-    structure: {
-      support: string;
-      content: string;
-      community: string;
-      bonus: string;
-    };
+    modelName: string;
+    avatarDescription: string;
+    consciousnessLevel: string;
+    clientPhrases: string;
+    transformation: string;
+    formula: string;
+    modelType: string;
+    modelReason: string;
+    support: string;
+    content: string;
+    community: string;
+    progress: string;
     price: string;
   };
   day2: {
@@ -42,6 +35,13 @@ export interface WorkbookData {
     uniqueProposal: string;
     annualStrategy: string;
     launchStrategy: string;
+    migration: string;
+    firstClients: Array<{ name: string; reason: string }>;
+  };
+  day3: {
+    landingHero: string;
+    setterQuestions: string;
+    tools: string[];
   };
 }
 

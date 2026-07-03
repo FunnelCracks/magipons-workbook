@@ -27,13 +27,19 @@ const COUNTRIES = [
 
 const IS_DEV = import.meta.env.DEV;
 
+const detectCountry = () => {
+  const lang = navigator.language || "es-AR";
+  const region = lang.split("-")[1]?.toUpperCase();
+  return COUNTRIES.find(c => c.code === region) || COUNTRIES[0];
+};
+
 export const OnboardingPage: React.FC = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
 
   const [firstName, setFirstName] = useState("");
   const [lastName,  setLastName]  = useState("");
-  const [country,   setCountry]   = useState(COUNTRIES[0]);
+  const [country,   setCountry]   = useState(detectCountry);
   const [phone,     setPhone]     = useState("");
   const [saving,    setSaving]    = useState(false);
   const [error,     setError]     = useState<string | null>(null);
@@ -88,7 +94,7 @@ export const OnboardingPage: React.FC = () => {
       {/* Wordmark */}
       <div style={{ textAlign: "center", marginBottom: "48px" }}>
         <p style={{ fontSize: "11px", fontWeight: 800, letterSpacing: ".18em", textTransform: "uppercase", color: ACCENT, margin: "0 0 6px" }}>
-          Workbook
+          Mapa
         </p>
         <p style={{ fontSize: "22px", fontWeight: 900, letterSpacing: "-.02em", color: "#111111", textTransform: "uppercase", margin: 0 }}>
           Reto 3K
@@ -149,7 +155,7 @@ export const OnboardingPage: React.FC = () => {
             onMouseDown={e => { if (!saving) e.currentTarget.style.transform = "scale(.98)"; }}
             onMouseUp={e => { e.currentTarget.style.transform = "scale(1)"; }}
           >
-            {saving ? "Guardando…" : "Comenzar el Workbook →"}
+            {saving ? "Guardando…" : "Comenzar el Mapa →"}
           </button>
         </form>
       </div>
