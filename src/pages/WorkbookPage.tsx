@@ -26,10 +26,10 @@ const CheckboxOption = ({ label, checked, onChange }: { label: string; checked: 
 const RadioOption = ({ label, checked, onChange }: { label: string; checked: boolean; onChange: () => void }) => (
   <div
     onClick={onChange}
-    style={{ display: "flex", alignItems: "center", gap: "12px", padding: "12px 14px", border: `1px solid ${checked ? ACCENT : "#E5E5E5"}`, borderRadius: "8px", cursor: "pointer", marginBottom: "8px", background: checked ? "rgba(38,150,106,.05)" : "#fff", transition: "all .15s", userSelect: "none" }}
+    style={{ display: "flex", alignItems: "flex-start", gap: "12px", padding: "12px 14px", border: `1px solid ${checked ? ACCENT : "#E5E5E5"}`, borderRadius: "8px", cursor: "pointer", marginBottom: "8px", background: checked ? "rgba(38,150,106,.05)" : "#fff", transition: "all .15s", userSelect: "none" }}
   >
-    <div style={{ width: "18px", height: "18px", flexShrink: 0, border: `2px solid ${checked ? ACCENT : "#D1D1CB"}`, borderRadius: "50%", background: "transparent", display: "flex", alignItems: "center", justifyContent: "center", transition: "all .15s" }}>
-      {checked && <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: ACCENT }} />}
+    <div style={{ width: "18px", height: "18px", flexShrink: 0, marginTop: "1px", border: `2px solid ${checked ? ACCENT : "#D1D1CB"}`, borderRadius: "4px", background: checked ? ACCENT : "transparent", display: "flex", alignItems: "center", justifyContent: "center", transition: "all .15s" }}>
+      {checked && <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 3L9 1" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>}
     </div>
     <span style={{ fontSize: "13px", color: "#111111", lineHeight: 1.55, fontFamily: INTER }}>{label}</span>
   </div>
