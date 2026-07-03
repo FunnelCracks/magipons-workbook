@@ -18,15 +18,6 @@ const Field = ({ label, value }: { label: string; value?: string }) => (
   </div>
 );
 
-const SectionDivider = ({ label }: { label: string }) => (
-  <div style={{ margin: "32px 0 20px" }}>
-    <div style={{ height: "1px", background: "#E5E5E5", marginBottom: "12px" }} />
-    <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", color: "#A1A1AA", fontFamily: MONT }}>
-      {label}
-    </span>
-  </div>
-);
-
 const DayBlock = ({ day, subtitle, children }: { day: string; subtitle: string; children: React.ReactNode }) => (
   <div style={{ marginTop: "48px" }}>
     <div style={{ marginBottom: "20px" }}>

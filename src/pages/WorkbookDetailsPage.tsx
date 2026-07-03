@@ -26,22 +26,6 @@ const Field = ({ label, value }: { label: string; value?: string }) => (
   </div>
 );
 
-const SubGrid = ({ items }: { items: { label: string; val?: string }[] }) => (
-  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", marginBottom: "14px" }}>
-    {items.map(({ label, val }) => (
-      <div key={label} style={{ background: BG, border: `1px solid ${BORDER}`, borderRadius: "6px", padding: "10px 14px" }}>
-        <div style={{ fontSize: "10px", fontWeight: 700, letterSpacing: ".06em", textTransform: "uppercase" as const, color: "#A1A1AA", marginBottom: "4px", fontFamily: MONT }}>{label}</div>
-        <div style={{ fontSize: "13px", color: val ? "#111111" : "#D1D1CB", fontFamily: MONT }}>{val || "—"}</div>
-      </div>
-    ))}
-  </div>
-);
-
-const SectionLabel = ({ children }: { children: React.ReactNode }) => (
-  <div style={{ fontSize: "11px", fontWeight: 700, letterSpacing: ".06em", textTransform: "uppercase" as const, color: "#A1A1AA", marginBottom: "8px", marginTop: "4px", fontFamily: MONT }}>
-    {children}
-  </div>
-);
 
 export const WorkbookDetailsPage: React.FC = () => {
   const { workbookId } = useParams<{ workbookId: string }>();
