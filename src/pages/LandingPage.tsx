@@ -98,14 +98,32 @@ const injectStyles = () => {
     .rocket-shake { animation: rocketShake .45s ease-in-out infinite; }
     @keyframes chipFloat {
       0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-6px); }
+      50%      { transform: translateY(-8px); }
     }
     .chip { animation: chipFloat 3.4s ease-in-out infinite; }
-    .chip:nth-child(2) { animation-delay: .6s; }
-    .chip:nth-child(3) { animation-delay: 1.2s; }
-    .chip:nth-child(4) { animation-delay: 1.8s; }
-    .chip:nth-child(5) { animation-delay: .9s; }
-    .a-chips { opacity:0; animation: fadeUp .7s ease forwards .58s; }
+    .chip:nth-child(2) { animation-delay: .7s; }
+    .chip:nth-child(3) { animation-delay: 1.4s; }
+    .chip:nth-child(4) { animation-delay: .35s; }
+    .chip:nth-child(5) { animation-delay: 1.05s; }
+    .side-chips-left {
+      position: absolute; left: 32px; top: 0; bottom: 0;
+      display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 14px;
+      z-index: 2; opacity: 0; animation: fadeUp .8s ease forwards .6s;
+    }
+    .side-chips-right {
+      position: absolute; right: 32px; top: 0; bottom: 0;
+      display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 14px;
+      z-index: 2; opacity: 0; animation: fadeUp .8s ease forwards .7s;
+    }
+    .side-chips-left .chip:nth-child(2) { margin-left: 20px; }
+    .side-chips-right .chip:nth-child(1) { margin-left: 12px; }
+    @media (max-width: 1100px) {
+      .side-chips-left, .side-chips-right { display: none; }
+    }
+    .mobile-chips { display: none; flex-wrap: wrap; justify-content: center; gap: 7px; margin-bottom: 28px; opacity: 0; animation: fadeUp .7s ease forwards .58s; }
+    @media (max-width: 1100px) {
+      .mobile-chips { display: flex; }
+    }
   `;
   document.head.appendChild(s);
 };
@@ -151,6 +169,29 @@ export const LandingPage: React.FC = () => {
       <div className="orb1" style={{ position: "fixed", top: "8%", right: "6%", width: "360px", height: "360px", borderRadius: "50%", background: "radial-gradient(circle, rgba(38,150,106,.08) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
       <div className="orb2" style={{ position: "fixed", bottom: "12%", left: "4%", width: "280px", height: "280px", borderRadius: "50%", background: "radial-gradient(circle, rgba(38,150,106,.06) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
 
+      {/* Side chips — desktop only */}
+      <div className="side-chips-left">
+        {[
+          { icon: "🎯", label: "3 días en vivo" },
+          { icon: "🗺️", label: "Acceso al Mapa" },
+          { icon: "💬", label: "Feedback personalizado" },
+        ].map(({ icon, label }) => (
+          <span key={label} className="chip" style={{ display: "inline-flex", alignItems: "center", gap: "5px", background: "#fff", border: "1px solid #E5E5E5", borderRadius: "20px", padding: "6px 14px", fontSize: "12px", fontWeight: 700, color: "#525252", boxShadow: "0 2px 8px rgba(0,0,0,.06)", whiteSpace: "nowrap", fontFamily: MONT }}>
+            <span style={{ fontSize: "13px" }}>{icon}</span>{label}
+          </span>
+        ))}
+      </div>
+      <div className="side-chips-right">
+        {[
+          { icon: "⚡", label: "Modelo recurrente" },
+          { icon: "🤝", label: "Comunidad exclusiva" },
+        ].map(({ icon, label }) => (
+          <span key={label} className="chip" style={{ display: "inline-flex", alignItems: "center", gap: "5px", background: "#fff", border: "1px solid #E5E5E5", borderRadius: "20px", padding: "6px 14px", fontSize: "12px", fontWeight: 700, color: "#525252", boxShadow: "0 2px 8px rgba(0,0,0,.06)", whiteSpace: "nowrap", fontFamily: MONT }}>
+            <span style={{ fontSize: "13px" }}>{icon}</span>{label}
+          </span>
+        ))}
+      </div>
+
       <div style={{ maxWidth: "560px", width: "100%", textAlign: "center", position: "relative", zIndex: 1 }}>
 
         {/* Live badge */}
@@ -175,8 +216,8 @@ export const LandingPage: React.FC = () => {
           Construye tu modelo recurrente en 60 días
         </p>
 
-        {/* Benefit chips */}
-        <div className="a-chips" style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px", marginBottom: "28px" }}>
+        {/* Benefit chips — mobile only */}
+        <div className="mobile-chips">
           {[
             { icon: "🎯", label: "3 días en vivo" },
             { icon: "🗺️", label: "Acceso al Mapa" },
@@ -184,20 +225,8 @@ export const LandingPage: React.FC = () => {
             { icon: "⚡", label: "Modelo recurrente" },
             { icon: "🤝", label: "Comunidad exclusiva" },
           ].map(({ icon, label }) => (
-            <span
-              key={label}
-              className="chip"
-              style={{
-                display: "inline-flex", alignItems: "center", gap: "5px",
-                background: "#fff", border: "1px solid #E5E5E5",
-                borderRadius: "20px", padding: "6px 14px",
-                fontSize: "12px", fontWeight: 700, color: "#525252",
-                boxShadow: "0 2px 8px rgba(0,0,0,.05)",
-                whiteSpace: "nowrap",
-              }}
-            >
-              <span style={{ fontSize: "13px" }}>{icon}</span>
-              {label}
+            <span key={label} className="chip" style={{ display: "inline-flex", alignItems: "center", gap: "5px", background: "#fff", border: "1px solid #E5E5E5", borderRadius: "20px", padding: "5px 11px", fontSize: "11px", fontWeight: 700, color: "#525252", boxShadow: "0 2px 6px rgba(0,0,0,.05)", whiteSpace: "nowrap", fontFamily: MONT }}>
+              <span style={{ fontSize: "12px" }}>{icon}</span>{label}
             </span>
           ))}
         </div>
