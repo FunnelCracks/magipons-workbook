@@ -280,11 +280,21 @@ export const WorkbookPage: React.FC = () => {
         {/* ── Day 0 ── */}
         {currentDay === 0 && (
           <div>
-            <h2 style={{ fontSize: "26px", fontWeight: 700, color: "#111111", letterSpacing: "-.03em", margin: "0 0 8px" }}>
-              Visión
-            </h2>
+            {/* Header */}
+            <div style={{ background: "#C0392B", borderRadius: "10px", padding: "20px 24px", marginBottom: "32px" }}>
+              <div style={{ fontSize: "13px", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", color: "rgba(255,255,255,.7)", marginBottom: "4px", fontFamily: INTER }}>
+                Día 0
+              </div>
+              <div style={{ fontSize: "26px", fontWeight: 900, color: "#fff", letterSpacing: "-.02em", fontFamily: INTER }}>
+                Visión
+              </div>
+            </div>
+
+            <p style={{ fontSize: "13px", fontStyle: "italic", color: "#525252", margin: "0 0 6px", lineHeight: 1.6, fontFamily: INTER, fontWeight: 600 }}>
+              Cuándo rellenarlo: antes de empezar el Reto, antes del 28 de julio.
+            </p>
             <p style={{ fontSize: "14px", color: "#A1A1AA", margin: "0 0 48px", lineHeight: 1.6, fontFamily: INTER }}>
-              El punto de partida. Cuanto más honesto seas aquí, más útil será todo lo demás.
+              Antes de meternos en nada, vamos a poner foco en por qué estás aquí y qué quieres conseguir realmente. Es el ejercicio más importante del workbook.
             </p>
 
             <Question
