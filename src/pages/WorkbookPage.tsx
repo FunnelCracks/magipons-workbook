@@ -658,16 +658,59 @@ export const WorkbookPage: React.FC = () => {
               number="2.2"
               title="Tu fórmula de promesa"
             >
+              {/* Formula template */}
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "14px 20px", marginBottom: "14px" }}>
+                <p style={{ fontSize: "14px", color: "#2D2D2D", margin: 0, lineHeight: 2, fontFamily: INTER }}>
+                  Ayudo a{" "}
+                  <span style={{ display: "inline-block", minWidth: "80px", borderBottom: "1.5px dashed #999", marginBottom: "-2px" }}>&nbsp;</span>
+                  {" "}a conseguir{" "}
+                  <span style={{ display: "inline-block", minWidth: "80px", borderBottom: "1.5px dashed #999", marginBottom: "-2px" }}>&nbsp;</span>
+                  {" "}para que puedan{" "}
+                  <span style={{ display: "inline-block", minWidth: "80px", borderBottom: "1.5px dashed #999", marginBottom: "-2px" }}>&nbsp;</span>
+                </p>
+              </div>
+
+              {/* Intro */}
+              <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 12px", lineHeight: 1.65, fontFamily: INTER }}>
+                Te dejo unos ejemplos que te van a ayudar mucho a entender los matices:
+              </p>
+
+              {/* Tres versiones */}
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
+                <p style={{ fontSize: "11px", fontWeight: 800, textTransform: "uppercase", letterSpacing: ".08em", color: "#777", margin: "0 0 12px", fontFamily: INTER }}>
+                  Tres versiones de la misma fórmula, de genérica a quirúrgica:
+                </p>
+                {[
+                  { icon: "❌", label: "Versión 1 (genérica — no sirve):", text: "Ayudo a mujeres a perder peso para que puedan sentirse mejor con su cuerpo.", color: "#DC2626" },
+                  { icon: "🟡", label: "Versión 2 (más específica — ya empieza a funcionar):", text: "Ayudo a mujeres de 35 a 50 años a recuperar su relación con la comida para que puedan vivir sin pensar en lo que comen.", color: "#D97706" },
+                  { icon: "✅", label: "Versión 3 (quirúrgica — es la que va a la landing):", text: "Ayudo a mujeres que han probado todas las dietas y ninguna les ha durado más de 3 semanas, a construir una forma de comer que se sostenga sola, para que dejen de empezar cada lunes una vida nueva.", color: "#059669" },
+                ].map(({ icon, label, text, color }) => (
+                  <p key={label} style={{ fontSize: "13px", color: "#525252", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
+                    {icon} <strong style={{ color }}>{label}</strong> {text}
+                  </p>
+                ))}
+              </div>
+
+              {/* Por qué + Las tres marcas */}
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 4px", lineHeight: 1.65, fontFamily: INTER }}>
+                Por qué la versión 3 funciona y las otras dos menos:
+              </p>
+              <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
+                Las tres marcas de una fórmula bien hecha:
+              </p>
+
+              {/* Three marks */}
               <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
                 {[
+                  ["El «ayudo a» tiene que ser auto-reconocible, no demográfico.", '"Mujeres de 35-50" describe un censo. "Mujeres que han probado todas las dietas y ninguna les ha durado más de 3 semanas" describe un espejo, la persona se reconoce antes de leer la segunda mitad de la frase. Eso es lo que detiene el scroll.'],
                   ["El «a conseguir» tiene que ser un mecanismo, no un resultado.", '"Perder peso" es lo que prometen 50.000 cuentas. "Construir una forma de comer que se sostenga sola" es lo único que esa mujer todavía no ha probado. Y por eso es lo único que puede vender.'],
                   ["El «para que puedan» tiene que ser lo que la persona se atreve a decir solo en voz baja.", '"Sentirse mejor con su cuerpo" es lo que pondría en una bio. "Dejar de empezar cada lunes una vida nueva" es lo que llora una madrugada de domingo. Lo segundo convierte; lo primero se ignora.'],
                 ].map(([title, desc], i) => (
-                  <p key={i} style={{ fontSize: "13px", color: "#525252", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
-                    {i + 2}. <em><strong>{title as string}</strong></em> {desc as string}
+                  <p key={i} style={{ fontSize: "13px", color: "#525252", margin: "0 0 12px", lineHeight: 1.65, fontFamily: INTER }}>
+                    {i + 1}. <em><strong>{title as string}</strong></em> {desc as string}
                   </p>
                 ))}
-                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "12px 0 6px", lineHeight: 1.6, fontFamily: INTER }}>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "4px 0 6px", lineHeight: 1.6, fontFamily: INTER }}>
                   🧪 El test rápido para saber si tu fórmula está hecha:
                 </p>
                 <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 6px", lineHeight: 1.65, fontFamily: INTER }}>
@@ -1120,7 +1163,7 @@ export const WorkbookPage: React.FC = () => {
                   El generalista compite a la baja y se pierde en el ruido. <strong>El rey de su parcela</strong> cobra premium, es referente y crece por recomendación. Y para ser el rey de tu parcela, la parcela tiene que ser lo suficientemente pequeña como para ser tuya.
                 </p>
                 <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
-                  La forma de llegar ahí es una sola: <strong>nichar hasta que duela.</strong> Empiezas amplio y afinas hasta que sientes que estás dejando gente fuera. Cuando duela un poco, vas por buen camino. Si tu diferenciación puede servirle a &ldquo;todo el mundo&rdquo;, no diferencia solo describe.
+                  La forma de llegar ahí es una sola: <strong>anichar hasta que duela.</strong> Empiezas amplio y afinas hasta que sientes que estás dejando gente fuera. Cuando duela un poco, vas por buen camino. Si tu diferenciación puede servirle a &ldquo;todo el mundo&rdquo;, no diferencia solo describe.
                 </p>
                 <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 10px", fontFamily: INTER }}>📊 Tres niveles de respuesta:</p>
                 {[

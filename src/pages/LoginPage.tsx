@@ -30,20 +30,17 @@ export const LoginPage: React.FC = () => {
 
       {/* Card */}
       <div style={{ maxWidth: "400px", width: "100%", background: "#FFFFFF", border: "1px solid #E5E5E5", borderRadius: "16px", padding: "40px 36px" }}>
-        <h2 style={{ fontSize: "20px", fontWeight: 800, color: "#111111", letterSpacing: "-.02em", margin: "0 0 8px", textAlign: "center" }}>
+        <h2 style={{ fontSize: "20px", fontWeight: 800, color: "#111111", letterSpacing: "-.02em", margin: "0 0 16px", textAlign: "center" }}>
           Acceder al Mapa
         </h2>
-        <p style={{ fontSize: "14px", color: "#A1A1AA", textAlign: "center", margin: "0 0 32px", lineHeight: 1.5 }}>
-          Usá tu cuenta de Google para ingresar
+
+        <p style={{ fontSize: "12px", color: "#6B7280", textAlign: "center", margin: "0 0 28px", lineHeight: 1.65 }}>
+          Usa tu cuenta de Google para ingresar, así mantendrás guardados siempre tus avances y accederás en cualquier momento sin tener que volver a loguearte.
         </p>
 
         <GoogleSignInButton />
 
-        <p style={{ fontSize: "12px", color: "#6B7280", textAlign: "center", margin: "20px 0 16px", lineHeight: 1.65 }}>
-          Usa tu cuenta de Google para ingresar, así mantendrás guardados siempre tus avances y accederás en cualquier momento sin tener que volver a loguearte.
-        </p>
-
-        <p style={{ fontSize: "12px", color: "#C4C4BC", textAlign: "center", margin: "0", lineHeight: 1.5 }}>
+        <p style={{ fontSize: "12px", color: "#C4C4BC", textAlign: "center", margin: "20px 0 0", lineHeight: 1.5 }}>
           Solo para participantes del Reto 3K
         </p>
       </div>
