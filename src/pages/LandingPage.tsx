@@ -8,7 +8,6 @@ const BG     = "#FAFAF9";
 const TEXT   = "#111111";
 const MUTED  = "#A1A1AA";
 const TARGET = new Date("2026-07-28T09:00:00");
-const START  = new Date("2026-06-28T09:00:00");
 
 function useCountdown(target: Date) {
   const calc = () => {
@@ -134,8 +133,6 @@ export const LandingPage: React.FC = () => {
   }, []);
 
   const pad = (n: number) => String(n).padStart(2, "0");
-  const progress = Math.min(1, Math.max(0, (Date.now() - START.getTime()) / (TARGET.getTime() - START.getTime())));
-
   return (
     <div style={{ minHeight: "100vh", background: BG, display: "flex", alignItems: "center", justifyContent: "center", padding: "16px 24px 40px", fontFamily: MONT, overflow: "hidden", position: "relative" }}>
 
