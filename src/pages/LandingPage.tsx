@@ -33,12 +33,6 @@ const injectStyles = () => {
   const s = document.createElement("style");
   s.id = "landing-styles";
   s.textContent = `
-    @keyframes marquee {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    .marquee-track { animation: marquee 18s linear infinite; }
-    .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(28px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -124,8 +118,33 @@ const injectStyles = () => {
 export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const glowRef   = useRef<HTMLDivElement>(null);
+  const glowRef      = useRef<HTMLDivElement>(null);
   const [hovering, setHovering] = useState(false);
+  const marqueeRef   = useRef<HTMLDivElement>(null);
+  const marqueeHover = useRef(false);
+  const marqueeSpeed = useRef(1);
+  const marqueePos   = useRef(0);
+
+  useEffect(() => {
+    let raf: number;
+    let last = performance.now();
+    const step = (now: number) => {
+      const dt = Math.min(now - last, 50);
+      last = now;
+      const target = marqueeHover.current ? 0 : 1;
+      marqueeSpeed.current += (target - marqueeSpeed.current) * 0.045;
+      marqueePos.current -= marqueeSpeed.current * 65 * dt / 1000;
+      const el = marqueeRef.current;
+      if (el) {
+        const half = el.scrollWidth / 2;
+        if (marqueePos.current <= -half) marqueePos.current += half;
+        el.style.transform = `translateX(${marqueePos.current}px)`;
+      }
+      raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, []);
   const { d, h, m, s } = useCountdown(TARGET);
 
   useEffect(() => {
@@ -198,8 +217,13 @@ export const LandingPage: React.FC = () => {
 
 
         {/* Marquee */}
-        <div className="a-p1 marquee-wrap" style={{ position: "relative", overflow: "hidden", width: "100vw", marginLeft: "calc(-50vw + 50%)", marginBottom: "36px" }}>
-          <div className="marquee-track" style={{ display: "flex", alignItems: "center", gap: "12px", width: "max-content" }}>
+        <div
+          className="a-p1"
+          style={{ position: "relative", overflow: "hidden", width: "min(860px, 100vw)", marginLeft: "calc(50% - min(430px, 50vw))", marginBottom: "36px" }}
+          onMouseEnter={() => { marqueeHover.current = true; }}
+          onMouseLeave={() => { marqueeHover.current = false; }}
+        >
+          <div ref={marqueeRef} style={{ display: "flex", alignItems: "center", gap: "12px", width: "max-content" }}>
             {[...Array(2)].flatMap(() =>
               [
                 { icon: "🎯", label: "3 días en vivo" },
