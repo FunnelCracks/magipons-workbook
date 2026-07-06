@@ -1355,9 +1355,48 @@ export const WorkbookPage: React.FC = () => {
         )}
 
         {/* ── Bonus Track ── */}
+
+        {/* Barra de progreso — siempre visible en tab Bonus */}
+        {currentDay === 4 && (
+          <div style={{ background: "#fff", border: "1px solid #E5E5E5", borderRadius: "14px", padding: "28px 32px", textAlign: "left", marginBottom: "32px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "10px" }}>
+              <span style={{ fontSize: "13px", fontWeight: 600, color: "#525252", fontFamily: INTER }}>Progreso total</span>
+              <span style={{ fontSize: "24px", fontWeight: 900, color: bonusProgress >= 80 ? ACCENT : "#111111", fontFamily: INTER, fontVariantNumeric: "tabular-nums" }}>{bonusProgress}%</span>
+            </div>
+            <div style={{ background: "#F0F0EE", height: "10px", borderRadius: "99px", overflow: "hidden", marginBottom: "28px" }}>
+              <div style={{ height: "100%", width: `${bonusProgress}%`, background: bonusProgress >= 80 ? ACCENT : "#D97706", borderRadius: "99px", transition: "width .8s cubic-bezier(.4,0,.2,1)" }} />
+            </div>
+            {[
+              { label: "Día 1 · Las Bases", pct: d1Pct, day: 1 },
+              { label: "Día 2 · Estrategia de venta", pct: d2Pct, day: 2 },
+              { label: "Día 3 · IA y funnel", pct: d3Pct, day: 3 },
+            ].map(({ label, pct: p, day }) => (
+              <div key={day} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                  <div style={{ width: "20px", height: "20px", borderRadius: "50%", background: p === 100 ? "rgba(38,150,106,.12)" : "rgba(217,119,6,.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    {p === 100
+                      ? <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 3L9 1" stroke={ACCENT} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      : <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><circle cx="4" cy="4" r="3" stroke="#D97706" strokeWidth="1.5"/></svg>
+                    }
+                  </div>
+                  <span style={{ fontSize: "13px", color: "#525252", fontFamily: INTER }}>{label}</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <div style={{ width: "80px", height: "4px", background: "#F0F0EE", borderRadius: "99px", overflow: "hidden" }}>
+                    <div style={{ height: "100%", width: `${p}%`, background: p === 100 ? ACCENT : "#D97706", borderRadius: "99px" }} />
+                  </div>
+                  <span style={{ fontSize: "11px", fontWeight: 700, color: p === 100 ? ACCENT : "#D97706", fontVariantNumeric: "tabular-nums", fontFamily: INTER, minWidth: "32px", textAlign: "right" }}>{p}%</span>
+                  <button onClick={() => setCurrentDay(day)} style={{ fontSize: "11px", color: "#A1A1AA", background: "none", border: "none", cursor: "pointer", fontFamily: INTER, textDecoration: "underline", padding: 0 }}>
+                    {p === 100 ? "ver" : "completar →"}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
         {currentDay === 4 && !bonusUnlocked && (
-          <div style={{ textAlign: "center", padding: "48px 0 0" }}>
-            {/* Lock icon */}
+          <div style={{ textAlign: "center", padding: "16px 0 0" }}>
             <div style={{ marginBottom: "20px" }}>
               <svg width="44" height="52" viewBox="0 0 44 52" fill="none">
                 <rect x="4" y="22" width="36" height="28" rx="6" fill="#F5F5F3" stroke="#D1D1CB" strokeWidth="2"/>
@@ -1368,156 +1407,42 @@ export const WorkbookPage: React.FC = () => {
             </div>
             <div style={{ fontSize: "13px", fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", color: "#A1A1AA", marginBottom: "8px", fontFamily: INTER }}>Bonus Track</div>
             <div style={{ fontSize: "22px", fontWeight: 900, color: "#111111", letterSpacing: "-.02em", fontFamily: INTER, marginBottom: "10px" }}>Completa el workbook para desbloquear</div>
-            <p style={{ fontSize: "14px", color: "#A1A1AA", margin: "0 0 40px", lineHeight: 1.6, fontFamily: INTER }}>
+            <p style={{ fontSize: "14px", color: "#A1A1AA", margin: 0, lineHeight: 1.6, fontFamily: INTER }}>
               Responde todas las preguntas de los 3 días para acceder al contenido exclusivo.
             </p>
-
-            {/* Barra de progreso */}
-            <div style={{ background: "#fff", border: "1px solid #E5E5E5", borderRadius: "14px", padding: "28px 32px", textAlign: "left", marginBottom: "24px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "10px" }}>
-                <span style={{ fontSize: "13px", fontWeight: 600, color: "#525252", fontFamily: INTER }}>Progreso total</span>
-                <span style={{ fontSize: "24px", fontWeight: 900, color: bonusProgress >= 80 ? ACCENT : "#111111", fontFamily: INTER, fontVariantNumeric: "tabular-nums" }}>{bonusProgress}%</span>
-              </div>
-              <div style={{ background: "#F0F0EE", height: "10px", borderRadius: "99px", overflow: "hidden", marginBottom: "28px" }}>
-                <div style={{ height: "100%", width: `${bonusProgress}%`, background: bonusProgress >= 80 ? ACCENT : "#D97706", borderRadius: "99px", transition: "width .8s cubic-bezier(.4,0,.2,1)" }} />
-              </div>
-
-              {/* Estado por día */}
-              {[
-                { label: "Día 1 · Las Bases", pct: d1Pct, day: 1 },
-                { label: "Día 2 · Estrategia de venta", pct: d2Pct, day: 2 },
-                { label: "Día 3 · IA y funnel", pct: d3Pct, day: 3 },
-              ].map(({ label, pct: p, day }) => (
-                <div key={day} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <div style={{ width: "20px", height: "20px", borderRadius: "50%", background: p === 100 ? "rgba(38,150,106,.12)" : "rgba(217,119,6,.08)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                      {p === 100
-                        ? <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 3L9 1" stroke={ACCENT} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                        : <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><circle cx="4" cy="4" r="3" stroke="#D97706" strokeWidth="1.5"/></svg>
-                      }
-                    </div>
-                    <span style={{ fontSize: "13px", color: "#525252", fontFamily: INTER }}>{label}</span>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <div style={{ width: "80px", height: "4px", background: "#F0F0EE", borderRadius: "99px", overflow: "hidden" }}>
-                      <div style={{ height: "100%", width: `${p}%`, background: p === 100 ? ACCENT : "#D97706", borderRadius: "99px" }} />
-                    </div>
-                    <span style={{ fontSize: "11px", fontWeight: 700, color: p === 100 ? ACCENT : "#D97706", fontVariantNumeric: "tabular-nums", fontFamily: INTER, minWidth: "32px", textAlign: "right" }}>{p}%</span>
-                    <button onClick={() => setCurrentDay(day)} style={{ fontSize: "11px", color: "#A1A1AA", background: "none", border: "none", cursor: "pointer", fontFamily: INTER, textDecoration: "underline", padding: 0 }}>
-                      {p === 100 ? "ver" : "completar →"}
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         )}
 
         {currentDay === 4 && bonusUnlocked && (
-          <div>
-            {/* Hero */}
-            <div style={{ marginBottom: "32px", textAlign: "center" }}>
-              <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
-                <svg width="20" height="24" viewBox="0 0 18 22" fill="none"><path d="M10.5 1L2 13H8.5L5.5 21L16.5 9H10L13 1Z" fill="#D97706"/></svg>
+          <div style={{ textAlign: "center", padding: "48px 0 32px" }}>
+            {/* Icon */}
+            <div style={{ fontSize: "48px", marginBottom: "24px" }}>🎉</div>
+
+            {/* Headline */}
+            <div style={{ fontSize: "32px", fontWeight: 900, color: "#111111", letterSpacing: "-.02em", fontFamily: INTER, lineHeight: 1.15, marginBottom: "8px" }}>
+              ¡Enhorabuena!
+            </div>
+            <div style={{ fontSize: "16px", fontWeight: 700, color: ACCENT, fontFamily: INTER, marginBottom: "40px" }}>
+              Has sido de los primeros en terminar tu trabajo.
+            </div>
+
+            {/* Cards */}
+            <div style={{ textAlign: "left", display: "flex", flexDirection: "column" as const, gap: "14px", marginBottom: "40px" }}>
+              <div style={{ background: "#fff", border: "1px solid #E5E5E5", borderLeft: `3px solid ${ACCENT}`, borderRadius: "0 10px 10px 0", padding: "18px 22px" }}>
+                <p style={{ fontSize: "15px", color: "#111111", lineHeight: 1.7, margin: 0, fontFamily: INTER }}>
+                  El <strong style={{ color: ACCENT }}>28 de julio</strong> podrás validar tu workbook en el directo con Magí y desbloquear tus bonus.
+                </p>
               </div>
-              <div style={{ fontSize: "11px", fontWeight: 800, letterSpacing: ".14em", textTransform: "uppercase", color: "#D97706", marginBottom: "14px", fontFamily: INTER }}>Bonus Track</div>
-              <div style={{ fontSize: "34px", fontWeight: 900, color: "#111111", letterSpacing: "-.02em", fontFamily: INTER, lineHeight: 1.15 }}>¿Quieres construirlo con nosotros?</div>
-            </div>
-
-            {/* Intro */}
-            <div style={{ marginBottom: "32px" }}>
-              <p style={{ fontSize: "14px", color: "#111111", lineHeight: 1.7, margin: "0 0 14px", fontFamily: INTER }}>
-                🎯 Si has llegado hasta aquí y has llenado el workbook con honestidad, ya tienes 80% de claridad sobre tu modelo recurrente.
-              </p>
-              <p style={{ fontSize: "14px", color: "#111111", lineHeight: 1.7, margin: 0, fontFamily: INTER }}>
-                🚀 Si quieres el otro 20%, el que viene de tener al lado a alguien que ya ha pasado por esto y a un equipo que te acompaña en la ejecución, <strong>Lanzadera de Membresías está abierta.</strong>
-              </p>
-            </div>
-
-            {/* Testimonios */}
-            <div style={{ marginBottom: "28px" }}>
-              <div style={{ fontSize: "11px", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", color: ACCENT, marginBottom: "18px", fontFamily: INTER }}>
-                Lo que tienen en común quienes ya están dentro:
+              <div style={{ background: "#fff", border: "1px solid #E5E5E5", borderLeft: `3px solid ${ACCENT}`, borderRadius: "0 10px 10px 0", padding: "18px 22px" }}>
+                <p style={{ fontSize: "15px", color: "#111111", lineHeight: 1.7, margin: 0, fontFamily: INTER }}>
+                  Estás muy cerca de disfrutar del sabor de los ingresos recurrentes cada mes.
+                </p>
               </div>
-              {[
-                { quote: "Tenía pensado sacar una suscripción, pero en Lanzadera me di cuenta de que lo mío necesitaba una membresía. Cambia todo.", name: "Marga Hope", stat1: "Inversión publi: 1.530€", stat2: "Facturación: 65.000€" },
-                { quote: "Buscábamos cómo ofrecer una membresía a nuestros seguidores. Apareció Magí. El trato tú a tú es de un valor brutal.", name: "fimeltraib", stat1: "Inversión publi: 2.500€", stat2: "Facturación: 33.804€" },
-              ].map((t, i) => (
-                <div key={i} style={{ background: "#fff", border: "1px solid #E5E5E5", borderRadius: "10px", padding: "20px 24px", marginBottom: "12px" }}>
-                  <p style={{ fontSize: "14px", fontStyle: "italic", color: "#111111", lineHeight: 1.65, margin: "0 0 14px", fontFamily: INTER }}>"{t.quote}"</p>
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" as const }}>
-                    <span style={{ fontSize: "13px", fontWeight: 700, color: "#111111", fontFamily: INTER }}>— {t.name}</span>
-                    <span style={{ fontSize: "11px", color: "#D1D1CB", fontFamily: INTER }}>·</span>
-                    <span style={{ fontSize: "11px", color: "#A1A1AA", fontFamily: INTER }}>{t.stat1}</span>
-                    <span style={{ fontSize: "11px", color: "#D1D1CB", fontFamily: INTER }}>·</span>
-                    <span style={{ fontSize: "11px", fontWeight: 700, color: ACCENT, fontFamily: INTER }}>{t.stat2}</span>
-                  </div>
-                </div>
-              ))}
             </div>
 
-            {/* Qué es Lanzadera */}
-            <div style={{ background: "#fff", border: "1px solid #E5E5E5", borderRadius: "10px", padding: "24px 28px", marginBottom: "16px" }}>
-              <div style={{ fontSize: "11px", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", color: ACCENT, marginBottom: "16px", fontFamily: INTER }}>
-                Qué es Lanzadera de Membresías
-              </div>
-              {[
-                "10 semanas de acompañamiento intensivo.",
-                "4 mentores especializados + Magí + Eric en sesiones en directo.",
-                "Tutor personal con seguimiento semanal.",
-                "Garantía de éxito firmada por contrato.",
-                "+83% de alumnos recuperan su inversión antes de terminar el programa.",
-              ].map((item, i) => (
-                <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "10px", marginBottom: i < 4 ? "10px" : 0 }}>
-                  <span style={{ color: ACCENT, flexShrink: 0, fontWeight: 700 }}>·</span>
-                  <span style={{ fontSize: "14px", color: "#111111", lineHeight: 1.55, fontFamily: INTER }}>{item}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Bonus especial */}
-            <div style={{ background: "rgba(217,119,6,.05)", border: "1px solid rgba(217,119,6,.2)", borderRadius: "10px", padding: "24px 28px", marginBottom: "16px" }}>
-              <div style={{ fontSize: "11px", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", color: "#D97706", marginBottom: "12px", fontFamily: INTER }}>
-                Bonus especial — solo para los que agenden el miércoles
-              </div>
-              <p style={{ fontSize: "14px", color: "#111111", lineHeight: 1.65, margin: "0 0 12px", fontFamily: INTER }}>
-                Quien agende su llamada el miércoles 29 (día del W2) y entre a Lanzadera antes del fin de semana, se lleva una sesión individual conmigo de 60 minutos.
-              </p>
-              <p style={{ fontSize: "14px", fontStyle: "italic", fontWeight: 700, color: "#111111", margin: 0, fontFamily: INTER }}>
-                Esto no lo he hecho nunca antes. Y probablemente no lo vuelva a hacer.
-              </p>
-            </div>
-
-            {/* Bootcamp IA */}
-            <div style={{ background: "#fff", border: "1px solid #E5E5E5", borderRadius: "10px", padding: "24px 28px", marginBottom: "48px" }}>
-              <div style={{ fontSize: "11px", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", color: ACCENT, marginBottom: "12px", fontFamily: INTER }}>
-                Bootcamp de IA · Inicio el 5 de agosto
-              </div>
-              <p style={{ fontSize: "14px", color: "#111111", lineHeight: 1.65, margin: "0 0 8px", fontFamily: INTER }}>
-                Aprende a crear con activos impulsados por IA todo lo que tu negocio necesita.
-              </p>
-              <p style={{ fontSize: "14px", color: "#111111", lineHeight: 1.65, margin: 0, fontFamily: INTER }}>
-                Reduce equipo, acelera resultados y ponte tú y a tu negocio a la vanguardia.
-              </p>
-            </div>
-
-            {/* CTA */}
-            <div style={{ textAlign: "center", paddingBottom: "16px" }}>
-              <p style={{ fontSize: "15px", fontStyle: "italic", color: "#525252", margin: "0 0 4px", lineHeight: 1.6, fontFamily: INTER }}>
-                Si tu mapa 3k + tu situación encajan,
-              </p>
-              <p style={{ fontSize: "20px", fontWeight: 900, color: ACCENT, margin: "0 0 8px", fontFamily: INTER, letterSpacing: "-.01em" }}>
-                te invitamos a una llamada de 30 minutos.
-              </p>
-              <p style={{ fontSize: "12px", fontStyle: "italic", color: "#A1A1AA", margin: "0 0 28px", lineHeight: 1.6, fontFamily: INTER }}>
-                Si no encajas con el programa, te lo decimos sin rodeos. No vendemos a quien no podemos ayudar.
-              </p>
-              <a
-                href="#"
-                style={{ display: "inline-block", padding: "14px 40px", background: "#111111", color: "#fff", borderRadius: "8px", textDecoration: "none", fontFamily: INTER, fontSize: "12px", fontWeight: 800, letterSpacing: ".12em", textTransform: "uppercase" as const }}
-              >
-                Agendar Llamada
-              </a>
+            {/* Cierre */}
+            <div style={{ fontSize: "20px", fontWeight: 900, color: "#111111", fontFamily: INTER, letterSpacing: "-.01em" }}>
+              ¡Nos vemos el <span style={{ color: ACCENT }}>28 de julio</span>!
             </div>
           </div>
         )}
