@@ -226,8 +226,8 @@ export const LandingPage: React.FC = () => {
             )}
           </div>
           {/* Fade edges */}
-          <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "80px", background: "linear-gradient(to right, #FAFAF9, transparent)", pointerEvents: "none", zIndex: 1 }} />
-          <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "80px", background: "linear-gradient(to left, #FAFAF9, transparent)", pointerEvents: "none", zIndex: 1 }} />
+          <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "clamp(80px, 12vw, 220px)", background: "linear-gradient(to right, #FAFAF9 60%, transparent)", pointerEvents: "none", zIndex: 1 }} />
+          <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "clamp(80px, 12vw, 220px)", background: "linear-gradient(to left, #FAFAF9 60%, transparent)", pointerEvents: "none", zIndex: 1 }} />
         </div>
 
         <p className="a-p1" style={{ fontSize: "15px", fontStyle: "italic", fontWeight: 400, color: "#525252", lineHeight: 1.75, margin: "0 0 20px" }}>
