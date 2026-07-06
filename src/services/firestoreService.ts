@@ -19,7 +19,7 @@ export const createWorkbook = async (
   userEmail: string,
   userName: string
 ): Promise<Workbook> => {
-  const newWorkbookRef = doc(collection(db, "workbooks"));
+  const newWorkbookRef = doc(db, "workbooks", userId);
   const workbookData = {
     userId,
     userEmail,
@@ -69,19 +69,9 @@ export const getWorkbookByUserId = async (
   userId: string
 ): Promise<Workbook | null> => {
   try {
-    const q = query(
-      collection(db, "workbooks"),
-      where("userId", "==", userId),
-      orderBy("createdAt", "desc")
-    );
-    const snapshot = await getDocs(q);
-    if (snapshot.empty) return null;
-
-    const doc = snapshot.docs[0];
-    return {
-      id: doc.id,
-      ...doc.data(),
-    } as Workbook;
+    const snap = await getDoc(doc(db, "workbooks", userId));
+    if (!snap.exists()) return null;
+    return { id: snap.id, ...snap.data() } as Workbook;
   } catch (error) {
     console.error("Error fetching workbook:", error);
     return null;
