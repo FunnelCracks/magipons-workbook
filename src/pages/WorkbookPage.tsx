@@ -161,7 +161,6 @@ export const WorkbookPage: React.FC = () => {
   const d2f = [
     localData.day2?.changes, localData.day2?.uniqueProposal, localData.day2?.annualStrategy,
     localData.day2?.launchStrategy, localData.day2?.migration,
-    localData.day2?.firstClients?.find((c: any) => c?.name?.trim())?.name ?? "",
   ];
   const d3f = [
     localData.day3?.landingHero, localData.day3?.setterQuestions,
