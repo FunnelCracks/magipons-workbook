@@ -1384,10 +1384,10 @@ export const WorkbookPage: React.FC = () => {
             {/* Intro */}
             <div style={{ marginBottom: "32px" }}>
               <p style={{ fontSize: "14px", color: "#111111", lineHeight: 1.7, margin: "0 0 14px", fontFamily: INTER }}>
-                Si has llegado hasta aquí y has llenado el workbook con honestidad, ya tienes 80% de claridad sobre tu modelo recurrente.
+                🎯 Si has llegado hasta aquí y has llenado el workbook con honestidad, ya tienes 80% de claridad sobre tu modelo recurrente.
               </p>
               <p style={{ fontSize: "14px", color: "#111111", lineHeight: 1.7, margin: 0, fontFamily: INTER }}>
-                Si quieres el otro 20%, el que viene de tener al lado a alguien que ya ha pasado por esto y a un equipo que te acompaña en la ejecución, <strong>Lanzadera de Membresías está abierta.</strong>
+                🚀 Si quieres el otro 20%, el que viene de tener al lado a alguien que ya ha pasado por esto y a un equipo que te acompaña en la ejecución, <strong>Lanzadera de Membresías está abierta.</strong>
               </p>
             </div>
 
