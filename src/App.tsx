@@ -12,38 +12,40 @@ import { MapaIntroPage } from "./pages/MapaIntroPage";
 import { LanzamientoPage } from "./pages/LanzamientoPage";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { PageTransition } from "./components/PageTransition";
-
 function AnimatedRoutes() {
   const location = useLocation();
+
   return (
-    <Routes location={location} key={location.pathname}>
-      <Route path="/" element={<PageTransition><LandingPage /></PageTransition>} />
-      <Route path="/login" element={<PageTransition><LoginPage /></PageTransition>} />
-      <Route path="/onboarding" element={<PageTransition><OnboardingPage /></PageTransition>} />
-      <Route path="/intro" element={<PageTransition><MapaIntroPage /></PageTransition>} />
-      <Route path="/launch" element={<PageTransition><LanzamientoPage /></PageTransition>} />
-      <Route
-        path="/workbook/day0"
-        element={
-          <ProtectedRoute>
-            <PageTransition><WorkbookPage /></PageTransition>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <PageTransition><DashboardPage /></PageTransition>
-          </ProtectedRoute>
-        }
-      />
-      <Route path="/admin" element={<PageTransition><AdminLoginPage /></PageTransition>} />
-      <Route path="/admin/select" element={<AdminUserSelectPage />} />
-      <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
-      <Route path="/admin/workbook/:workbookId" element={<WorkbookDetailsPage />} />
-      <Route path="*" element={<Navigate to="/" />} />
-    </Routes>
+    <>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<PageTransition><LandingPage /></PageTransition>} />
+          <Route path="/login" element={<PageTransition><LoginPage /></PageTransition>} />
+          <Route path="/onboarding" element={<PageTransition><OnboardingPage /></PageTransition>} />
+          <Route path="/intro" element={<PageTransition><MapaIntroPage /></PageTransition>} />
+          <Route path="/launch" element={<PageTransition><LanzamientoPage /></PageTransition>} />
+          <Route
+            path="/workbook/day0"
+            element={
+              <ProtectedRoute>
+                <PageTransition><WorkbookPage /></PageTransition>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <PageTransition><DashboardPage /></PageTransition>
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/admin" element={<PageTransition><AdminLoginPage /></PageTransition>} />
+          <Route path="/admin/select" element={<AdminUserSelectPage />} />
+          <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+          <Route path="/admin/workbook/:workbookId" element={<WorkbookDetailsPage />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+    </>
   );
 }
 

@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useEffect, useRef, useState } from "react";
-import { RocketProgress } from "../components/RocketProgress";
 
 const MONT   = "'Montserrat', system-ui, sans-serif";
 const ACCENT = "#26966a";
 const BG     = "#FAFAF9";
+const TEXT   = "#111111";
+const MUTED  = "#A1A1AA";
 const TARGET = new Date("2026-07-28T09:00:00");
+const START  = new Date("2026-06-28T09:00:00");
 
 function useCountdown(target: Date) {
   const calc = () => {
@@ -66,13 +68,13 @@ const injectStyles = () => {
       0%,100% { opacity:.4; transform:scale(1); }
       50%      { opacity:1;  transform:scale(1.3); }
     }
-    .a-badge { opacity:0; animation: fadeUp .6s ease forwards .05s; }
-    .a-date  { opacity:0; animation: fadeUp .7s ease forwards .15s; }
-    .a-label { opacity:0; animation: fadeUp .7s ease forwards .25s; }
     @keyframes gradFlow {
       0%,100% { background-position: 0% 50%; }
       50%      { background-position: 100% 50%; }
     }
+    .a-badge { opacity:0; animation: fadeUp .6s ease forwards .05s; }
+    .a-date  { opacity:0; animation: fadeUp .7s ease forwards .15s; }
+    .a-label { opacity:0; animation: fadeUp .7s ease forwards .25s; }
     .a-title {
       opacity: 0;
       background: linear-gradient(120deg, #111 0%, #26966a 42%, #34b87f 58%, #111 90%);
@@ -88,38 +90,26 @@ const injectStyles = () => {
     .a-p1    { opacity:0; animation: fadeUp .7s ease forwards 1.08s; }
     .a-p2    { opacity:0; animation: fadeUp .7s ease forwards 1.22s; }
     .a-social{ opacity:0; animation: fadeUp .7s ease forwards 1.3s; }
+    .a-phrase{ opacity:0; animation: fadeUp .7s ease forwards 1.36s; }
     .a-btn   { opacity:0; animation: fadeUp .7s ease forwards 1.42s; }
     .a-micro { opacity:0; animation: fadeUp .7s ease forwards 1.56s; }
     .btn-pulse { animation: glow 2.6s ease-in-out 2s infinite; }
     .btn-float { animation: float 3.2s ease-in-out infinite; }
     .btn-hover:hover {
-      background: linear-gradient(90deg, #26966a, #34b87f, #26966a) !important;
-      background-size: 200% !important;
-      animation: shimmer .8s linear infinite, glow 2.6s ease-in-out infinite !important;
+      filter: brightness(1.08);
+      transform: scale(1.05) !important;
     }
-    .btn-hover:hover { transform: scale(1.05) !important; }
     .orb1 { animation: orb 14s ease-in-out infinite; }
     .orb2 { animation: orb 18s ease-in-out 5s infinite reverse; }
     .live-dot { animation: dotPulse 1.8s ease-in-out infinite; }
-    @keyframes rocketShake {
-      0%,100% { transform: scale(1.1) rotate(0deg) translateY(0); }
-      20%      { transform: scale(1.15) rotate(-10deg) translateY(-3px); }
-      40%      { transform: scale(1.18) rotate(10deg) translateY(-5px); }
-      60%      { transform: scale(1.15) rotate(-7deg) translateY(-3px); }
-      80%      { transform: scale(1.2) rotate(6deg) translateY(-6px); }
+    @media (max-width: 600px) {
+      .a-social { display: block !important; }
+      .a-count  { margin-bottom: 18px !important; }
+      .a-hr     { margin-bottom: 18px !important; }
     }
-    .rocket-shake { animation: rocketShake .45s ease-in-out infinite; }
   `;
   document.head.appendChild(s);
 };
-
-const AVATARS = [
-  { bg: "#26966a", letter: "M" },
-  { bg: "#1a7a52", letter: "A" },
-  { bg: "#34b87f", letter: "J" },
-  { bg: "#0f5c3e", letter: "C" },
-];
-
 
 export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
@@ -144,29 +134,27 @@ export const LandingPage: React.FC = () => {
   }, []);
 
   const pad = (n: number) => String(n).padStart(2, "0");
+  const progress = Math.min(1, Math.max(0, (Date.now() - START.getTime()) / (TARGET.getTime() - START.getTime())));
 
   return (
-    <div style={{ minHeight: "100vh", background: BG, display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 24px", fontFamily: MONT, overflow: "hidden", position: "relative" }}>
+    <div style={{ minHeight: "100vh", background: BG, display: "flex", alignItems: "center", justifyContent: "center", padding: "16px 24px 40px", fontFamily: MONT, overflow: "hidden", position: "relative" }}>
 
       {/* Cursor glow */}
       <div ref={glowRef} style={{ position: "fixed", width: "500px", height: "500px", borderRadius: "50%", background: "radial-gradient(circle, rgba(38,150,106,.07) 0%, transparent 70%)", transform: "translate(-50%,-50%)", pointerEvents: "none", zIndex: 0, transition: "left .12s ease, top .12s ease" }} />
-
-      <RocketProgress current={1} />
 
       {/* Ambient orbs */}
       <div className="orb1" style={{ position: "fixed", top: "8%", right: "6%", width: "360px", height: "360px", borderRadius: "50%", background: "radial-gradient(circle, rgba(38,150,106,.08) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
       <div className="orb2" style={{ position: "fixed", bottom: "12%", left: "4%", width: "280px", height: "280px", borderRadius: "50%", background: "radial-gradient(circle, rgba(38,150,106,.06) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
 
-
       <div style={{ maxWidth: "560px", width: "100%", textAlign: "center", position: "relative", zIndex: 1 }}>
 
         {/* Live badge */}
-        <div className="a-badge" style={{ display: "inline-flex", alignItems: "center", gap: "7px", background: "rgba(38,150,106,.1)", border: "1px solid rgba(38,150,106,.28)", borderRadius: "20px", padding: "6px 16px", marginBottom: "20px" }}>
+        <div className="a-badge" style={{ display: "inline-flex", alignItems: "center", gap: "7px", background: "rgba(52,184,127,.1)", border: "1px solid rgba(52,184,127,.25)", borderRadius: "20px", padding: "6px 16px", marginBottom: "20px" }}>
           <span className="live-dot" style={{ width: 7, height: 7, borderRadius: "50%", background: ACCENT, display: "inline-block" }} />
           <span style={{ fontSize: "11px", fontWeight: 800, letterSpacing: ".14em", textTransform: "uppercase", color: ACCENT }}>En vivo · 28 julio</span>
         </div>
 
-        <p className="a-date" style={{ fontSize: "12px", fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase", color: "#B0B0A8", margin: "0 0 8px" }}>
+        <p className="a-date" style={{ fontSize: "12px", fontWeight: 700, letterSpacing: ".16em", textTransform: "uppercase", color: MUTED, margin: "0 0 8px" }}>
           Julio 2026
         </p>
 
@@ -174,89 +162,74 @@ export const LandingPage: React.FC = () => {
           Mapa
         </p>
 
-        <h1 className="a-title" style={{ fontSize: "clamp(52px, 10vw, 88px)", fontWeight: 900, color: "#111111", letterSpacing: "-.02em", lineHeight: 1, margin: "0 0 16px", textTransform: "uppercase" }}>
+        <h1 className="a-title" style={{ fontSize: "clamp(52px, 10vw, 88px)", fontWeight: 900, letterSpacing: "-.02em", lineHeight: 1, margin: "0 0 16px", textTransform: "uppercase" }}>
           Reto 3K
         </h1>
 
-        <p className="a-sub" style={{ fontSize: "clamp(14px, 2vw, 17px)", fontWeight: 600, color: "#A1A1AA", letterSpacing: ".01em", margin: "0 0 22px" }}>
+        <p className="a-sub" style={{ fontSize: "clamp(14px, 2vw, 17px)", fontWeight: 600, color: MUTED, letterSpacing: ".01em", margin: "0 0 22px" }}>
           Construye tu modelo recurrente en 60 días
         </p>
 
         {/* Countdown */}
-        <div className="a-count" style={{ display: "inline-flex", alignItems: "center", gap: "4px", marginBottom: "44px", background: "#fff", border: "1px solid #E5E5E5", borderRadius: "12px", padding: "14px 24px", boxShadow: "0 2px 12px rgba(0,0,0,.04)" }}>
+        <div className="a-count" style={{ display: "inline-flex", alignItems: "flex-start", gap: "0", marginBottom: "44px" }}>
           {[
             { val: d, label: "días" },
             { val: h, label: "horas" },
             { val: m, label: "min" },
             { val: s, label: "seg" },
           ].map(({ val, label }, i) => (
-            <div key={label} style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-              {i > 0 && <span style={{ fontSize: "20px", fontWeight: 900, color: "#D1D1CB", marginBottom: "10px", padding: "0 2px" }}>:</span>}
-              <div style={{ textAlign: "center", minWidth: "42px" }}>
-                <div style={{ fontSize: "26px", fontWeight: 900, color: "#111111", fontVariantNumeric: "tabular-nums", lineHeight: 1, letterSpacing: "-.02em" }}>{pad(val)}</div>
-                <div style={{ fontSize: "9px", fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", color: "#B0B0A8", marginTop: "4px" }}>{label}</div>
+            <div key={label} style={{ display: "flex", alignItems: "flex-start" }}>
+              {i > 0 && <span style={{ fontSize: "clamp(28px,6vw,40px)", fontWeight: 300, color: "#D4D4CE", lineHeight: 1, margin: "0 6px", paddingTop: "2px" }}>·</span>}
+              <div style={{ textAlign: "center" }}>
+                <div style={{ fontSize: "clamp(32px,7vw,48px)", fontWeight: 900, color: TEXT, fontVariantNumeric: "tabular-nums", lineHeight: 1, letterSpacing: "-.03em" }}>{pad(val)}</div>
+                <div style={{ fontSize: "9px", fontWeight: 600, letterSpacing: ".12em", textTransform: "uppercase", color: MUTED, marginTop: "2px" }}>{label}</div>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="a-hr" style={{ height: "1px", background: "#E5E5E5", margin: "0 0 36px" }} />
 
-        <p className="a-p1" style={{ fontSize: "15px", fontStyle: "italic", fontWeight: 400, color: "#525252", lineHeight: 1.75, margin: "0 0 16px" }}>
+        <p className="a-p1" style={{ fontSize: "15px", fontStyle: "italic", fontWeight: 400, color: "#525252", lineHeight: 1.75, margin: "0 0 20px" }}>
           Para profesionales que ya saben que el modelo de cambiar tiempo por dinero tiene un techo.
         </p>
 
-        <p className="a-p2" style={{ fontSize: "15px", fontStyle: "italic", fontWeight: 600, color: ACCENT, lineHeight: 1.75, margin: "0 0 36px" }}>
+        <p className="a-p2" style={{ fontSize: "15px", fontStyle: "italic", fontWeight: 600, color: ACCENT, lineHeight: 1.75, margin: "0 0 40px" }}>
           Y han decidido que este verano va a ser el último así.
         </p>
 
-        {/* Social proof */}
-        <div className="a-social" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", marginBottom: "32px" }}>
-          <div style={{ display: "flex" }}>
-            {AVATARS.map(({ bg, letter }, i) => (
-              <div key={i} style={{ width: "26px", height: "26px", borderRadius: "50%", background: bg, border: "2px solid #fff", marginLeft: i === 0 ? 0 : "-7px", fontSize: "10px", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 900, zIndex: AVATARS.length - i }}>
-                {letter}
-              </div>
-            ))}
-          </div>
-          <span style={{ fontSize: "12px", fontWeight: 700, color: "#525252" }}>
-            <strong style={{ color: "#111111" }}>+247</strong> personas ya tienen su Mapa
-          </span>
-        </div>
-
         {/* CTA */}
         <div className="a-btn">
-        <div className="btn-float">
-          <button
-            className="btn-pulse"
-            onClick={() => navigate("/login")}
-            onMouseEnter={() => setHovering(true)}
-            onMouseLeave={() => setHovering(false)}
-            style={{
-              position: "relative", overflow: "hidden",
-              width: "240px", height: "56px",
-              background: ACCENT, border: "none", borderRadius: "10px",
-              color: "#fff", fontFamily: MONT, cursor: "pointer",
-              transform: hovering ? "scale(1.06)" : "scale(1)",
-              transition: "transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s",
-            }}
-          >
-            <span style={{
-              position: "absolute", inset: 0,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: "16px", fontWeight: 800, letterSpacing: ".02em",
-              pointerEvents: "none",
-            }}>
-              Comenzar mi Mapa
-            </span>
-          </button>
-        </div>
+          <div className="btn-float">
+            <button
+              className="btn-pulse btn-hover"
+              onClick={() => navigate("/login")}
+              onMouseEnter={() => setHovering(true)}
+              onMouseLeave={() => setHovering(false)}
+              style={{
+                position: "relative", overflow: "hidden",
+                width: "260px", height: "58px",
+                background: ACCENT, border: "none", borderRadius: "10px",
+                color: "#fff", fontFamily: MONT, cursor: "pointer",
+                transform: hovering ? "scale(1.06)" : "scale(1)",
+                transition: "transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s, filter .25s",
+              }}
+            >
+              <span style={{
+                position: "absolute", inset: 0,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: "16px", fontWeight: 900, letterSpacing: ".02em",
+                pointerEvents: "none",
+              }}>
+                Comenzar mi Mapa →
+              </span>
+            </button>
+          </div>
         </div>
 
         <p className="a-micro" style={{ fontSize: "11px", color: "#D97706", margin: "14px 0 4px", letterSpacing: ".02em", fontWeight: 700 }}>
           ⚡ Acceso gratuito · Solo hasta el 27 de julio
         </p>
-        <p style={{ fontSize: "11px", color: "#B0B0A8", margin: 0, letterSpacing: ".02em" }}>
+        <p style={{ fontSize: "11px", color: MUTED, margin: 0, letterSpacing: ".02em" }}>
           Solo para participantes del Reto 3K
         </p>
 
