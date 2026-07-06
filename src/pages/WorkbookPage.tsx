@@ -1095,7 +1095,7 @@ export const WorkbookPage: React.FC = () => {
                 <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
                   Recuerda, no debes esperar que todo sea perfecto: se lanza al 70% y se mejora en marcha. Nunca vas a tener el 100% de claridad por eso te doy el permiso explícito de mover cosas ahora, cuando aún estamos a tiempo de ajustar el modelo antes de bajar a estrategia de venta.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Dónde te toca cambiar (y dónde no):</p>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 8px", fontFamily: INTER }}>💡 Dónde te toca cambiar (y dónde no):</p>
                 <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 8px", lineHeight: 1.65, fontFamily: INTER }}>
                   Los cambios útiles viven en la <strong style={{ fontStyle: "normal" }}>capa estratégica</strong> — avatar, promesa, modelo, estructura de tu membresía. Son los que mueven el negocio.
                 </p>
@@ -1122,7 +1122,7 @@ export const WorkbookPage: React.FC = () => {
                 <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
                   La forma de llegar ahí es una sola: <strong>nichar hasta que duela.</strong> Empiezas amplio y afinas hasta que sientes que estás dejando gente fuera. Cuando duela un poco, vas por buen camino. Si tu diferenciación puede servirle a &ldquo;todo el mundo&rdquo;, no diferencia solo describe.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 10px", fontFamily: INTER }}>Tres niveles de respuesta:</p>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 10px", fontFamily: INTER }}>📊 Tres niveles de respuesta:</p>
                 {[
                   { icon: "✗", color: "#DC2626", label: "Nivel 1 — Adjetivos vacíos:", quote: '"Soy auténtica y cercana. Doy un trato personalizado. Tengo pasión por lo que hago."', note: 'Todos los adjetivos. Cero diferenciación real. Estas palabras las usa el 90% del sector: no separan, uniforman. Y una diferenciación que la usan miles ya no es diferenciación.' },
                   { icon: "◑", color: "#D97706", label: "Nivel 2 — Credencial sin filo:", quote: '"Tengo 10 años de experiencia como nutricionista y he trabajado con muchas mujeres."', note: 'Correcto pero blando. Otros 500 profesionales de tu sector podrían escribir exactamente lo mismo. Falta el ángulo único: qué has aprendido en esos 10 años que otros no, y por qué eso importa para tu cliente.' },
@@ -1135,7 +1135,7 @@ export const WorkbookPage: React.FC = () => {
                   </div>
                 ))}
                 <div style={{ borderTop: "1px solid #E8E8E5", marginTop: "12px", paddingTop: "12px" }}>
-                  <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Las 3 marcas de una diferenciación que se sostiene:</p>
+                  <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 8px", fontFamily: INTER }}>✅ Las 3 marcas de una diferenciación que se sostiene:</p>
                   {[
                     ["Es un dato, no un adjetivo.", '"Soy la única X que Y" o "he hecho Z veces esto" o "vengo de A y por eso B". Los adjetivos ("auténtica", "cercana", "apasionada") son ruido — todos los usan, ninguno separa. Sustituye cada adjetivo por un hecho verificable. Si no puedes, ese adjetivo no aguanta.'],
                     ["Tiene un método o marco propio con nombre.", 'No es "mi enfoque personalizado" — es "el sistema Cuerpo Estable" o "el método Mantrailing" o "la comunicación no agresiva". El rey de su parcela tiene un método reconocible. Sin nombre, no hay marca — hay servicio anónimo.'],
@@ -1145,8 +1145,8 @@ export const WorkbookPage: React.FC = () => {
                       {i + 1}. <strong><em>{title as string}</em></strong> {desc as string}
                     </p>
                   ))}
-                  <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "12px 0 0", lineHeight: 1.65, fontFamily: INTER }}>
-                    <strong style={{ fontStyle: "normal" }}>Regla operativa:</strong> Si al describir por qué eres única sientes que estás dejando gente fuera, vas por buen camino. Si tu respuesta a esta pregunta puede pegarla otra persona de tu sector en su propia landing y funcionar igual, no es tuya es del sector. Reescribe hasta que sea impecable.
+                  <p style={{ fontSize: "13px", fontStyle: "italic", color: ACCENT, fontWeight: 500, margin: "12px 0 0", lineHeight: 1.65, fontFamily: INTER }}>
+                    <strong style={{ fontStyle: "normal", fontWeight: 800 }}>⚡ Regla operativa:</strong> Si al describir por qué eres única sientes que estás dejando gente fuera, vas por buen camino. Si tu respuesta a esta pregunta puede pegarla otra persona de tu sector en su propia landing y funcionar igual, no es tuya es del sector. Reescribe hasta que sea impecable.
                   </p>
                 </div>
               </div>
@@ -1160,14 +1160,16 @@ export const WorkbookPage: React.FC = () => {
                 <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 8px", lineHeight: 1.65, fontFamily: INTER }}>
                   Cómo vas a conseguir leads y clientes durante todo el año, no solo en lanzamientos.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 10px", fontFamily: INTER }}>
-                  &ldquo;El evergreen paga las facturas. Los lanzamientos son la casa en la playa.&rdquo;
-                </p>
-                <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
+                <div style={{ background: "rgba(38,150,106,0.07)", border: "1px solid rgba(38,150,106,0.25)", borderRadius: "8px", padding: "10px 14px", margin: "0 0 12px" }}>
+                  <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: 0, lineHeight: 1.5, fontFamily: INTER, fontStyle: "italic", textAlign: "center" }}>
+                    &ldquo;El evergreen paga las facturas. Los lanzamientos son la casa en la playa.&rdquo;
+                  </p>
+                </div>
+                <p style={{ fontSize: "13px", color: "#555", margin: "0 0 16px", lineHeight: 1.65, fontFamily: INTER }}>
                   Si tu estrategia depende 100% de picos, los meses en los que no lanzas facturas cero y en el 4º mes ya vives con el estrés del próximo lanzamiento. Si tu estrategia es solo evergreen sin activaciones, dejas fuera a toda la demanda reprimida (los que te conocen pero no actúan). Necesitas las dos patas.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 6px", fontFamily: INTER }}>Pata 1 · Evergreen (base constante).</p>
-                <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 4px", lineHeight: 1.65, fontFamily: INTER }}>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 6px", fontFamily: INTER }}>🔄 Pata 1 · Evergreen (base constante)</p>
+                <p style={{ fontSize: "13px", fontStyle: "italic", color: "#555", margin: "0 0 6px", lineHeight: 1.65, fontFamily: INTER }}>
                   Capta al cliente que está listo AHORA, nivel 3-4 de conciencia. Sistema siempre activo: lead magnet + nutrición + oferta.
                 </p>
                 {[
@@ -1175,10 +1177,12 @@ export const WorkbookPage: React.FC = () => {
                   'Si tu precio anual supera esa cifra → VSL o taller gratuito previo.',
                   'Siempre con opción anual. El anual es lo que asegura LTV.',
                 ].map((line, i) => (
-                  <p key={i} style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 4px", lineHeight: 1.65, fontFamily: INTER }}>· {line}</p>
+                  <p key={i} style={{ fontSize: "13px", fontStyle: "italic", color: "#555", margin: "0 0 4px", lineHeight: 1.65, fontFamily: INTER }}>
+                    <span style={{ color: ACCENT, fontStyle: "normal", fontWeight: 700, marginRight: "6px" }}>→</span>{line}
+                  </p>
                 ))}
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "12px 0 6px", fontFamily: INTER }}>Pata 2 · Estacionales (demanda reprimida).</p>
-                <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 4px", lineHeight: 1.65, fontFamily: INTER }}>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "14px 0 6px", fontFamily: INTER }}>📅 Pata 2 · Estacionales (demanda reprimida)</p>
+                <p style={{ fontSize: "13px", fontStyle: "italic", color: "#555", margin: "0 0 6px", lineHeight: 1.65, fontFamily: INTER }}>
                   Para el que te conoce, te sigue, y aún no da el paso. Momentos concretos del año donde activas urgencia con estructura:
                 </p>
                 {[
@@ -1186,10 +1190,12 @@ export const WorkbookPage: React.FC = () => {
                   'Aperturas de plazas fundadoras.',
                   'Paid trial de 14 días por 14€ (nunca 7 días gratis — atrae al peor perfil).',
                 ].map((line, i) => (
-                  <p key={i} style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 4px", lineHeight: 1.65, fontFamily: INTER }}>· {line}</p>
+                  <p key={i} style={{ fontSize: "13px", fontStyle: "italic", color: "#555", margin: "0 0 4px", lineHeight: 1.65, fontFamily: INTER }}>
+                    <span style={{ color: ACCENT, fontStyle: "normal", fontWeight: 700, marginRight: "6px" }}>→</span>{line}
+                  </p>
                 ))}
-                <div style={{ borderTop: "1px solid #E8E8E5", marginTop: "12px", paddingTop: "12px" }}>
-                  <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Las 3 marcas de una estrategia anual que se sostiene:</p>
+                <div style={{ borderTop: "1px solid rgba(38,150,106,0.2)", marginTop: "14px", paddingTop: "14px" }}>
+                  <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 8px", fontFamily: INTER }}>✅ Las 3 marcas de una estrategia anual que se sostiene:</p>
                   {[
                     ["Tiene evergreen que funciona sin ti.", "Un sistema que capta leads y vende mientras duermes. Sin evergreen dependes de tu energía y tu energía no da para 12 meses seguidos de captación manual."],
                     ["Tiene estacionales para activar la demanda reprimida.", "El nivel 2 (te conoce, no actúa) es el segmento más grande de tu audiencia. Solo lo activas con momentos concretos y estructurados. Sin estacionales, ese segmento se queda mirando para siempre."],
@@ -1218,17 +1224,20 @@ export const WorkbookPage: React.FC = () => {
                 <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
                   <strong>500 seguidores son suficientes</strong> para arrancar. No necesitas audiencia grande — necesitas oferta clara, fecha clara y condiciones fundadoras que compensen el riesgo del que entra sin prueba social.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 10px", fontFamily: INTER }}>Los 3 ingredientes de un primer lanzamiento que funciona:</p>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 12px", fontFamily: INTER }}>🚀 Los 3 ingredientes de un primer lanzamiento que funciona:</p>
                 {[
-                  ["1 · Evento gratuito de activación", "(reto de 3-5 días, masterclass, taller intensivo). Activa a los niveles 3-4 de conciencia y filtra al que no encaja."],
-                  ["2 · Condiciones fundadoras con caducidad real.", "Los primeros que entran sin prueba social merecen recompensa: precio congelado, bonus exclusivos o acceso extra. Cuando dices que las condiciones caducan el domingo, caducan el domingo. La credibilidad lo es todo."],
-                  ["3 · Ventana corta de venta.", "3-5 días. Ni un mes de campaña floja, ni una tarde. Suficiente para que quien está listo actúe, suficientemente corto para generar urgencia real."],
-                ].map(([label, desc], i) => (
-                  <p key={i} style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 8px", lineHeight: 1.65, fontFamily: INTER }}>
-                    <strong style={{ fontStyle: "normal", color: "#525252" }}>{label}</strong> {desc}
-                  </p>
+                  { num: "1", label: "Evento gratuito de activación", desc: "(reto de 3-5 días, masterclass, taller intensivo). Activa a los niveles 3-4 de conciencia y filtra al que no encaja." },
+                  { num: "2", label: "Condiciones fundadoras con caducidad real.", desc: "Los primeros que entran sin prueba social merecen recompensa: precio congelado, bonus exclusivos o acceso extra. Cuando dices que las condiciones caducan el domingo, caducan el domingo. La credibilidad lo es todo." },
+                  { num: "3", label: "Ventana corta de venta.", desc: "3-5 días. Ni un mes de campaña floja, ni una tarde. Suficiente para que quien está listo actúe, suficientemente corto para generar urgencia real." },
+                ].map(({ num, label, desc }) => (
+                  <div key={num} style={{ display: "flex", gap: "10px", alignItems: "flex-start", marginBottom: "10px" }}>
+                    <span style={{ fontSize: "12px", fontWeight: 900, color: "#fff", background: ACCENT, borderRadius: "50%", width: "20px", height: "20px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "1px" }}>{num}</span>
+                    <p style={{ fontSize: "13px", fontStyle: "italic", color: "#555", margin: 0, lineHeight: 1.65, fontFamily: INTER }}>
+                      <strong style={{ fontStyle: "normal", color: "#2D2D2D" }}>{label}</strong> {desc}
+                    </p>
+                  </div>
                 ))}
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "14px 0 10px", fontFamily: INTER }}>Tres niveles de respuesta:</p>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "14px 0 10px", fontFamily: INTER }}>📊 Tres niveles de respuesta:</p>
                 {[
                   { icon: "✗", color: "#DC2626", label: 'Nivel 1 — Sin fecha, sin evento:', quote: '"Haré una apertura cuando esté todo listo."', note: 'Nunca vas a lanzar. Sin fecha, sin evento gatillo, sin urgencia. Y sobre todo: sin el permiso mental para lanzar antes de tenerlo perfecto.' },
                   { icon: "◑", color: "#D97706", label: 'Nivel 2 — Formato correcto, sin estructura:', quote: '"Un webinar gratuito y después abro la membresía."', note: 'Formato adecuado pero sin condiciones fundadoras, sin ventana, sin caducidad de precio. Sin incentivo para actuar el día del webinar, la gente asiente, dice "qué interesante" y no compra hasta "más adelante". Y "más adelante" no llega nunca.' },
@@ -1241,8 +1250,8 @@ export const WorkbookPage: React.FC = () => {
                   </div>
                 ))}
                 <div style={{ borderTop: "1px solid #E8E8E5", marginTop: "12px", paddingTop: "12px" }}>
-                  <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 6px", fontFamily: INTER }}>La trampa más frecuente:</p>
-                  <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: 0, lineHeight: 1.65, fontFamily: INTER }}>
+                  <p style={{ fontSize: "13px", fontWeight: 800, color: ACCENT, margin: "0 0 6px", fontFamily: INTER }}>⚡ La trampa más frecuente:</p>
+                  <p style={{ fontSize: "13px", fontStyle: "italic", color: "#555", margin: 0, lineHeight: 1.65, fontFamily: INTER }}>
                     Perfeccionismo. &ldquo;Cuando tenga los módulos grabados, los emails automatizados, la comunidad montada y la landing perfecta, lanzo.&rdquo; Nunca ocurre. Y cuando ocurre, es 8 meses después y ya has perdido dinero, tiempo y momentum. Lanza al 70%. Los primeros miembros son parte del proceso de construcción, no clientes de un producto acabado.
                   </p>
                 </div>
@@ -1264,29 +1273,32 @@ export const WorkbookPage: React.FC = () => {
                 <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
                   Si paras de vender una semana, el 1 a 1 se frena. Ese es el techo exacto que la membresía viene a romper.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 10px", fontFamily: INTER }}>El principio de la migración: no cortas ni compaginas, transicionas.</p>
-                <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 10px", fontFamily: INTER }}>🔀 El principio de la migración: no cortas ni compaginas, transicionas.</p>
+                <p style={{ fontSize: "13px", color: "#555", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
                   Los dos extremos matan. Cortar el 1 a 1 de golpe = ingreso cero durante 6 meses hasta que la membresía facture. Mantenerlo todo en paralelo = nunca liberas tiempo y la membresía nunca crece porque compite con tu atención.
                 </p>
-                <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
+                <p style={{ fontSize: "13px", color: "#555", margin: "0 0 12px", lineHeight: 1.65, fontFamily: INTER }}>
                   La ruta que funciona es en fases, con umbral de ingreso mínimo que nunca bajas y cierre inmediato de nueva captación 1 a 1 para no seguir alimentando el modelo que quieres dejar atrás.
                 </p>
                 {[
-                  ["· Fase 1 (mes 0-3):", "paro nueva captación 1 a 1 desde hoy. De mis 8 clientes actuales, identifico las 4 más alineadas con la promesa de la membresía y les propongo entrar como fundadoras (precio 99€/mes + 1 sesión 1:1 de continuidad al mes durante 6 meses). Las otras 4 terminan su paquete pactado sin renovación automática. La membresía arranca con 4 fundadoras internas + captación externa."],
-                  ["· Fase 2 (mes 4-6):", "subo precio de sesiones sueltas 1 a 1 en un 50% para que quede como servicio premium residual, no como oferta principal. Foco 80% en membresía, 20% residual en 1 a 1 selecto."],
-                  ["· Fase 3 (mes 7+):", "sesiones 1 a 1 solo como upsell interno para miembras existentes que necesiten intensivos puntuales. Membresía como único producto de captación externa."],
-                ].map(([label, desc], i) => (
-                  <p key={i} style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 8px", lineHeight: 1.65, fontFamily: INTER }}>
-                    <strong style={{ fontStyle: "normal", color: "#525252" }}>{label}</strong> {desc}
-                  </p>
+                  { icon: "1️⃣", label: "Fase 1 (mes 0-3):", desc: "paro nueva captación 1 a 1 desde hoy. De mis 8 clientes actuales, identifico las 4 más alineadas con la promesa de la membresía y les propongo entrar como fundadoras (precio 99€/mes + 1 sesión 1:1 de continuidad al mes durante 6 meses). Las otras 4 terminan su paquete pactado sin renovación automática. La membresía arranca con 4 fundadoras internas + captación externa." },
+                  { icon: "2️⃣", label: "Fase 2 (mes 4-6):", desc: "subo precio de sesiones sueltas 1 a 1 en un 50% para que quede como servicio premium residual, no como oferta principal. Foco 80% en membresía, 20% residual en 1 a 1 selecto." },
+                  { icon: "3️⃣", label: "Fase 3 (mes 7+):", desc: "sesiones 1 a 1 solo como upsell interno para miembras existentes que necesiten intensivos puntuales. Membresía como único producto de captación externa." },
+                ].map(({ icon, label, desc }) => (
+                  <div key={label} style={{ display: "flex", gap: "10px", alignItems: "flex-start", marginBottom: "10px" }}>
+                    <span style={{ fontSize: "15px", flexShrink: 0, marginTop: "1px" }}>{icon}</span>
+                    <p style={{ fontSize: "13px", fontStyle: "italic", color: "#555", margin: 0, lineHeight: 1.65, fontFamily: INTER }}>
+                      <strong style={{ fontStyle: "normal", color: "#2D2D2D" }}>{label}</strong> {desc}
+                    </p>
+                  </div>
                 ))}
-                <div style={{ borderTop: "1px solid #E8E8E5", marginTop: "12px", paddingTop: "12px" }}>
-                  <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 6px", fontFamily: INTER }}>La trampa más frecuente:</p>
-                  <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
+                <div style={{ borderTop: "1px solid rgba(38,150,106,0.2)", marginTop: "14px", paddingTop: "14px" }}>
+                  <p style={{ fontSize: "13px", fontWeight: 800, color: ACCENT, margin: "0 0 6px", fontFamily: INTER }}>⚡ La trampa más frecuente:</p>
+                  <p style={{ fontSize: "13px", fontStyle: "italic", color: "#555", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
                     Sobrevalorar la resistencia de tus clientes 1 a 1 a moverse al grupo. Muchos profesionales asumen que &ldquo;sus clientes son de 1 a 1 y no van a querer entrar en un grupo&rdquo;. Suelen equivocarse — muchos entran encantados de mantener el vínculo pagando menos y con más comunidad. Pero solo si se lo ofreces con condición específica de fundadora, no como opción difusa.
                   </p>
-                  <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 4px", fontFamily: INTER }}>Regla operativa:</p>
-                  <p style={{ fontSize: "13px", color: "#525252", margin: 0, lineHeight: 1.65, fontFamily: INTER }}>
+                  <p style={{ fontSize: "13px", fontWeight: 800, color: ACCENT, margin: "0 0 4px", fontFamily: INTER }}>💡 Regla operativa:</p>
+                  <p style={{ fontSize: "13px", color: "#555", margin: 0, lineHeight: 1.65, fontFamily: INTER }}>
                     No eres el primer profesional que migra. Tenemos decenas de casos que hicieron esta transición.
                   </p>
                 </div>
