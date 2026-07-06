@@ -1373,12 +1373,12 @@ export const WorkbookPage: React.FC = () => {
         {currentDay === 4 && bonusUnlocked && (
           <div>
             {/* Hero */}
-            <div style={{ background: "#111111", borderRadius: "14px", padding: "40px 32px", marginBottom: "32px", textAlign: "center" }}>
-              <div style={{ display: "flex", justifyContent: "center", marginBottom: "12px" }}>
+            <div style={{ marginBottom: "32px", textAlign: "center" }}>
+              <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
                 <svg width="20" height="24" viewBox="0 0 18 22" fill="none"><path d="M10.5 1L2 13H8.5L5.5 21L16.5 9H10L13 1Z" fill="#D97706"/></svg>
               </div>
-              <div style={{ fontSize: "11px", fontWeight: 800, letterSpacing: ".14em", textTransform: "uppercase", color: "#D97706", marginBottom: "12px", fontFamily: INTER }}>Bonus Track</div>
-              <div style={{ fontSize: "22px", fontWeight: 900, color: "#fff", letterSpacing: "-.02em", fontFamily: INTER, lineHeight: 1.25 }}>¿Quieres construirlo con nosotros?</div>
+              <div style={{ fontSize: "11px", fontWeight: 800, letterSpacing: ".14em", textTransform: "uppercase", color: "#D97706", marginBottom: "14px", fontFamily: INTER }}>Bonus Track</div>
+              <div style={{ fontSize: "34px", fontWeight: 900, color: "#111111", letterSpacing: "-.02em", fontFamily: INTER, lineHeight: 1.15 }}>¿Quieres construirlo con nosotros?</div>
             </div>
 
             {/* Intro */}
