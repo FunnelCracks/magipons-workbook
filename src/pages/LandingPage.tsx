@@ -33,6 +33,12 @@ const injectStyles = () => {
   const s = document.createElement("style");
   s.id = "landing-styles";
   s.textContent = `
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .marquee-track { animation: marquee 18s linear infinite; }
+    .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(28px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -94,6 +100,11 @@ const injectStyles = () => {
     .a-micro { opacity:0; animation: fadeUp .7s ease forwards 1.56s; }
     .btn-pulse { animation: glow 2.6s ease-in-out 2s infinite; }
     .btn-float { animation: float 3.2s ease-in-out infinite; }
+    @keyframes arrowBounce {
+      0%, 100% { transform: translateX(0); }
+      50%       { transform: translateX(6px); }
+    }
+    .btn-arrow { display: inline-block; margin-left: 8px; font-size: 1.2em; animation: arrowBounce 1.2s cubic-bezier(.45,0,.55,1) infinite; }
     .btn-hover:hover {
       filter: brightness(1.08);
       transform: scale(1.05) !important;
@@ -186,6 +197,39 @@ export const LandingPage: React.FC = () => {
         </div>
 
 
+        {/* Marquee */}
+        <div className="a-p1 marquee-wrap" style={{ position: "relative", overflow: "hidden", width: "100vw", marginLeft: "calc(-50vw + 50%)", marginBottom: "36px" }}>
+          <div className="marquee-track" style={{ display: "flex", alignItems: "center", gap: "12px", width: "max-content" }}>
+            {[...Array(2)].flatMap(() =>
+              [
+                { icon: "🎯", label: "3 días en vivo" },
+                { icon: "💬", label: "Feedback personalizado" },
+                { icon: "⚡", label: "Modelo recurrente" },
+                { icon: "🤝", label: "Comunidad exclusiva" },
+                { icon: "🎯", label: "3 días en vivo" },
+                { icon: "💬", label: "Feedback personalizado" },
+                { icon: "⚡", label: "Modelo recurrente" },
+                { icon: "🤝", label: "Comunidad exclusiva" },
+              ].map(({ icon, label }, i) => (
+                <span key={`${label}-${i}`} style={{
+                  display: "inline-flex", alignItems: "center", gap: "6px",
+                  background: "#fff", border: "1px solid #E8E8E4",
+                  borderRadius: "20px", padding: "7px 16px",
+                  fontSize: "12px", fontWeight: 700, color: "#525252",
+                  boxShadow: "0 2px 8px rgba(0,0,0,.05)",
+                  whiteSpace: "nowrap", fontFamily: MONT,
+                  flexShrink: 0,
+                }}>
+                  <span style={{ fontSize: "13px" }}>{icon}</span>{label}
+                </span>
+              ))
+            )}
+          </div>
+          {/* Fade edges */}
+          <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: "80px", background: "linear-gradient(to right, #FAFAF9, transparent)", pointerEvents: "none", zIndex: 1 }} />
+          <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: "80px", background: "linear-gradient(to left, #FAFAF9, transparent)", pointerEvents: "none", zIndex: 1 }} />
+        </div>
+
         <p className="a-p1" style={{ fontSize: "15px", fontStyle: "italic", fontWeight: 400, color: "#525252", lineHeight: 1.75, margin: "0 0 20px" }}>
           Para profesionales que ya saben que el modelo de cambiar tiempo por dinero tiene un techo.
         </p>
@@ -217,7 +261,7 @@ export const LandingPage: React.FC = () => {
                 fontSize: "16px", fontWeight: 900, letterSpacing: ".02em",
                 pointerEvents: "none",
               }}>
-                Comenzar mi Mapa →
+                Comenzar mi Mapa{" "}<span className="btn-arrow">→</span>
               </span>
             </button>
           </div>
