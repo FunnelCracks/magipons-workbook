@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useEffect, useRef, useState } from "react";
+import { RocketProgress } from "../components/RocketProgress";
 
 const MONT   = "'Montserrat', system-ui, sans-serif";
 const ACCENT = "#26966a";
@@ -68,7 +69,19 @@ const injectStyles = () => {
     .a-badge { opacity:0; animation: fadeUp .6s ease forwards .05s; }
     .a-date  { opacity:0; animation: fadeUp .7s ease forwards .15s; }
     .a-label { opacity:0; animation: fadeUp .7s ease forwards .25s; }
-    .a-title { opacity:0; animation: titleIn 1s cubic-bezier(.16,1,.3,1) forwards .38s; }
+    @keyframes gradFlow {
+      0%,100% { background-position: 0% 50%; }
+      50%      { background-position: 100% 50%; }
+    }
+    .a-title {
+      opacity: 0;
+      background: linear-gradient(120deg, #111 0%, #26966a 42%, #34b87f 58%, #111 90%);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: titleIn 1s cubic-bezier(.16,1,.3,1) forwards .38s, gradFlow 4s ease 1.38s infinite;
+    }
     .a-sub   { opacity:0; animation: fadeUp .7s ease forwards .72s; }
     .a-count { opacity:0; animation: fadeUp .7s ease forwards .88s; }
     .a-hr    { transform: scaleX(0); transform-origin: left; animation: lineExpand .9s cubic-bezier(.16,1,.3,1) forwards .95s; }
@@ -96,34 +109,6 @@ const injectStyles = () => {
       80%      { transform: scale(1.2) rotate(6deg) translateY(-6px); }
     }
     .rocket-shake { animation: rocketShake .45s ease-in-out infinite; }
-    @keyframes chipFloat {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-8px); }
-    }
-    .chip { animation: chipFloat 3.4s ease-in-out infinite; }
-    .chip:nth-child(2) { animation-delay: .7s; }
-    .chip:nth-child(3) { animation-delay: 1.4s; }
-    .chip:nth-child(4) { animation-delay: .35s; }
-    .chip:nth-child(5) { animation-delay: 1.05s; }
-    .side-chips-left {
-      position: absolute; left: 32px; top: 0; bottom: 0;
-      display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 14px;
-      z-index: 2; opacity: 0; animation: fadeUp .8s ease forwards .6s;
-    }
-    .side-chips-right {
-      position: absolute; right: 32px; top: 0; bottom: 0;
-      display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 14px;
-      z-index: 2; opacity: 0; animation: fadeUp .8s ease forwards .7s;
-    }
-    .side-chips-left .chip:nth-child(2) { margin-left: 20px; }
-    .side-chips-right .chip:nth-child(1) { margin-left: 12px; }
-    @media (max-width: 1100px) {
-      .side-chips-left, .side-chips-right { display: none; }
-    }
-    .mobile-chips { display: none; flex-wrap: wrap; justify-content: center; gap: 7px; margin-bottom: 28px; opacity: 0; animation: fadeUp .7s ease forwards .58s; }
-    @media (max-width: 1100px) {
-      .mobile-chips { display: flex; }
-    }
   `;
   document.head.appendChild(s);
 };
@@ -134,6 +119,7 @@ const AVATARS = [
   { bg: "#34b87f", letter: "J" },
   { bg: "#0f5c3e", letter: "C" },
 ];
+
 
 export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
@@ -165,32 +151,12 @@ export const LandingPage: React.FC = () => {
       {/* Cursor glow */}
       <div ref={glowRef} style={{ position: "fixed", width: "500px", height: "500px", borderRadius: "50%", background: "radial-gradient(circle, rgba(38,150,106,.07) 0%, transparent 70%)", transform: "translate(-50%,-50%)", pointerEvents: "none", zIndex: 0, transition: "left .12s ease, top .12s ease" }} />
 
+      <RocketProgress current={1} />
+
       {/* Ambient orbs */}
       <div className="orb1" style={{ position: "fixed", top: "8%", right: "6%", width: "360px", height: "360px", borderRadius: "50%", background: "radial-gradient(circle, rgba(38,150,106,.08) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
       <div className="orb2" style={{ position: "fixed", bottom: "12%", left: "4%", width: "280px", height: "280px", borderRadius: "50%", background: "radial-gradient(circle, rgba(38,150,106,.06) 0%, transparent 70%)", pointerEvents: "none", zIndex: 0 }} />
 
-      {/* Side chips — desktop only */}
-      <div className="side-chips-left">
-        {[
-          { icon: "🎯", label: "3 días en vivo" },
-          { icon: "🗺️", label: "Acceso al Mapa" },
-          { icon: "💬", label: "Feedback personalizado" },
-        ].map(({ icon, label }) => (
-          <span key={label} className="chip" style={{ display: "inline-flex", alignItems: "center", gap: "5px", background: "#fff", border: "1px solid #E5E5E5", borderRadius: "20px", padding: "6px 14px", fontSize: "12px", fontWeight: 700, color: "#525252", boxShadow: "0 2px 8px rgba(0,0,0,.06)", whiteSpace: "nowrap", fontFamily: MONT }}>
-            <span style={{ fontSize: "13px" }}>{icon}</span>{label}
-          </span>
-        ))}
-      </div>
-      <div className="side-chips-right">
-        {[
-          { icon: "⚡", label: "Modelo recurrente" },
-          { icon: "🤝", label: "Comunidad exclusiva" },
-        ].map(({ icon, label }) => (
-          <span key={label} className="chip" style={{ display: "inline-flex", alignItems: "center", gap: "5px", background: "#fff", border: "1px solid #E5E5E5", borderRadius: "20px", padding: "6px 14px", fontSize: "12px", fontWeight: 700, color: "#525252", boxShadow: "0 2px 8px rgba(0,0,0,.06)", whiteSpace: "nowrap", fontFamily: MONT }}>
-            <span style={{ fontSize: "13px" }}>{icon}</span>{label}
-          </span>
-        ))}
-      </div>
 
       <div style={{ maxWidth: "560px", width: "100%", textAlign: "center", position: "relative", zIndex: 1 }}>
 
@@ -215,21 +181,6 @@ export const LandingPage: React.FC = () => {
         <p className="a-sub" style={{ fontSize: "clamp(14px, 2vw, 17px)", fontWeight: 600, color: "#A1A1AA", letterSpacing: ".01em", margin: "0 0 22px" }}>
           Construye tu modelo recurrente en 60 días
         </p>
-
-        {/* Benefit chips — mobile only */}
-        <div className="mobile-chips">
-          {[
-            { icon: "🎯", label: "3 días en vivo" },
-            { icon: "🗺️", label: "Acceso al Mapa" },
-            { icon: "💬", label: "Feedback personalizado" },
-            { icon: "⚡", label: "Modelo recurrente" },
-            { icon: "🤝", label: "Comunidad exclusiva" },
-          ].map(({ icon, label }) => (
-            <span key={label} className="chip" style={{ display: "inline-flex", alignItems: "center", gap: "5px", background: "#fff", border: "1px solid #E5E5E5", borderRadius: "20px", padding: "5px 11px", fontSize: "11px", fontWeight: 700, color: "#525252", boxShadow: "0 2px 6px rgba(0,0,0,.05)", whiteSpace: "nowrap", fontFamily: MONT }}>
-              <span style={{ fontSize: "12px" }}>{icon}</span>{label}
-            </span>
-          ))}
-        </div>
 
         {/* Countdown */}
         <div className="a-count" style={{ display: "inline-flex", alignItems: "center", gap: "4px", marginBottom: "44px", background: "#fff", border: "1px solid #E5E5E5", borderRadius: "12px", padding: "14px 24px", boxShadow: "0 2px 12px rgba(0,0,0,.04)" }}>
@@ -290,32 +241,13 @@ export const LandingPage: React.FC = () => {
               transition: "transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s",
             }}
           >
-            {/* Label default */}
             <span style={{
               position: "absolute", inset: 0,
-              display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
+              display: "flex", alignItems: "center", justifyContent: "center",
               fontSize: "16px", fontWeight: 800, letterSpacing: ".02em",
-              opacity: hovering ? 0 : 1,
-              transform: hovering ? "translateY(10px) scale(.9)" : "translateY(0) scale(1)",
-              transition: "all .22s ease",
               pointerEvents: "none",
             }}>
-              🚀 Comenzar mi Mapa
-            </span>
-            {/* Rocket hover */}
-            <span
-              className={hovering ? "rocket-shake" : ""}
-              style={{
-                position: "absolute", inset: 0,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "34px",
-                opacity: hovering ? 1 : 0,
-                transform: hovering ? "scale(1)" : "scale(0.3) translateY(12px)",
-                transition: "opacity .22s ease, transform .28s cubic-bezier(.16,1,.3,1)",
-                pointerEvents: "none",
-              }}
-            >
-              🚀
+              Comenzar mi Mapa
             </span>
           </button>
         </div>

@@ -39,7 +39,11 @@ export const LoginPage: React.FC = () => {
 
         <GoogleSignInButton />
 
-        <p style={{ fontSize: "12px", color: "#C4C4BC", textAlign: "center", margin: "20px 0 0", lineHeight: 1.5 }}>
+        <p style={{ fontSize: "12px", color: "#6B7280", textAlign: "center", margin: "20px 0 16px", lineHeight: 1.65 }}>
+          Usa tu cuenta de Google para ingresar, así mantendrás guardados siempre tus avances y accederás en cualquier momento sin tener que volver a loguearte.
+        </p>
+
+        <p style={{ fontSize: "12px", color: "#C4C4BC", textAlign: "center", margin: "0", lineHeight: 1.5 }}>
           Solo para participantes del Reto 3K
         </p>
       </div>

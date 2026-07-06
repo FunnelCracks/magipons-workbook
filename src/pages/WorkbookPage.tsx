@@ -308,6 +308,7 @@ export const WorkbookPage: React.FC = () => {
                 "Porque llevo dos años haciendo lanzamientos y cada uno me deja agotado. Necesito un modelo que no dependa de hacer un lanzamiento cada trimestre.",
                 "Porque ya intenté lanzar una membresía y no funcionó. Quiero entender qué hice mal y hacerlo bien esta vez.",
                 "Porque quiero más tiempo con mi familia y libertad real. Sin que el negocio dependa de que yo esté delante.",
+                "Porque quiero dar el salto al digital y el modelo de ingresos recurrentes es el que me da más confianza para la vida que quiero tener.",
               ]}
               outro="Tu respuesta no tiene que parecerse a ninguna. Pero si lees estas y reconoces algo, ya tienes por dónde empezar."
             >
@@ -362,7 +363,7 @@ export const WorkbookPage: React.FC = () => {
               hint="Marca lo que más se acerque a tu realidad ahora mismo. Si dudas entre dos, marca las dos."
             >
               {[
-                "Trabajo 1 a 1 y mi agenda está saturada (sesiones, consultas, mentorías individuales)",
+                "Trabajo 1 a 1 y no quiero depender de mi agenda (sesiones, consultas, mentorías individuales)",
                 "Tengo un negocio digital con ingresos irregulares (cursos, lanzamientos, picos de facturación)",
                 "Ya tengo una membresía o programa grupal funcionando pero quiero escalarlo",
                 "Estoy empezando, todavía no tengo clientes pagando",
@@ -1015,7 +1016,7 @@ export const WorkbookPage: React.FC = () => {
                     <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
                       Ofrecer 7 días gratis para &ldquo;reducir la barrera&rdquo;. No funciona. Atrae exactamente a quien no quieres: el que entra sin compromiso, no consigue resultados en 7 días (nadie los consigue), y se va hablando mal. Si tienes que reducir barrera, ofrece <strong style={{ fontStyle: "normal" }}>paid trial</strong> (14 días por 14€, por ejemplo) filtra al que no está listo y compromete al que sí.
                     </p>
-                    <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 6px", fontFamily: INTER }}>La filosofía del libro sobre precio:</p>
+                    <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 6px", fontFamily: INTER }}>Algo importante sobre el precio:</p>
                     <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: 0, lineHeight: 1.65, fontFamily: INTER }}>
                       El precio bajo no vende más, vende peor. Compras más cansancio, más devoluciones, más críticas, y ninguna posibilidad de escalar. El precio alto no es arrogancia: es la única forma de tener un cliente que se toma en serio la transformación que le vendes.
                     </p>
@@ -1078,7 +1079,7 @@ export const WorkbookPage: React.FC = () => {
                   El generalista compite a la baja y se pierde en el ruido. <strong>El rey de su parcela</strong> cobra premium, es referente y crece por recomendación. Y para ser el rey de tu parcela, la parcela tiene que ser lo suficientemente pequeña como para ser tuya.
                 </p>
                 <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
-                  La forma de llegar ahí es una sola: <strong>anchar hasta que duela.</strong> Empiezas amplio y afinas hasta que sientes que estás dejando gente fuera. Cuando duela un poco, vas por buen camino. Si tu diferenciación puede servirle a &ldquo;todo el mundo&rdquo;, no diferencia solo describe.
+                  La forma de llegar ahí es una sola: <strong>nichar hasta que duela.</strong> Empiezas amplio y afinas hasta que sientes que estás dejando gente fuera. Cuando duela un poco, vas por buen camino. Si tu diferenciación puede servirle a &ldquo;todo el mundo&rdquo;, no diferencia solo describe.
                 </p>
                 <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 10px", fontFamily: INTER }}>Tres niveles de respuesta:</p>
                 {[
@@ -1096,7 +1097,7 @@ export const WorkbookPage: React.FC = () => {
                   <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Las 3 marcas de una diferenciación que se sostiene:</p>
                   {[
                     ["Es un dato, no un adjetivo.", '"Soy la única X que Y" o "he hecho Z veces esto" o "vengo de A y por eso B". Los adjetivos ("auténtica", "cercana", "apasionada") son ruido — todos los usan, ninguno separa. Sustituye cada adjetivo por un hecho verificable. Si no puedes, ese adjetivo no aguanta.'],
-                    ["Tiene un método o marco propio con nombre.", 'No es "mi enfoque personalizado" — es "el sistema Cuerpo Estable" o "el método Mantrailing" o "la comunicación no agresiva". El libro es claro: el rey de su parcela tiene un método reconocible. Sin nombre, no hay marca — hay servicio anónimo.'],
+                    ["Tiene un método o marco propio con nombre.", 'No es "mi enfoque personalizado" — es "el sistema Cuerpo Estable" o "el método Mantrailing" o "la comunicación no agresiva". El rey de su parcela tiene un método reconocible. Sin nombre, no hay marca — hay servicio anónimo.'],
                     ["Termina en el cliente, no en ti.", '"Vengo de terapia clínica" es tu credencial. Lo importante viene después: "...y eso significa que sé cuándo alguien necesita sistema y cuándo necesita terapia — y hago solo lo que puedo hacer bien". Tu diferencia se justifica por lo que le aporta al cliente, no por lo que dice de ti.'],
                   ].map(([title, desc], i) => (
                     <p key={i} style={{ fontSize: "13px", color: "#525252", margin: "0 0 8px", lineHeight: 1.65, fontFamily: INTER }}>
@@ -1219,9 +1220,6 @@ export const WorkbookPage: React.FC = () => {
               hint="Los mantienes en paralelo · los conviertes en miembros fundadores con precio especial · subes precios para reducir cartera · paras nueva captación 1 a 1… Qué plan tienes."
             >
               <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
-                <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
-                  Esta pregunta es solo para uno de los 3 perfiles que encajan en membresía según el libro: <strong>el experto en servicios</strong>. Si vienes del 1 a 1, tu cartera actual no es un lastre — es tu mayor ventaja competitiva. Son clientes que ya te compraron una vez con éxito. Son la audiencia más cualificada que vas a tener nunca. Si los ignoras en la migración, estás desperdiciando tu mejor recurso.
-                </p>
                 <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
                   Si paras de vender una semana, el 1 a 1 se frena. Ese es el techo exacto que la membresía viene a romper.
                 </p>
@@ -1256,57 +1254,6 @@ export const WorkbookPage: React.FC = () => {
               <FormField label="" value={localData.day2.migration || ""} onChange={(v) => handleFieldChange("day2.migration", v)} type="textarea" />
             </Question>
 
-            {/* Q6 Tus primeros 10 clientes */}
-            <Question
-              number={6}
-              title="Tus primeros 10 clientes"
-              hint="Lista las personas reales que podrían ser tus 10 primeros clientes cuando abras. Con nombre. Si no tienes 10, escribe los que tengas."
-            >
-              <div style={{ border: "1px solid #E5E5E5", borderRadius: "8px", overflow: "hidden" }}>
-                <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                  <thead>
-                    <tr style={{ background: "#F5F5F3" }}>
-                      <th style={{ width: "36px", padding: "10px 12px", fontSize: "11px", fontWeight: 700, color: "#A1A1AA", textAlign: "center", borderBottom: "1px solid #E5E5E5", fontFamily: INTER, letterSpacing: ".06em", textTransform: "uppercase" }}>#</th>
-                      <th style={{ padding: "10px 14px", fontSize: "11px", fontWeight: 700, color: "#A1A1AA", textAlign: "left", borderBottom: "1px solid #E5E5E5", borderLeft: "1px solid #E5E5E5", fontFamily: INTER, letterSpacing: ".06em", textTransform: "uppercase" }}>Nombre</th>
-                      <th style={{ padding: "10px 14px", fontSize: "11px", fontWeight: 700, color: "#A1A1AA", textAlign: "left", borderBottom: "1px solid #E5E5E5", borderLeft: "1px solid #E5E5E5", fontFamily: INTER, letterSpacing: ".06em", textTransform: "uppercase" }}>Por qué crees que entrarían</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {(localData.day2.firstClients || Array.from({ length: 10 }, () => ({ name: "", reason: "" }))).map((client: { name: string; reason: string }, i: number) => (
-                      <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : "#FAFAF9" }}>
-                        <td style={{ padding: "6px 12px", fontSize: "12px", color: "#A1A1AA", fontWeight: 700, textAlign: "center", borderBottom: "1px solid #F0F0EE", fontFamily: INTER }}>{i + 1}</td>
-                        <td style={{ padding: "4px 8px", borderBottom: "1px solid #F0F0EE", borderLeft: "1px solid #E5E5E5" }}>
-                          <input
-                            value={client.name}
-                            onChange={(e) => {
-                              const updated = [...(localData.day2.firstClients || Array.from({ length: 10 }, () => ({ name: "", reason: "" })))];
-                              updated[i] = { ...updated[i], name: e.target.value };
-                              handleFieldChange("day2.firstClients", updated);
-                            }}
-                            className="client-input"
-                            style={{ width: "100%", border: "none", background: "transparent", fontSize: "13px", color: "#111111", fontFamily: INTER, outline: "none", padding: "7px 10px", boxSizing: "border-box" }}
-                            placeholder="Nombre..."
-                          />
-                        </td>
-                        <td style={{ padding: "4px 8px", borderBottom: "1px solid #F0F0EE", borderLeft: "1px solid #E5E5E5" }}>
-                          <input
-                            value={client.reason}
-                            onChange={(e) => {
-                              const updated = [...(localData.day2.firstClients || Array.from({ length: 10 }, () => ({ name: "", reason: "" })))];
-                              updated[i] = { ...updated[i], reason: e.target.value };
-                              handleFieldChange("day2.firstClients", updated);
-                            }}
-                            className="client-input"
-                            style={{ width: "100%", border: "none", background: "transparent", fontSize: "13px", color: "#111111", fontFamily: INTER, outline: "none", padding: "7px 10px", boxSizing: "border-box" }}
-                            placeholder="Por qué entraría..."
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </Question>
 
           </div>
         )}

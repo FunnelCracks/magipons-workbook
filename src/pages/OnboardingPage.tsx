@@ -107,8 +107,8 @@ export const OnboardingPage: React.FC = () => {
         <h2 style={{ fontSize: "20px", fontWeight: 800, color: "#111111", letterSpacing: "-.02em", margin: "0 0 6px" }}>
           Antes de comenzar
         </h2>
-        <p style={{ fontSize: "14px", color: "#A1A1AA", margin: "0 0 32px", lineHeight: 1.5 }}>
-          Completá tus datos para personalizar tu experiencia.
+        <p style={{ fontSize: "14px", color: "#6B7280", margin: "0 0 32px", lineHeight: 1.65 }}>
+          Completa tus datos para personalizar tus avances y poder enviarte el resultado final por WhatsApp.
         </p>
 
         <form onSubmit={handleSubmit}>
