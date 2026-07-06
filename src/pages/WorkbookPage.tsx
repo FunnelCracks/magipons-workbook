@@ -70,21 +70,25 @@ const Question = ({ number, title, hint, intro, examples, outro, children }: Que
         </p>
       </div>
       {hint && (
-        <p style={{ fontSize: "13px", fontStyle: "italic", color: "#A1A1AA", margin: "4px 0 0 22px", lineHeight: 1.55, fontFamily: INTER }}>
+        <p style={{ fontSize: "13px", fontStyle: "italic", color: "#888", margin: "4px 0 0 22px", lineHeight: 1.6, fontFamily: INTER }}>
           {hint}
         </p>
       )}
     </div>
 
     {(intro || examples?.length || outro) && (
-      <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
-        {intro && <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 10px", lineHeight: 1.6, fontFamily: INTER }}>{intro}</p>}
+      <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
+        {intro && (
+          <p style={{ fontSize: "13px", color: "#2D2D2D", fontWeight: examples?.length ? 600 : 400, margin: "0 0 14px", lineHeight: 1.75, fontFamily: INTER }}>
+            {intro.startsWith("Ejemplo:") ? <><strong>Ejemplo:</strong>{intro.slice("Ejemplo:".length)}</> : intro}
+          </p>
+        )}
         {examples?.map((ex, i) => (
-          <p key={i} style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 6px", lineHeight: 1.6, fontFamily: INTER }}>
-            · "{ex}"
+          <p key={i} style={{ fontSize: "13px", fontStyle: "italic", color: "#444", margin: "0 0 8px", lineHeight: 1.75, fontFamily: INTER }}>
+            <span style={{ color: ACCENT, fontStyle: "normal", fontWeight: 700, marginRight: "7px" }}>→</span>"{ex}"
           </p>
         ))}
-        {outro && <p style={{ fontSize: "13px", fontStyle: "italic", color: "#525252", margin: (intro || examples?.length) ? "12px 0 0" : "0", lineHeight: 1.6, fontFamily: INTER }}>{outro}</p>}
+        {outro && <p style={{ fontSize: "13px", fontStyle: "italic", color: ACCENT, fontWeight: 500, margin: (intro || examples?.length) ? "14px 0 0" : "0", lineHeight: 1.65, fontFamily: INTER }}>{outro}</p>}
       </div>
     )}
 
@@ -312,7 +316,7 @@ export const WorkbookPage: React.FC = () => {
               ]}
               outro="Tu respuesta no tiene que parecerse a ninguna. Pero si lees estas y reconoces algo, ya tienes por dónde empezar."
             >
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>
                 Ahora te toca a ti, ¿por qué quieres construir un modelo recurrente?
               </p>
               <FormField
@@ -330,7 +334,7 @@ export const WorkbookPage: React.FC = () => {
               intro='Ejemplo: "5.000€ recurrentes al mes. No por el dinero en sí, sino porque a esa cifra puedo dejar de coger clientes que no me llenan, bloquear los viernes para mí, y saber que aunque me ponga enfermo/a una semana entera el ingreso entra igual. Es la cifra a la que dejo de vender mi tiempo por horas y empiezo a construir algo que es mío."'
               outro="Tu cifra puede ser 2.000€ o 20.000€. Lo importante no es el número, es qué pasa en tu vida cuando llega."
             >
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>
                 Ahora te toca a ti, ¿cuánto te gustaría facturar cada mes de forma recurrente?
               </p>
               <FormField
@@ -346,7 +350,7 @@ export const WorkbookPage: React.FC = () => {
               title="¿Cómo sería un día tuyo cuando ya tengas ese MRH funcionando?"
               hint="A las 9:00 estoy haciendo... A las 12:00... Por la tarde... Por la noche... Quiero ver tu vida concreta cuando llegues ahí."
             >
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>
                 Ahora te toca a ti, ¿cómo sería tu día ideal cuando tengas MRH?
               </p>
               <FormField
@@ -424,7 +428,7 @@ export const WorkbookPage: React.FC = () => {
 
             {/* Block label */}
             <div style={{ fontSize: "11px", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", color: ACCENT, marginBottom: "40px", fontFamily: INTER }}>
-              Bloque 1 · Tu cliente real
+              🧠 Bloque 1 · Tu cliente real
             </div>
 
             {/* 1.1 Nombre del modelo */}
@@ -433,24 +437,26 @@ export const WorkbookPage: React.FC = () => {
               title="Nombre tentativo de tu modelo (membresía / programa / ecosistema..)"
               hint='Si no tienes nombre todavía, escribe 3 posibles. Importante: el nombre nunca debería contener las palabras "membresía", "programa" ni "curso". Tu nombre vende el resultado, no el formato.'
             >
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
-                <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 10px", lineHeight: 1.6, fontFamily: INTER }}>
-                  Te dejamos algunos ejemplos si te sirven como inspiración:
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
+                <p style={{ fontSize: "13px", color: "#2D2D2D", fontWeight: 600, margin: "0 0 12px", lineHeight: 1.6, fontFamily: INTER }}>
+                  Algunos ejemplos para inspirarte:
                 </p>
                 {[
                   ['"Cuerpo Estable"', 'nombre concepto: la promesa transformada en idea.'],
                   ['"Hábitos Reales"', 'nombre descriptivo: lo que la persona consigue.'],
                   ['"Plan 365"', 'nombre marca corta: fácil de recordar y de pronunciar.'],
                 ].map(([name, desc], i) => (
-                  <p key={i} style={{ fontSize: "13px", color: "#6B6B6B", margin: "0 0 6px", lineHeight: 1.6, fontFamily: INTER }}>
-                    {i + 1}. <em>{name}</em> → {desc}
+                  <p key={i} style={{ fontSize: "13px", color: "#444", margin: "0 0 6px", lineHeight: 1.65, fontFamily: INTER }}>
+                    <span style={{ color: ACCENT, fontWeight: 700, marginRight: "7px" }}>→</span>
+                    <em style={{ color: ACCENT, fontWeight: 700 }}>{name}</em>
+                    <span style={{ color: "#777", fontStyle: "italic" }}> — {desc}</span>
                   </p>
                 ))}
-                <p style={{ fontSize: "13px", fontStyle: "italic", color: "#525252", margin: "12px 0 0", lineHeight: 1.6, fontFamily: INTER }}>
+                <p style={{ fontSize: "13px", fontStyle: "italic", color: ACCENT, fontWeight: 500, margin: "14px 0 0", lineHeight: 1.6, fontFamily: INTER }}>
                   Si todavía no lo tienes claro, no lo fuerces. Escribe lo que se te ocurra ahora y siempre podemos afinarlo.
                 </p>
               </div>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>
                 Ahora te toca a ti, ¿cómo se llamará tu modelo?
               </p>
               <FormField label="" value={localData.day1.modelName || ""} onChange={(v) => handleFieldChange("day1.modelName", v)} type="textarea" />
@@ -462,16 +468,16 @@ export const WorkbookPage: React.FC = () => {
               title="Avatar psicológico de tu cliente ideal"
               hint="Ayúdate respondiendo estos enunciados y añade todo lo que creas que lo completa."
             >
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
-                <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 8px", lineHeight: 1.6, fontFamily: INTER }}>Ejemplo:</p>
-                <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 12px", lineHeight: 1.7, fontFamily: INTER }}>
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 8px", lineHeight: 1.6, fontFamily: INTER }}>Ejemplo:</p>
+                <p style={{ fontSize: "13px", fontStyle: "italic", color: "#444", margin: "0 0 12px", lineHeight: 1.75, fontFamily: INTER }}>
                   Tiene 38 años. Le preocupa sobre todo no llegar a los 50 con la salud que ve en sus amigas. Siente que ha probado todas las dietas y todas le funcionan tres semanas. Sueña con un cuerpo que no le obligue a pensar en él cada mañana y con poder ir a una cena sin calcular qué pedir. Pero ahora mismo está atrapada entre el descontrol del fin de semana y la culpa del lunes y cada nuevo intento la deja más convencida de que el problema es ella, no el método.
                 </p>
-                <p style={{ fontSize: "13px", fontStyle: "italic", color: "#525252", margin: 0, lineHeight: 1.6, fontFamily: INTER }}>
+                <p style={{ fontSize: "13px", fontStyle: "italic", color: ACCENT, fontWeight: 500, margin: 0, lineHeight: 1.6, fontFamily: INTER }}>
                   No describas a tu cliente cómo lo describirías en un brief de marketing. Descríbelo como si tu mejor amiga te preguntara "¿pero cómo es esa persona de verdad?".
                 </p>
               </div>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>
                 Ahora te toca a ti, describe a tu cliente ideal:
               </p>
               <FormField
@@ -488,33 +494,47 @@ export const WorkbookPage: React.FC = () => {
               number="1.3"
               title="Los 4 niveles de consciencia de tu cliente"
             >
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
                 {[
-                  ["Nivel 1", "ni siquiera sabe que tiene el problema"],
-                  ["Nivel 2", "sabe que tiene el problema pero no busca solución"],
-                  ["Nivel 3", "busca soluciones activamente"],
-                  ["Nivel 4", "te conoce y considera comprarte"],
-                ].map(([level, desc]) => (
-                  <p key={level} style={{ fontSize: "13px", color: "#525252", margin: "0 0 4px", lineHeight: 1.6, fontFamily: INTER }}>
-                    <strong>{level}:</strong> {desc}
+                  { level: "Nivel 1", desc: "ni siquiera sabe que tiene el problema", color: "#DC2626", dot: "🔴" },
+                  { level: "Nivel 2", desc: "sabe que tiene el problema pero no busca solución", color: "#D97706", dot: "🟡" },
+                  { level: "Nivel 3", desc: "busca soluciones activamente", color: "#059669", dot: "🟢" },
+                  { level: "Nivel 4", desc: "te conoce y considera comprarte", color: ACCENT, dot: "⭐" },
+                ].map(({ level, desc, color, dot }) => (
+                  <p key={level} style={{ fontSize: "13px", color: "#2D2D2D", margin: "0 0 6px", lineHeight: 1.6, fontFamily: INTER }}>
+                    <span style={{ marginRight: "6px" }}>{dot}</span>
+                    <strong style={{ color }}>{level}:</strong>
+                    <span style={{ color: "#555" }}> {desc}</span>
                   </p>
                 ))}
-                <p style={{ fontSize: "13px", color: "#525252", margin: "14px 0 10px", lineHeight: 1.6, fontFamily: INTER, fontWeight: 600 }}>
-                  Ejemplo: Misma persona (mujer, 38 años, relación complicada con la comida) en los 4 niveles:
+                <p style={{ fontSize: "13px", color: ACCENT, margin: "16px 0 10px", lineHeight: 1.6, fontFamily: INTER, fontWeight: 700 }}>
+                  📖 Ejemplo: Misma persona (mujer, 38 años, relación complicada con la comida) en los 4 niveles:
                 </p>
                 {[
-                  ["Nivel 1 — Ni siquiera sabe que tiene el problema.",
-                   '"Yo soy así, de buen comer, como mi padre. Lo que pasa es que el metabolismo cambia con la edad." Justifica su situación como genética, edad o vida ajetreada. Si le hablas de "trastornos con la comida" se ofende. No te va a comprar nada, primero hay que mostrarle que su normalidad no es normal.'],
-                  ["Nivel 2 — Sabe que tiene el problema pero no busca solución.",
-                   '"Sí, tengo que ponerme en serio, pero ahora no es el momento. Cuando pase el verano / cuando los niños empiecen el cole / en enero." Hace bromas sobre su descontrol en las cenas. Posterga. Lo aplaza. Aquí no compite tu producto contra otros productos, compite contra "ya empezaré".'],
-                  ["Nivel 3 — Busca soluciones activamente.",
-                   '"He probado Noom, ayuno intermitente, la nutricionista del barrio y dos retos en Instagram. Todo me ha funcionado al principio y luego nada." Está cansada del bucle método-fracaso. Ya no compara precios, compara confianza. Aquí no le hables de quién eres, háblale de por qué lo que probó no funcionó y la razón de por qué tú sí.'],
-                  ["Nivel 4 — Te conoce y considera comprarte.",
-                   '"Llevo dos meses siguiéndote, he visto el caso de Marta y me siento muy identificada. Solo me frena pensar si esta vez voy a poder." No duda de ti, duda de ella. Aquí no necesita más contenido educativo, necesita un empujón: prueba social, garantía, llamada gratuita, algo que neutralice su miedo, no el tuyo a vender.'],
-                ].map(([title, text]) => (
-                  <div key={title as string} style={{ marginBottom: "12px" }}>
-                    <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 4px", lineHeight: 1.5, fontFamily: INTER }}>{title as string}</p>
-                    <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: 0, lineHeight: 1.65, fontFamily: INTER }}>{text as string}</p>
+                  {
+                    title: "🔴 Nivel 1 — Ni siquiera sabe que tiene el problema.",
+                    text: '"Yo soy así, de buen comer, como mi padre. Lo que pasa es que el metabolismo cambia con la edad." Justifica su situación como genética, edad o vida ajetreada. Si le hablas de "trastornos con la comida" se ofende. No te va a comprar nada, primero hay que mostrarle que su normalidad no es normal.',
+                    titleColor: "#DC2626",
+                  },
+                  {
+                    title: "🟡 Nivel 2 — Sabe que tiene el problema pero no busca solución.",
+                    text: '"Sí, tengo que ponerme en serio, pero ahora no es el momento. Cuando pase el verano / cuando los niños empiecen el cole / en enero." Hace bromas sobre su descontrol en las cenas. Posterga. Lo aplaza. Aquí no compite tu producto contra otros productos, compite contra "ya empezaré".',
+                    titleColor: "#D97706",
+                  },
+                  {
+                    title: "🟢 Nivel 3 — Busca soluciones activamente.",
+                    text: '"He probado Noom, ayuno intermitente, la nutricionista del barrio y dos retos en Instagram. Todo me ha funcionado al principio y luego nada." Está cansada del bucle método-fracaso. Ya no compara precios, compara confianza. Aquí no le hables de quién eres, háblale de por qué lo que probó no funcionó y la razón de por qué tú sí.',
+                    titleColor: "#059669",
+                  },
+                  {
+                    title: "⭐ Nivel 4 — Te conoce y considera comprarte.",
+                    text: '"Llevo dos meses siguiéndote, he visto el caso de Marta y me siento muy identificada. Solo me frena pensar si esta vez voy a poder." No duda de ti, duda de ella. Aquí no necesita más contenido educativo, necesita un empujón: prueba social, garantía, llamada gratuita, algo que neutralice su miedo, no el tuyo a vender.',
+                    titleColor: ACCENT,
+                  },
+                ].map(({ title, text, titleColor }) => (
+                  <div key={title} style={{ marginBottom: "14px" }}>
+                    <p style={{ fontSize: "13px", fontWeight: 700, color: titleColor, margin: "0 0 4px", lineHeight: 1.5, fontFamily: INTER }}>{title}</p>
+                    <p style={{ fontSize: "13px", fontStyle: "italic", color: "#555", margin: 0, lineHeight: 1.65, fontFamily: INTER }}>{text}</p>
                   </div>
                 ))}
               </div>
@@ -524,7 +544,7 @@ export const WorkbookPage: React.FC = () => {
               <p style={{ fontSize: "13px", fontStyle: "italic", color: "#A1A1AA", margin: "0 0 14px", lineHeight: 1.6, fontFamily: INTER }}>
                 Ejemplo: Nivel 1: 30% · Nivel 2: 30% · Nivel 3: 20% · Nivel 4: 20%
               </p>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>
                 Ahora te toca a ti, ¿en qué nivel de consciencia está tu cliente?
               </p>
               <FormField label="" value={localData.day1.consciousnessLevel || ""} onChange={(v) => handleFieldChange("day1.consciousnessLevel", v)} type="textarea" />
@@ -536,21 +556,26 @@ export const WorkbookPage: React.FC = () => {
               title="3 frases que tu cliente te diría si te escribiera por WhatsApp"
               hint="Las palabras exactas que usaría. No las tuyas, las suyas."
             >
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
                 {[
                   '"Hola, perdona la hora. Llevo dos semanas viendo tu contenido. Tengo 38, dos hijos, y ya he probado de todo. ¿Cómo sé si esto va a ser diferente esta vez?"',
                   '"Oye, una pregunta un poco tonta… ¿cuánto cuesta? Lo vi en el directo pero no encuentro el precio por ningún lado y me da apuro preguntar."',
                   '"Hola, no sé si te lo escribirá mucha gente pero… ¿esto funciona también si una no tiene tiempo? Trabajo, niños, casa. No quiero apuntarme y dejarlo a la semana otra vez."',
                 ].map((phrase, i) => (
-                  <p key={i} style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
-                    {i + 1}. {phrase}
-                  </p>
+                  <div key={i} style={{ display: "flex", gap: "10px", alignItems: "flex-start", marginBottom: "10px" }}>
+                    <span style={{ fontSize: "15px", flexShrink: 0, marginTop: "1px" }}>💬</span>
+                    <p style={{ fontSize: "13px", fontStyle: "italic", color: "#444", margin: 0, lineHeight: 1.65, fontFamily: INTER }}>
+                      {phrase}
+                    </p>
+                  </div>
                 ))}
-                <p style={{ fontSize: "13px", color: "#525252", margin: "12px 0 0", lineHeight: 1.6, fontFamily: INTER }}>
-                  <strong>Bonus:</strong> estas 3 frases que escribas las vas a usar tal cual en tu próximo ad, en tu próxima landing y en tu próximo email. Cuanto más reales suenen, menos tendrás que escribir desde cero el resto del año.
-                </p>
+                <div style={{ borderTop: "1px solid rgba(38,150,106,0.2)", marginTop: "12px", paddingTop: "12px" }}>
+                  <p style={{ fontSize: "13px", color: ACCENT, fontWeight: 600, margin: 0, lineHeight: 1.65, fontFamily: INTER }}>
+                    <span style={{ fontWeight: 800 }}>⚡ Bonus:</span> estas 3 frases que escribas las vas a usar tal cual en tu próximo ad, en tu próxima landing y en tu próximo email. Cuanto más reales suenen, menos tendrás que escribir desde cero el resto del año.
+                  </p>
+                </div>
               </div>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>
                 Ahora te toca a ti, ¿cómo te escribe tu cliente?
               </p>
               <FormField label="" value={localData.day1.clientPhrases || ""} onChange={(v) => handleFieldChange("day1.clientPhrases", v)} type="textarea" />
@@ -558,7 +583,7 @@ export const WorkbookPage: React.FC = () => {
             {/* Block 2 label */}
             <div style={{ height: "1px", background: "#E5E5E5", margin: "56px 0 40px" }} />
             <div style={{ fontSize: "11px", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", color: ACCENT, marginBottom: "40px", fontFamily: INTER }}>
-              Bloque 2 · Tu promesa
+              ✨ Bloque 2 · Tu promesa
             </div>
 
             {/* 2.1 Transformación prolongada */}
@@ -567,51 +592,62 @@ export const WorkbookPage: React.FC = () => {
               title="Tu transformación prolongada"
               hint="De qué punto a qué punto llevas a tu cliente. No es un beneficio, es un viaje."
             >
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
-                <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 12px", lineHeight: 1.6, fontFamily: INTER }}>
-                  Te pongo un ejemplo de un viaje que podría ocurrir:
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
+                <p style={{ fontSize: "13px", color: "#2D2D2D", fontWeight: 600, margin: "0 0 12px", lineHeight: 1.6, fontFamily: INTER }}>
+                  Ejemplo de un viaje real:
                 </p>
-                <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 6px", lineHeight: 1.65, fontFamily: INTER }}>
-                  <strong>DE:</strong> <em>Una mujer que cada lunes empieza una dieta nueva con la promesa de "esta sí". Que come contando calorías mentalmente mientras come. Que siente que el descontrol del sábado borra todo lo que hizo de lunes a viernes. Y que ha llegado a creer, en silencio, que el problema es ella, no el método.</em>
-                </p>
-                <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
-                  <strong>A:</strong> <em>Una mujer que come sin pensar en comer. Que se acuerda de su peso solo cuando se compra ropa. Que ha dejado de discutir consigo misma cada mañana frente al espejo. Y que sabe que aunque tenga una semana mala, el sistema sigue funcionando porque entiende por qué funciona, no porque alguien se lo esté recordando.</em>
-                </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", lineHeight: 1.6, fontFamily: INTER }}>
-                  EL VIAJE PASA POR 3 MOMENTOS:
+                <div style={{ borderLeft: "3px solid #DC2626", paddingLeft: "12px", marginBottom: "8px" }}>
+                  <p style={{ fontSize: "12px", fontWeight: 800, color: "#DC2626", textTransform: "uppercase", letterSpacing: ".06em", margin: "0 0 4px", fontFamily: INTER }}>DE</p>
+                  <p style={{ fontSize: "13px", fontStyle: "italic", color: "#555", margin: 0, lineHeight: 1.65, fontFamily: INTER }}>
+                    Una mujer que cada lunes empieza una dieta nueva con la promesa de "esta sí". Que come contando calorías mentalmente mientras come. Que siente que el descontrol del sábado borra todo lo que hizo de lunes a viernes. Y que ha llegado a creer, en silencio, que el problema es ella, no el método.
+                  </p>
+                </div>
+                <div style={{ borderLeft: `3px solid ${ACCENT}`, paddingLeft: "12px", marginBottom: "16px" }}>
+                  <p style={{ fontSize: "12px", fontWeight: 800, color: ACCENT, textTransform: "uppercase", letterSpacing: ".06em", margin: "0 0 4px", fontFamily: INTER }}>A</p>
+                  <p style={{ fontSize: "13px", fontStyle: "italic", color: "#555", margin: 0, lineHeight: 1.65, fontFamily: INTER }}>
+                    Una mujer que come sin pensar en comer. Que se acuerda de su peso solo cuando se compra ropa. Que ha dejado de discutir consigo misma cada mañana frente al espejo. Y que sabe que aunque tenga una semana mala, el sistema sigue funcionando porque entiende por qué funciona, no porque alguien se lo esté recordando.
+                  </p>
+                </div>
+                <p style={{ fontSize: "13px", fontWeight: 800, color: ACCENT, margin: "0 0 10px", lineHeight: 1.6, fontFamily: INTER, letterSpacing: ".02em" }}>
+                  🗺️ EL VIAJE PASA POR 3 MOMENTOS:
                 </p>
                 {[
-                  ["Mes 1–2 · Soltar.", 'Dejar de luchar contra la comida. Bajar el ruido mental. La gente le dice "te veo más tranquila" antes de notarle nada físico.'],
-                  ["Mes 3–6 · Construir.", 'Aparecen los hábitos invisibles. Los cambios físicos llegan sin sufrimiento. La gente le pregunta qué está haciendo distinto.'],
-                  ["Mes 7–12 · Encarnar.", 'La transformación deja de ser "lo que hace" y pasa a ser quien es. Aquí es cuando se convierte en testimonio.'],
-                ].map(([phase, desc]) => (
-                  <p key={phase as string} style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 6px", lineHeight: 1.65, fontFamily: INTER }}>
-                    <strong style={{ fontStyle: "normal" }}>{phase as string}</strong> {desc as string}
+                  { icon: "🌱", phase: "Mes 1–2 · Soltar.", desc: 'Dejar de luchar contra la comida. Bajar el ruido mental. La gente le dice "te veo más tranquila" antes de notarle nada físico.' },
+                  { icon: "🏗️", phase: "Mes 3–6 · Construir.", desc: 'Aparecen los hábitos invisibles. Los cambios físicos llegan sin sufrimiento. La gente le pregunta qué está haciendo distinto.' },
+                  { icon: "⭐", phase: "Mes 7–12 · Encarnar.", desc: 'La transformación deja de ser "lo que hace" y pasa a ser quien es. Aquí es cuando se convierte en testimonio.' },
+                ].map(({ icon, phase, desc }) => (
+                  <p key={phase} style={{ fontSize: "13px", fontStyle: "italic", color: "#555", margin: "0 0 8px", lineHeight: 1.65, fontFamily: INTER }}>
+                    <span style={{ marginRight: "6px" }}>{icon}</span>
+                    <strong style={{ fontStyle: "normal", color: "#2D2D2D" }}>{phase}</strong> {desc}
                   </p>
                 ))}
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "14px 0 6px", lineHeight: 1.6, fontFamily: INTER }}>
-                  Por qué este ejemplo enseña algo crítico para el modelo recurrente:
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "16px 0 6px", lineHeight: 1.6, fontFamily: INTER }}>
+                  💡 Por qué este ejemplo enseña algo crítico para el modelo recurrente:
                 </p>
-                <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
+                <p style={{ fontSize: "13px", fontStyle: "italic", color: "#555", margin: "0 0 16px", lineHeight: 1.65, fontFamily: INTER }}>
                   Esta pregunta es el examen real de si tu producto puede ser membresía o solo curso. Si tu transformación se puede entregar en 8 semanas, no necesitas membresía, necesitas un programa cerrado, y también te ayudamos a crearlo.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 10px", lineHeight: 1.6, fontFamily: INTER }}>
-                  Las tres marcas de una transformación prolongada bien construida son:
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 10px", lineHeight: 1.6, fontFamily: INTER }}>
+                  ✅ Las tres marcas de una transformación prolongada bien construida:
                 </p>
                 {[
                   ["El punto de partida es un estado, no un síntoma.", '"Hace dieta cada lunes" es un comportamiento. "Cree que el problema es ella" es un estado interno. Lo segundo justifica meses de acompañamiento; lo primero se soluciona con un programa.'],
                   ["El punto de llegada describe identidad, no resultado.", '"Pesa 10 kg menos" es un resultado y cuando llega, la persona se va. "Es quien come sin pensar en comer" es identidad y la identidad no caduca, se mantiene.'],
                   ["El viaje tiene fases con cambios visibles.", "Si no puedes describir qué pasa el mes 2, el 5 y el 9, tu transformación no es prolongada, es un evento. Y los eventos no se cobran de forma recurrente."],
                 ].map(([title, desc], i) => (
-                  <p key={i} style={{ fontSize: "13px", color: "#525252", margin: "0 0 8px", lineHeight: 1.65, fontFamily: INTER }}>
-                    {i + 1}. <em><strong>{title as string}</strong></em> {desc as string}
+                  <p key={i} style={{ fontSize: "13px", color: "#444", margin: "0 0 8px", lineHeight: 1.65, fontFamily: INTER }}>
+                    <span style={{ color: ACCENT, fontWeight: 700, marginRight: "6px" }}>{i + 1}.</span>
+                    <strong style={{ color: "#2D2D2D" }}>{title as string}</strong>
+                    <span style={{ color: "#666", fontStyle: "italic" }}> {desc as string}</span>
                   </p>
                 ))}
-                <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "12px 0 0", lineHeight: 1.65, fontFamily: INTER }}>
-                  <strong style={{ fontStyle: "normal" }}>Bonus:</strong> si tu transformación cabe en 6-8 semanas, todavía no tienes membresía, tienes un programa cerrado. La pregunta no es "qué consigue mi cliente conmigo". La pregunta es "qué se le rompe el día que deja de tenerme". Si la respuesta es "nada porque ya está transformado", tu modelo es de pago único. Si la respuesta es "vuelve al sitio de antes", tu modelo es recurrente. Además siempre está la opción de comenzar con un programa, que te ayudamos a construir, y crear una membresía de continuación para toda esa gente que no quiera perder el resultado logrado. Esto ocurre en más de un 50% de las veces.
-                </p>
+                <div style={{ borderTop: "1px solid rgba(38,150,106,0.2)", marginTop: "14px", paddingTop: "14px" }}>
+                  <p style={{ fontSize: "13px", fontStyle: "italic", color: ACCENT, fontWeight: 600, margin: 0, lineHeight: 1.65, fontFamily: INTER }}>
+                    <strong style={{ fontStyle: "normal", fontWeight: 800 }}>⚡ Bonus:</strong> si tu transformación cabe en 6-8 semanas, todavía no tienes membresía, tienes un programa cerrado. La pregunta no es "qué consigue mi cliente conmigo". La pregunta es "qué se le rompe el día que deja de tenerme". Si la respuesta es "nada porque ya está transformado", tu modelo es de pago único. Si la respuesta es "vuelve al sitio de antes", tu modelo es recurrente. Además siempre está la opción de comenzar con un programa, que te ayudamos a construir, y crear una membresía de continuación para toda esa gente que no quiera perder el resultado logrado. Esto ocurre en más de un 50% de las veces.
+                  </p>
+                </div>
               </div>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>
                 Ahora te toca a ti, ¿cuál es la transformación prolongada de tu cliente?
               </p>
               <FormField label="" value={localData.day1.transformation || ""} onChange={(v) => handleFieldChange("day1.transformation", v)} type="textarea" />
@@ -622,7 +658,7 @@ export const WorkbookPage: React.FC = () => {
               number="2.2"
               title="Tu fórmula de promesa"
             >
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
                 {[
                   ["El «a conseguir» tiene que ser un mecanismo, no un resultado.", '"Perder peso" es lo que prometen 50.000 cuentas. "Construir una forma de comer que se sostenga sola" es lo único que esa mujer todavía no ha probado. Y por eso es lo único que puede vender.'],
                   ["El «para que puedan» tiene que ser lo que la persona se atreve a decir solo en voz baja.", '"Sentirse mejor con su cuerpo" es lo que pondría en una bio. "Dejar de empezar cada lunes una vida nueva" es lo que llora una madrugada de domingo. Lo segundo convierte; lo primero se ignora.'],
@@ -631,8 +667,8 @@ export const WorkbookPage: React.FC = () => {
                     {i + 2}. <em><strong>{title as string}</strong></em> {desc as string}
                   </p>
                 ))}
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "12px 0 6px", lineHeight: 1.6, fontFamily: INTER }}>
-                  El test rápido para saber si tu fórmula está hecha:
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "12px 0 6px", lineHeight: 1.6, fontFamily: INTER }}>
+                  🧪 El test rápido para saber si tu fórmula está hecha:
                 </p>
                 <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 6px", lineHeight: 1.65, fontFamily: INTER }}>
                   Pista: léela en voz alta y cronometra 7 segundos. Si en ese tiempo no se entiende a quién ayudas, qué consigue y por qué le importa profundamente, todavía no está.
@@ -641,7 +677,7 @@ export const WorkbookPage: React.FC = () => {
                   Una fórmula bien construida es la frase que pegas en tu bio de Instagram, encabeza tu landing y abre tu llamada de venta. Si tienes una distinta para cada cosa, todavía no la tienes.
                 </p>
               </div>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>
                 Ahora te toca a ti, escribe tu fórmula
               </p>
               <FormField label="" value={localData.day1.formula || ""} onChange={(v) => handleFieldChange("day1.formula", v)} type="textarea" />
@@ -650,7 +686,7 @@ export const WorkbookPage: React.FC = () => {
             {/* Block 3 label */}
             <div style={{ height: "1px", background: "#E5E5E5", margin: "56px 0 40px" }} />
             <div style={{ fontSize: "11px", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", color: ACCENT, marginBottom: "40px", fontFamily: INTER }}>
-              Bloque 3 · ¿Qué modelo te conviene?
+              🎯 Bloque 3 · ¿Qué modelo te conviene?
             </div>
 
             {/* 3.1 Modelo */}
@@ -658,7 +694,7 @@ export const WorkbookPage: React.FC = () => {
               number="3.1"
               title="Marca el modelo que mejor encaja con tu nicho y tu situación"
             >
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
                 <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
                   Antes de elegir, vuelve por un segundo a tu respuesta de la pregunta 2.1 (Transformación prolongada). Ahí tienes la respuesta.
                 </p>
@@ -668,12 +704,15 @@ export const WorkbookPage: React.FC = () => {
                   ['→ Marca "Ecosistema" si:', 'Necesitas que la persona haga primero un proceso intensivo (un programa de 6-12 semanas que la transforme) y después se quede en una membresía para no recaer y seguir avanzando. Vendes dos cosas distintas en momentos distintos del viaje.'],
                   ['→ Marca "Todavía no lo tengo claro" si:', 'Es lo más honesto que puedes responder si no tienes claridad aún. Te ayudaremos a darle forma. No es un suspenso, es el atajo.'],
                 ].map(([label, desc]) => (
-                  <p key={label as string} style={{ fontSize: "13px", color: "#525252", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
-                    <strong>{label as string}</strong> {desc as string}
-                  </p>
+                  <div key={label as string} style={{ marginBottom: "10px" }}>
+                    <p style={{ fontSize: "13px", color: "#2D2D2D", margin: 0, lineHeight: 1.65, fontFamily: INTER }}>
+                      <strong style={{ color: ACCENT }}>{label as string}</strong>
+                      <span style={{ color: "#555" }}> {desc as string}</span>
+                    </p>
+                  </div>
                 ))}
-                <div style={{ borderTop: "1px solid #E8E8E5", marginTop: "14px", paddingTop: "14px" }}>
-                  <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Bonus — la trampa más frecuente:</p>
+                <div style={{ borderTop: "1px solid rgba(38,150,106,0.2)", marginTop: "14px", paddingTop: "14px" }}>
+                  <p style={{ fontSize: "13px", fontWeight: 800, color: ACCENT, margin: "0 0 8px", fontFamily: INTER }}>⚡ Bonus — la trampa más frecuente:</p>
                   <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 8px", lineHeight: 1.65, fontFamily: INTER }}>
                     El error más común es marcar &ldquo;ecosistema&rdquo; para no tener que elegir. Si todavía no tienes UNO solo de los dos modelos funcionando con clientes pagando, no eres ecosistema. Eres alguien con buenas ideas. Empieza por uno.
                   </p>
@@ -705,18 +744,18 @@ export const WorkbookPage: React.FC = () => {
               number="3.2"
               title="¿Por qué ese modelo y no otro?"
             >
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
                 <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
                   Si has marcado &lsquo;Todavía no tengo claro&rsquo;, no escribas &ldquo;no sé&rdquo;. Más abajo te explico cómo formular tu duda para que sea útil.
                 </p>
                 <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
                   Antes de escribir, vuelve a tu respuesta de 2.1 (Transformación prolongada) y 1.2 (Avatar). El modelo no se elige por preferencia, se cae por su propio peso cuando las capas anteriores están claras.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>El test raíz que decide el modelo:</p>
-                <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 8px", lineHeight: 1.65, fontFamily: INTER }}>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 8px", fontFamily: INTER }}>🎯 El test raíz que decide el modelo:</p>
+                <p style={{ fontSize: "13px", color: "#555", margin: "0 0 8px", lineHeight: 1.65, fontFamily: INTER }}>
                   Hay una sola pregunta que separa un modelo recurrente de uno de pago único:
                 </p>
-                <p style={{ fontSize: "13px", fontStyle: "italic", fontWeight: 700, color: "#525252", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
+                <p style={{ fontSize: "13px", fontStyle: "italic", fontWeight: 700, color: "#2D2D2D", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
                   &ldquo;¿Qué se le rompe a tu cliente el día que deja de tenerte?&rdquo;
                 </p>
                 {[
@@ -731,7 +770,7 @@ export const WorkbookPage: React.FC = () => {
                 <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "12px 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
                   Esta pregunta la respondes en 5 segundos. Si tardas más, no es que no sepas el modelo, es que aún no tienes claro qué transformación vendes. Vuelve a 2.1 antes de seguir aquí.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 10px", fontFamily: INTER }}>Tres niveles de respuesta para que veas dónde estás:</p>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 10px", fontFamily: INTER }}>📊 Tres niveles de respuesta para que veas dónde estás:</p>
                 {[
                   { icon: "✗", color: "#DC2626", label: "Nivel 1 — Preferencia personal (no convence):", quote: '"He marcado membresía porque me gusta más la idea de los ingresos recurrentes."', note: "Habla de ti, no de tu cliente. El modelo se elige en la capa estratégica (cliente + transformación + posicionamiento), no en la capa personal (tus ganas)." },
                   { icon: "◑", color: "#D97706", label: "Nivel 2 — Razón razonable (defendible, pero blanda):", quote: '"He marcado membresía porque quiero ingresos estables y mi audiencia me lo pide."', note: 'Ya hay mención al cliente. Pero "mi audiencia me lo pide" no es una razón, es un dato sin filtrar.' },
@@ -744,7 +783,7 @@ export const WorkbookPage: React.FC = () => {
                   </div>
                 ))}
                 <div style={{ borderTop: "1px solid #E8E8E5", marginTop: "14px", paddingTop: "14px" }}>
-                  <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 6px", fontFamily: INTER }}>Si has marcado &ldquo;Todavía no lo tengo claro&rdquo;:</p>
+                  <p style={{ fontSize: "13px", fontWeight: 800, color: ACCENT, margin: "0 0 6px", fontFamily: INTER }}>⚡ Si has marcado &ldquo;Todavía no lo tengo claro&rdquo;:</p>
                   <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 8px", lineHeight: 1.65, fontFamily: INTER }}>
                     Está bien. Pero tu respuesta aquí tiene que ser específica, no un &ldquo;no sé&rdquo;.
                   </p>
@@ -752,7 +791,7 @@ export const WorkbookPage: React.FC = () => {
                   <p style={{ fontSize: "13px", color: ACCENT, margin: 0, lineHeight: 1.65, fontFamily: INTER }}>✓ &ldquo;Dudo entre membresía y programa. Mi transformación dura 4-6 meses con un sistema cerrado, pero un 30% de mis clientas 1 a 1 me piden seguir conmigo después. No sé si eso significa que necesito programa + membresía de continuación (ecosistema), o membresía desde el principio.&rdquo;</p>
                 </div>
               </div>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>
                 Ahora te toca a ti, ¿por qué has elegido este modelo?
               </p>
               <FormField label="" value={localData.day1.modelReason || ""} onChange={(v) => handleFieldChange("day1.modelReason", v)} type="textarea" />
@@ -761,7 +800,7 @@ export const WorkbookPage: React.FC = () => {
             {/* Block 4 label */}
             <div style={{ height: "1px", background: "#E5E5E5", margin: "56px 0 40px" }} />
             <div style={{ fontSize: "11px", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", color: ACCENT, marginBottom: "40px", fontFamily: INTER }}>
-              Bloque 4 · Estructura mínima viable
+              🏗️ Bloque 4 · Estructura mínima viable
             </div>
 
             {/* 4.1 Soporte */}
@@ -770,11 +809,11 @@ export const WorkbookPage: React.FC = () => {
               title="Soporte · ¿Cómo acompañarás a tus miembros?"
               hint="Sesiones grupales, comunidad, soporte por email, directos mensuales, voice notes…"
             >
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
                 <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
                   Esta es la pregunta que separa una membresía de un curso grabado con cobro mensual. Si un usuario puede conseguir exactamente lo que tú ofreces bajándose un curso en Hotmart, no tienes una membresía, tienes un pool de contenido con recurrencia. El soporte es el acceso a ti. Es lo único que no se puede piratear ni copiar.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Por qué esta pregunta pesa más de lo que parece:</p>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Por qué esta pregunta pesa más de lo que parece:</p>
                 <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 6px", lineHeight: 1.65, fontFamily: INTER }}>
                   El soporte hace dos cosas que ninguna otra pieza del producto puede hacer:
                 </p>
@@ -784,7 +823,7 @@ export const WorkbookPage: React.FC = () => {
                 <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
                   Si el soporte queda pobre, la retención se hunde aunque tu contenido sea brillante.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 10px", fontFamily: INTER }}>Tres niveles de respuesta para que veas dónde estás:</p>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 10px", fontFamily: INTER }}>📊 Tres niveles de respuesta para que veas dónde estás:</p>
                 {[
                   { icon: "✗", color: "#DC2626", label: "Nivel 1 — Genérico o insostenible:", quote: '"Estaré disponible para responder cualquier duda por WhatsApp."', note: 'Sin formato, sin frecuencia, sin canal claro. Es una promesa que en el mes 3 no vas a poder cumplir. El miembro se lo cree, escribe fuera de horario, no respondes a tiempo, y se va con la sensación de que le has engañado.' },
                   { icon: "◑", color: "#D97706", label: "Nivel 2 — Definido pero blando:", quote: '"Una sesión grupal al mes y un grupo de WhatsApp para dudas."', note: 'Ya hay algo de estructura, pero un grupo de WhatsApp abierto sin reglas es un pozo negro que se llena de ruido en dos semanas. Y estás mezclando soporte (contacto contigo) con comunidad (contacto entre miembros), que son cosas distintas.' },
@@ -797,7 +836,7 @@ export const WorkbookPage: React.FC = () => {
                   </div>
                 ))}
                 <div style={{ borderTop: "1px solid #E8E8E5", marginTop: "12px", paddingTop: "12px" }}>
-                  <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Las 3 marcas de un soporte bien pensado:</p>
+                  <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 8px", fontFamily: INTER }}>✅ Las 3 marcas de un soporte bien pensado:</p>
                   {[
                     ["Tiene formato, no promesas.", '"Estaré disponible" no es soporte, es una expectativa imposible de sostener. Un buen soporte se define en tres coordenadas: frecuencia, canal y duración. Sin las tres, cada miembro nuevo llega con una idea distinta de lo que le vas a dar. Y cuando la realidad no coincide con su expectativa, se va.'],
                     ["Es escalable.", 'Lo que ofreces a 20 miembros tienes que poder ofrecerlo a 200. Si tu formato exige respuesta individualizada a cada miembro, ya no es membresía es 1 a 1 disfrazado, y muere el día que superas la capacidad de tu agenda.'],
@@ -809,7 +848,7 @@ export const WorkbookPage: React.FC = () => {
                   ))}
                 </div>
               </div>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cómo darás soporte?</p>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cómo darás soporte?</p>
               <FormField label="" value={localData.day1.support || ""} onChange={(v) => handleFieldChange("day1.support", v)} type="textarea" />
             </Question>
 
@@ -819,15 +858,15 @@ export const WorkbookPage: React.FC = () => {
               title="Contenido · ¿Qué contenido entregas y cuándo?"
               hint="1 vídeo + recursos descargables al mes, masterclass mensual, retos trimestrales…"
             >
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
                 <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
                   El contenido de una membresía no es un curso partido a cachos, tiene otro ritmo, otra duración y otra intención. <strong>La membresía que se consume es la que retiene.</strong> Todo lo que no consuman, no sirve.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 6px", fontFamily: INTER }}>El formato que funciona: microlearning.</p>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 6px", fontFamily: INTER }}>🎯 El formato que funciona: microlearning.</p>
                 <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
                   Pieza corta (5-20 min), un solo concepto por vídeo, aplicable el mismo día. La lógica es simple: tu miembro tiene la vida que tú tienes. No tiene 90 min para una masterclass, tiene 15 min entre reuniones. Si tus vídeos duran 45 min, no los ve nadie. Si nadie los ve, nadie se transforma. Si nadie se transforma, nadie renueva.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 10px", fontFamily: INTER }}>Tres niveles de respuesta:</p>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 10px", fontFamily: INTER }}>📊 Tres niveles de respuesta:</p>
                 {[
                   { icon: "✗", color: "#DC2626", label: "Nivel 1 — Contenido infinito, sin criterio:", quote: '"Iré subiendo material según me vaya surgiendo. Cuanto más, mejor."', note: 'Este es literalmente el segundo error más caro: comprometerte con contenido infinito. Te quema en 3 meses y no genera retención, genera fatiga tuya y del miembro. "Cuanto más" nunca es la respuesta correcta en una membresía.' },
                   { icon: "◑", color: "#D97706", label: "Nivel 2 — Estructura correcta, ritmo excesivo:", quote: '"1 clase semanal de 60 min + newsletter diaria + directo mensual."', note: 'Ritmo estructurado, pero desproporcionado. 4 clases al mes de 60 min = 4 horas de consumo pasivo. Tu miembro no las va a ver. Tú te vas a matar grabándolas. En 6 meses te preguntas por qué has montado un negocio que te agota más que el 1 a 1.' },
@@ -840,7 +879,7 @@ export const WorkbookPage: React.FC = () => {
                   </div>
                 ))}
                 <div style={{ borderTop: "1px solid #E8E8E5", marginTop: "12px", paddingTop: "12px" }}>
-                  <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Las 3 marcas de un plan de contenido que se sostiene:</p>
+                  <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 8px", fontFamily: INTER }}>✅ Las 3 marcas de un plan de contenido que se sostiene:</p>
                   {[
                     ["Cada pieza enseña UNA sola cosa.", 'Si tu vídeo cubre 4 conceptos, no cubre ninguno es una masterclass mal editada. Una idea por pieza, aplicable el mismo día. Es la única forma de que se consuma, y consumir es la única forma de que renueven.'],
                     ["El ritmo lo puedes producir tú, sin equipo, en tu peor semana.", 'Si tu plan requiere que grabes 8 vídeos al mes para arrancar, se cae en el segundo mes. Piensa el ritmo pensando en ti dentro de 6 meses cansada, no en ti motivada en la semana 1.'],
@@ -850,15 +889,15 @@ export const WorkbookPage: React.FC = () => {
                       {i + 1}. <strong><em>{title as string}</em></strong> {desc as string}
                     </p>
                   ))}
-                  <div style={{ borderTop: "1px solid #E8E8E5", marginTop: "10px", paddingTop: "10px" }}>
-                    <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 6px", fontFamily: INTER }}>La trampa más frecuente:</p>
-                    <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: 0, lineHeight: 1.65, fontFamily: INTER }}>
+                  <div style={{ borderTop: "1px solid rgba(38,150,106,0.2)", marginTop: "10px", paddingTop: "10px" }}>
+                    <p style={{ fontSize: "13px", fontWeight: 800, color: ACCENT, margin: "0 0 6px", fontFamily: INTER }}>⚡ La trampa más frecuente:</p>
+                    <p style={{ fontSize: "13px", fontStyle: "italic", color: "#555", margin: 0, lineHeight: 1.65, fontFamily: INTER }}>
                       Convertir el contenido en el eje del producto. &ldquo;Cada semana subo algo nuevo&rdquo; suena a valor, pero es al revés. El contenido es el <strong>50% del producto</strong>, no el 100%. El otro 50% es soporte (30%) y comunidad (20%). Si toda tu propuesta de valor es contenido, has vuelto a construir un curso disfrazado de membresía. Y los cursos se cancelan tranquilamente cuando el cliente ya vio lo que le interesaba.
                     </p>
                   </div>
                 </div>
               </div>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cómo será tu contenido?</p>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cómo será tu contenido?</p>
               <FormField label="" value={localData.day1.content || ""} onChange={(v) => handleFieldChange("day1.content", v)} type="textarea" />
             </Question>
 
@@ -868,18 +907,18 @@ export const WorkbookPage: React.FC = () => {
               title="Comunidad · ¿Cómo conectas a tus miembros entre ellos?"
               hint="Grupo privado, canal exclusivo, dinámica de presentación, llamadas en grupo…"
             >
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
                 <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
                   La comunidad puede ser el 20% del producto, pero es el 60% de la retención. Y es también <strong>el único activo que no se puede copiar</strong>: alguien puede piratear tu contenido, replicar tu formato, imitar tu discurso pero no puede reproducir a las personas que están en tu comunidad.
                 </p>
-                <p style={{ fontSize: "13px", fontStyle: "italic", fontWeight: 700, color: "#525252", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
+                <p style={{ fontSize: "13px", fontStyle: "italic", fontWeight: 700, color: ACCENT, margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
                   Quédate con esta idea: las personas no se van de los sitios donde sienten que pertenecen.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>El ejemplo que decide todo:</p>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 8px", fontFamily: INTER }}>💡 El ejemplo que decide todo:</p>
                 <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
                   CrossFit no vende entrenos. Vende tu tribu. Si mañana un miembro pudiera hacer los mismos entrenos gratis en su casa, no lo haría porque no perdería el contenido, perdería a sus personas. Esa es la diferencia entre membresía y suscripción, y esa es la única razón por la que un cliente paga cada mes durante 4 años.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 10px", fontFamily: INTER }}>Tres niveles de respuesta:</p>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 10px", fontFamily: INTER }}>📊 Tres niveles de respuesta:</p>
                 {[
                   { icon: "✗", color: "#DC2626", label: "Nivel 1 — Grupo sin diseño:", quote: '"Habrá un grupo de WhatsApp donde todos podrán hablar."', note: "Sin plataforma pensada, sin reglas, sin ritual de entrada. En 2 semanas hay 30 stickers, 5 mensajes al día, tres cuñadas discutiendo, y el resto ha silenciado el grupo. La comunidad ha muerto antes de arrancar." },
                   { icon: "◑", color: "#D97706", label: "Nivel 2 — Espacio, sin dinámica:", quote: '"Canal privado en Circle donde comparto novedades y respondo dudas cuando puedo."', note: "Hay plataforma, pero el flujo es unidireccional (tú → miembros). Los miembros no hablan entre ellos, no se conocen, no tienen razón para volver. Y estás confundiendo soporte (tú respondes) con comunidad (ellos se conectan entre sí)." },
@@ -892,7 +931,7 @@ export const WorkbookPage: React.FC = () => {
                   </div>
                 ))}
                 <div style={{ borderTop: "1px solid #E8E8E5", marginTop: "12px", paddingTop: "12px" }}>
-                  <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Las 3 marcas de una comunidad que se sostiene:</p>
+                  <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 8px", fontFamily: INTER }}>✅ Las 3 marcas de una comunidad que se sostiene:</p>
                   {[
                     ["Hay un ritual de entrada.", "El miembro que entra sin presentarse nunca vuelve a hablar. La presentación (vídeo corto, texto estructurado, lo que sea) crea el primer compromiso que hace que participe. Sin ritual de entrada, la comunidad es un salón lleno de gente que no se saluda."],
                     ["Los miembros hablan entre ellos, no solo contigo.", "Si toda la conversación pasa por ti, no es comunidad es un fan club. Diseña formatos donde los miembros se conecten sin ti en medio: dúos, cuartetos, subgrupos temáticos, reviews entre pares."],
@@ -902,9 +941,9 @@ export const WorkbookPage: React.FC = () => {
                       {i + 1}. <strong><em>{title as string}</em></strong> {desc as string}
                     </p>
                   ))}
-                  <div style={{ borderTop: "1px solid #E8E8E5", marginTop: "10px", paddingTop: "10px" }}>
-                    <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 6px", fontFamily: INTER }}>La trampa más frecuente:</p>
-                    <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 8px", lineHeight: 1.65, fontFamily: INTER }}>
+                  <div style={{ borderTop: "1px solid rgba(38,150,106,0.2)", marginTop: "10px", paddingTop: "10px" }}>
+                    <p style={{ fontSize: "13px", fontWeight: 800, color: ACCENT, margin: "0 0 6px", fontFamily: INTER }}>⚡ La trampa más frecuente:</p>
+                    <p style={{ fontSize: "13px", fontStyle: "italic", color: "#555", margin: "0 0 8px", lineHeight: 1.65, fontFamily: INTER }}>
                       Confundir comunidad con grupo de WhatsApp abierto. Grupo abierto = ruido sin señal. Necesitas plataforma con estructura (Luxora, Circle, Skool, Discord con canales, Slack) donde cada conversación tenga su sitio. La plataforma no es el activo pero sin una plataforma pensada, el activo no llega a existir.
                     </p>
                     <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: 0, lineHeight: 1.65, fontFamily: INTER }}>
@@ -913,7 +952,7 @@ export const WorkbookPage: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cómo conectarás a tus miembros entre ellos?</p>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cómo conectarás a tus miembros entre ellos?</p>
               <FormField label="" value={localData.day1.community || ""} onChange={(v) => handleFieldChange("day1.community", v)} type="textarea" />
             </Question>
 
@@ -923,14 +962,14 @@ export const WorkbookPage: React.FC = () => {
               title="Progreso · ¿Cómo sabrán tus miembros que están avanzando?"
               hint="Rutas, niveles, checklists, feedback personalizado, hitos visibles…"
             >
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
                 <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
                   Esta pregunta parece la más &ldquo;técnica&rdquo; del bloque, pero es la palanca invisible de la retención. El miembro que no ve su avance no se queda, aunque tu contenido sea bueno y tu comunidad esté viva. <strong>El estatus visible es lo que hace que un miembro de 2 años tenga una razón real para renovar.</strong> Sin hitos visibles, la membresía se convierte en una cuota mensual sin sentido.
                 </p>
                 <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
                   Los primeros 30 días son donde se decide si alguien se queda o se va. Si en las primeras semanas el miembro no ve un hito claro que le confirme que está avanzando, se va antes del mes 3 — y muy probablemente ni te lo dice. Simplemente cancela.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 10px", fontFamily: INTER }}>Tres niveles de respuesta:</p>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 10px", fontFamily: INTER }}>📊 Tres niveles de respuesta:</p>
                 {[
                   { icon: "✗", color: "#DC2626", label: "Nivel 1 — Sin sistema:", quote: '"Cada uno irá viendo su avance según lo que le funcione."', note: "Sin hitos, sin señales, sin marco. El miembro no sabe si progresa. En el mes 3 se pregunta \"¿esto me sirve?\" y cancela sin drama, porque no hay nada que le indique lo contrario." },
                   { icon: "◑", color: "#D97706", label: "Nivel 2 — Progreso solo cuantitativo:", quote: '"Tendrán una lista de contenidos con checkboxes para marcar lo que ya vieron."', note: "Estás midiendo consumo, no transformación. Es una playlist de Netflix. Y el día que un miembro marca el 100% de los checks, se pregunta \"¿y ahora qué?\" y se va, porque no le has dado ningún destino más allá del contenido." },
@@ -943,7 +982,7 @@ export const WorkbookPage: React.FC = () => {
                   </div>
                 ))}
                 <div style={{ borderTop: "1px solid #E8E8E5", marginTop: "12px", paddingTop: "12px" }}>
-                  <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Las 3 marcas de un sistema de progreso que sostiene:</p>
+                  <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 8px", fontFamily: INTER }}>✅ Las 3 marcas de un sistema de progreso que sostiene:</p>
                   {[
                     ["Es visible para el grupo, no solo para el miembro.", "El progreso que solo tú ves no genera estatus y sin estatus no hay incentivo para llevar 2 años dentro. El progreso público hace dos cosas a la vez: al que lo consigue le confirma que avanza, y al que aún no lo ha conseguido le muestra que se puede."],
                     ["Combina hitos objetivos con identidad.", 'No es "he visto 10 vídeos" (cuantitativo), es "he pasado del nivel Explora al nivel Aterriza" (identidad). Los hitos cuantitativos son el mapa; los identitarios son el destino.'],
@@ -955,14 +994,14 @@ export const WorkbookPage: React.FC = () => {
                   ))}
                 </div>
               </div>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cómo sabrán tus miembros que están avanzando?</p>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cómo sabrán tus miembros que están avanzando?</p>
               <FormField label="" value={localData.day1.progress || ""} onChange={(v) => handleFieldChange("day1.progress", v)} type="textarea" />
             </Question>
 
             {/* Block 5 label */}
             <div style={{ height: "1px", background: "#E5E5E5", margin: "56px 0 40px" }} />
             <div style={{ fontSize: "11px", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", color: ACCENT, marginBottom: "40px", fontFamily: INTER }}>
-              Bloque 5 · Precio
+              💰 Bloque 5 · Precio
             </div>
 
             {/* 5.1 Precio */}
@@ -971,20 +1010,22 @@ export const WorkbookPage: React.FC = () => {
               title="Precio de tu modelo mensual/anual (si es membresía) o precio total (si es programa)"
               hint="Piensa en lo que tu cliente ahorra, gana o transforma estando contigo cada mes. Si no valoras tu trabajo, nadie lo valorará por ti."
             >
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
                 <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
                   El precio no es un cálculo tuyo, es una fórmula del valor que le entregas al cliente. Cuando lo calculas mirando a la competencia, siempre acabas bajo. Cuando lo calculas mirando la transformación que produces, acabas donde debes.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>
-                  PRECIO = (Resultado que obtiene el cliente × Probabilidad de éxito percibida) / Esfuerzo que le supone al cliente
-                </p>
+                <div style={{ background: "rgba(38,150,106,0.07)", border: "1px solid rgba(38,150,106,0.25)", borderRadius: "8px", padding: "10px 14px", margin: "0 0 10px" }}>
+                  <p style={{ fontSize: "13px", fontWeight: 800, color: ACCENT, margin: 0, lineHeight: 1.5, fontFamily: INTER, textAlign: "center" }}>
+                    PRECIO = (Resultado × Probabilidad de éxito) / Esfuerzo del cliente
+                  </p>
+                </div>
                 <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 8px", lineHeight: 1.65, fontFamily: INTER }}>
                   Cuanto mayor sea el resultado y menor el esfuerzo para conseguirlo, más puedes cobrar. Es la única fórmula que sirve, porque no habla de ti, habla de lo que le pasa a quien te compra.
                 </p>
                 <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
                   Ejemplo aplicado: si tu membresía transforma la relación con la comida (resultado alto), tienes 12 casos previos exitosos (probabilidad de éxito alta) y le pides al miembro 2h a la semana (esfuerzo bajo), tu precio está entre 99-199€/mes sin problema. Si tu transformación es difusa, sin casos previos y exige 6h semanales, no importa lo mucho que trabajes: no puedes cobrar 199€. Y si lo intentas, no vendes.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 10px", fontFamily: INTER }}>Tres niveles de respuesta:</p>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 10px", fontFamily: INTER }}>📊 Tres niveles de respuesta:</p>
                 {[
                   { icon: "✗", color: "#DC2626", label: "Nivel 1 — Precio por comparación:", quote: '"Voy a poner 29€/mes porque he visto que otros de mi sector cobran eso."', note: 'Estás copiando el precio del otro sin saber por qué él lo pone. Y el otro probablemente lo pone porque también miró al de al lado. La comparación siempre lleva a la baja: nadie sube precio por comparar. Y "barato" atrae al peor perfil: el que aún no está en nivel 3.' },
                   { icon: "◑", color: "#D97706", label: "Nivel 2 — Precio intuitivo, sin fórmula:", quote: '"Creo que puedo cobrar 79€/mes. Es lo que la gente estaría dispuesta a pagar."', note: 'Ya piensas en el cliente, pero adivinas. "La gente" no es un dato es un promedio inventado. Y sin fórmula, cambias el precio cada dos meses según tu ansiedad. Eso mata la credibilidad más rápido que un precio equivocado.' },
@@ -997,7 +1038,7 @@ export const WorkbookPage: React.FC = () => {
                   </div>
                 ))}
                 <div style={{ borderTop: "1px solid #E8E8E5", marginTop: "12px", paddingTop: "12px" }}>
-                  <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Las 3 marcas de un precio bien pensado:</p>
+                  <p style={{ fontSize: "13px", fontWeight: 700, color: ACCENT, margin: "0 0 8px", fontFamily: INTER }}>✅ Las 3 marcas de un precio bien pensado:</p>
                   {[
                     ["Está justificado con la fórmula, no con la competencia.", "La competencia te empuja a la baja. La fórmula te lleva al valor real que entregas. Si tu precio necesita justificarse comparándose con otro, todavía no lo tienes."],
                     ["Ofrece mensual Y anual, con incentivo claro al anual.", "Fórmula: precio anual = 10 × precio mensual (los 2 meses restantes son el descuento). Un miembro anual paga 12 meses el primer día, se compromete de otra forma, consigue mejores resultados, y su LTV está asegurado. Un miembro mensual, en cambio, se va en 3-6 meses en promedio. Sin opción anual, tu negocio nunca escala."],
@@ -1008,22 +1049,22 @@ export const WorkbookPage: React.FC = () => {
                     </p>
                   ))}
                   <div style={{ borderTop: "1px solid #E8E8E5", marginTop: "10px", paddingTop: "10px" }}>
-                    <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 6px", fontFamily: INTER }}>La trampa más frecuente:</p>
-                    <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
+                    <p style={{ fontSize: "13px", fontWeight: 800, color: ACCENT, margin: "0 0 6px", fontFamily: INTER }}>⚡ La trampa más frecuente:</p>
+                    <p style={{ fontSize: "13px", fontStyle: "italic", color: "#555", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
                       Precio ridículamente bajo &ldquo;para que entre gente al principio&rdquo;. Es un error. La psicología es implacable: <strong style={{ fontStyle: "normal" }}>barato = no vale</strong>. Atraes al peor perfil (nivel 1-2, sin compromiso), consumen poco, no se transforman, se van hablando mal y usan su boca-oreja contra ti. Precio bajo no reduce fricción, la desplaza al peor sitio (el cliente que ni sabe por qué compró).
                     </p>
-                    <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 6px", fontFamily: INTER }}>La segunda trampa:</p>
+                    <p style={{ fontSize: "13px", fontWeight: 800, color: ACCENT, margin: "0 0 6px", fontFamily: INTER }}>⚡ La segunda trampa:</p>
                     <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
                       Ofrecer 7 días gratis para &ldquo;reducir la barrera&rdquo;. No funciona. Atrae exactamente a quien no quieres: el que entra sin compromiso, no consigue resultados en 7 días (nadie los consigue), y se va hablando mal. Si tienes que reducir barrera, ofrece <strong style={{ fontStyle: "normal" }}>paid trial</strong> (14 días por 14€, por ejemplo) filtra al que no está listo y compromete al que sí.
                     </p>
-                    <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 6px", fontFamily: INTER }}>Algo importante sobre el precio:</p>
+                    <p style={{ fontSize: "13px", fontWeight: 800, color: ACCENT, margin: "0 0 6px", fontFamily: INTER }}>💡 Algo importante sobre el precio:</p>
                     <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: 0, lineHeight: 1.65, fontFamily: INTER }}>
                       El precio bajo no vende más, vende peor. Compras más cansancio, más devoluciones, más críticas, y ninguna posibilidad de escalar. El precio alto no es arrogancia: es la única forma de tener un cliente que se toma en serio la transformación que le vendes.
                     </p>
                   </div>
                 </div>
               </div>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿qué precio le pondrías a tu modelo?</p>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿qué precio le pondrías a tu modelo?</p>
               <FormField label="" value={localData.day1.price || ""} onChange={(v) => handleFieldChange("day1.price", v)} type="textarea" />
             </Question>
 
@@ -1047,14 +1088,14 @@ export const WorkbookPage: React.FC = () => {
 
             {/* Q1 - Cambios del Día 1 */}
             <Question number={1} title="Sabiendo todo lo que sabes ahora, ¿qué cambiarías del Día 1?">
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
                 <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
                   Es momento de dar un paso atrás para dar dos hacia delante. Si no cambiarías nada, también es válido — escríbelo.
                 </p>
                 <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
                   Recuerda, no debes esperar que todo sea perfecto: se lanza al 70% y se mejora en marcha. Nunca vas a tener el 100% de claridad por eso te doy el permiso explícito de mover cosas ahora, cuando aún estamos a tiempo de ajustar el modelo antes de bajar a estrategia de venta.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Dónde te toca cambiar (y dónde no):</p>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Dónde te toca cambiar (y dónde no):</p>
                 <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 8px", lineHeight: 1.65, fontFamily: INTER }}>
                   Los cambios útiles viven en la <strong style={{ fontStyle: "normal" }}>capa estratégica</strong> — avatar, promesa, modelo, estructura de tu membresía. Son los que mueven el negocio.
                 </p>
@@ -1062,13 +1103,13 @@ export const WorkbookPage: React.FC = () => {
                   Los cambios cosméticos: nombre, color, un pequeño ajuste de precio no cambian nada real. Son lo que hace la gente que quiere sentir que ha avanzado sin haber trabajado en profundidad. Si tu única revisión es &ldquo;voy a cambiar el nombre&rdquo;, no has revisado nada, has procrastinado con estética.
                 </p>
               </div>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿necesitas cambiar algo del Día 1?</p>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿necesitas cambiar algo del Día 1?</p>
               <FormField label="" value={localData.day2.changes || ""} onChange={(v) => handleFieldChange("day2.changes", v)} type="textarea" />
             </Question>
 
             {/* Q2 - Propuesta única */}
             <Question number={2} title="¿Por qué tú? ¿Qué hace única tu propuesta?">
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
                 <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 8px", lineHeight: 1.65, fontFamily: INTER }}>
                   Experiencia, enfoque, método, energía, filosofía… No me digas &lsquo;soy auténtica&rsquo;, dime el dato concreto que te diferencia.
                 </p>
@@ -1094,7 +1135,7 @@ export const WorkbookPage: React.FC = () => {
                   </div>
                 ))}
                 <div style={{ borderTop: "1px solid #E8E8E5", marginTop: "12px", paddingTop: "12px" }}>
-                  <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Las 3 marcas de una diferenciación que se sostiene:</p>
+                  <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Las 3 marcas de una diferenciación que se sostiene:</p>
                   {[
                     ["Es un dato, no un adjetivo.", '"Soy la única X que Y" o "he hecho Z veces esto" o "vengo de A y por eso B". Los adjetivos ("auténtica", "cercana", "apasionada") son ruido — todos los usan, ninguno separa. Sustituye cada adjetivo por un hecho verificable. Si no puedes, ese adjetivo no aguanta.'],
                     ["Tiene un método o marco propio con nombre.", 'No es "mi enfoque personalizado" — es "el sistema Cuerpo Estable" o "el método Mantrailing" o "la comunicación no agresiva". El rey de su parcela tiene un método reconocible. Sin nombre, no hay marca — hay servicio anónimo.'],
@@ -1109,13 +1150,13 @@ export const WorkbookPage: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿qué hace tu propuesta única?</p>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿qué hace tu propuesta única?</p>
               <FormField label="" value={localData.day2.uniqueProposal || ""} onChange={(v) => handleFieldChange("day2.uniqueProposal", v)} type="textarea" />
             </Question>
 
             {/* Q3 - Estrategia anual */}
             <Question number={3} title="¿Cuál será tu estrategia anual de captación?">
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
                 <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 8px", lineHeight: 1.65, fontFamily: INTER }}>
                   Cómo vas a conseguir leads y clientes durante todo el año, no solo en lanzamientos.
                 </p>
@@ -1148,7 +1189,7 @@ export const WorkbookPage: React.FC = () => {
                   <p key={i} style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 4px", lineHeight: 1.65, fontFamily: INTER }}>· {line}</p>
                 ))}
                 <div style={{ borderTop: "1px solid #E8E8E5", marginTop: "12px", paddingTop: "12px" }}>
-                  <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Las 3 marcas de una estrategia anual que se sostiene:</p>
+                  <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Las 3 marcas de una estrategia anual que se sostiene:</p>
                   {[
                     ["Tiene evergreen que funciona sin ti.", "Un sistema que capta leads y vende mientras duermes. Sin evergreen dependes de tu energía y tu energía no da para 12 meses seguidos de captación manual."],
                     ["Tiene estacionales para activar la demanda reprimida.", "El nivel 2 (te conoce, no actúa) es el segmento más grande de tu audiencia. Solo lo activas con momentos concretos y estructurados. Sin estacionales, ese segmento se queda mirando para siempre."],
@@ -1160,7 +1201,7 @@ export const WorkbookPage: React.FC = () => {
                   ))}
                 </div>
               </div>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cuál será tu estrategia anual de captación?</p>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cuál será tu estrategia anual de captación?</p>
               <FormField label="" value={localData.day2.annualStrategy || ""} onChange={(v) => handleFieldChange("day2.annualStrategy", v)} type="textarea" />
             </Question>
 
@@ -1170,7 +1211,7 @@ export const WorkbookPage: React.FC = () => {
               title="Estrategia de lanzamiento. ¿Cómo será esa primera apertura?"
               hint="Webinar gratuito, reto de 5 días, masterclass, comunidad fundadores… Define qué harás."
             >
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
                 <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
                   El primer lanzamiento no es donde presentas un producto terminado — es donde <strong>vendes antes de tener</strong>. Lanzas al 70% y mejoras en marcha. Esperar a tenerlo todo listo es la forma más elegante de no lanzar nunca.
                 </p>
@@ -1206,7 +1247,7 @@ export const WorkbookPage: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cómo será tu primera apertura?</p>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cómo será tu primera apertura?</p>
               <FormField label="" value={localData.day2.launchStrategy || ""} onChange={(v) => handleFieldChange("day2.launchStrategy", v)} type="textarea" />
             </Question>
 
@@ -1219,7 +1260,7 @@ export const WorkbookPage: React.FC = () => {
               title="¿Qué haces con tus clientes 1 a 1 actuales cuando lances el modelo grupal?"
               hint="Los mantienes en paralelo · los conviertes en miembros fundadores con precio especial · subes precios para reducir cartera · paras nueva captación 1 a 1… Qué plan tienes."
             >
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
                 <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
                   Si paras de vender una semana, el 1 a 1 se frena. Ese es el techo exacto que la membresía viene a romper.
                 </p>
@@ -1250,7 +1291,7 @@ export const WorkbookPage: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cómo pasarás del individual al grupal?</p>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cómo pasarás del individual al grupal?</p>
               <FormField label="" value={localData.day2.migration || ""} onChange={(v) => handleFieldChange("day2.migration", v)} type="textarea" />
             </Question>
 
@@ -1444,7 +1485,7 @@ export const WorkbookPage: React.FC = () => {
               title="Tu landing en UNA frase: ¿qué prometes en el primer scroll?"
               hint="Una frase. La que pondrías como hero de tu landing. Si te sale larga, recorta."
             >
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
                 <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
                   El headline de tu landing no explica, engancha. Su único trabajo es hacer que el que llegó frío decida seguir leyendo. Si no lo consigue en 7 segundos, has perdido a esa persona para siempre.
                 </p>
@@ -1470,7 +1511,7 @@ export const WorkbookPage: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cuál es el hero de landing?</p>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cuál es el hero de landing?</p>
               <FormField label="" value={localData.day3?.landingHero || ""} onChange={(v) => handleFieldChange("day3.landingHero", v)} type="textarea" />
             </Question>
 
@@ -1480,12 +1521,12 @@ export const WorkbookPage: React.FC = () => {
               title="Tu setter IA: ¿cuáles serían las dos primeras preguntas que harías a un lead que entra a tu WhatsApp?"
               hint="Lo que quieres saber primero para clasificar si esa persona encaja con tu modelo."
             >
-              <div style={{ background: "#F5F5F3", border: "1px solid #E8E8E5", borderRadius: "10px", padding: "16px 20px", marginBottom: "14px" }}>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>El principio del setter que funciona:</p>
+              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>El principio del setter que funciona:</p>
                 <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
                   El setter no vende, cualifica. Las preguntas iniciales no persuaden, no venden, no seducen. Recogen información que permite al closer conducir una <strong>compra premeditada</strong>, no impulsiva. Y la conversación por WhatsApp es íntima: tus preguntas tienen que sonar a persona, no a formulario de Typeform.
                 </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Te dejo lo que sería un buen modelo para que tomes inspiración:</p>
+                <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Te dejo lo que sería un buen modelo para que tomes inspiración:</p>
                 <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
                   &ldquo;1. Cuéntame en qué punto estás ahora con [tu tema específico], ¿qué es lo que te ha traído a escribirme? 2. ¿Qué has probado antes y por qué crees que no te ha terminado de funcionar?&rdquo;
                 </p>
@@ -1493,7 +1534,7 @@ export const WorkbookPage: React.FC = () => {
                   La primera revela situación actual + urgencia (por qué HOY). La segunda revela fricción específica + patrones de intento anterior. Con esas dos respuestas, el closer llega a la llamada con: nivel de conciencia estimado, fatiga acumulada, objeción principal probable, y palancas emocionales. Todo en 2 turnos.
                 </p>
               </div>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#525252", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cuáles serían las dos primeras preguntas que harías a un lead que entra a tu WhatsApp?</p>
+              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cuáles serían las dos primeras preguntas que harías a un lead que entra a tu WhatsApp?</p>
               <FormField label="" value={localData.day3?.setterQuestions || ""} onChange={(v) => handleFieldChange("day3.setterQuestions", v)} type="textarea" />
             </Question>
 
