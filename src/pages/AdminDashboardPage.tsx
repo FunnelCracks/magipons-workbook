@@ -37,12 +37,6 @@ function computeLeadScore(w: Workbook): number {
   if (mod && !mod.includes("no lo tengo claro")) score += 3;
   else if (mod.includes("no lo tengo claro")) score += 2;
 
-  // Día 2 — Los 10 primeros clientes (3 pts si al menos 1 fila con contenido)
-  const hasClients = (d.day2?.firstClients || []).some(
-    (c: any) => c?.name?.trim() || c?.reason?.trim()
-  );
-  if (hasClients) score += 3;
-
   return score;
 }
 

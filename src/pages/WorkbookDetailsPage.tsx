@@ -149,30 +149,6 @@ export const WorkbookDetailsPage: React.FC = () => {
           <Field label="Estrategia anual"           value={workbook.data.day2.annualStrategy} />
           <Field label="Estrategia de lanzamiento"  value={workbook.data.day2.launchStrategy} />
           <Field label="Migración 1 a 1"            value={workbook.data.day2.migration} />
-          {/* Primeros 10 clientes */}
-          <div style={{ marginBottom: "14px" }}>
-            <div style={{ fontSize: "11px", fontWeight: 700, letterSpacing: ".06em", textTransform: "uppercase" as const, color: "#A1A1AA", marginBottom: "8px", fontFamily: MONT }}>Primeros 10 clientes</div>
-            <div style={{ border: `1px solid ${BORDER}`, borderRadius: "6px", overflow: "hidden" }}>
-              <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                <thead>
-                  <tr style={{ background: "#F5F5F3" }}>
-                    <th style={{ width: "32px", padding: "8px 10px", fontSize: "10px", fontWeight: 700, color: "#A1A1AA", textAlign: "center", borderBottom: `1px solid ${BORDER}`, fontFamily: MONT, textTransform: "uppercase" as const }}>#</th>
-                    <th style={{ padding: "8px 12px", fontSize: "10px", fontWeight: 700, color: "#A1A1AA", textAlign: "left", borderBottom: `1px solid ${BORDER}`, borderLeft: `1px solid ${BORDER}`, fontFamily: MONT, textTransform: "uppercase" as const }}>Nombre</th>
-                    <th style={{ padding: "8px 12px", fontSize: "10px", fontWeight: 700, color: "#A1A1AA", textAlign: "left", borderBottom: `1px solid ${BORDER}`, borderLeft: `1px solid ${BORDER}`, fontFamily: MONT, textTransform: "uppercase" as const }}>Por qué entraría</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {(workbook.data.day2.firstClients || []).map((c: { name: string; reason: string }, i: number) => (
-                    <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : BG }}>
-                      <td style={{ padding: "7px 10px", fontSize: "11px", color: "#A1A1AA", fontWeight: 700, textAlign: "center", borderBottom: `1px solid #F0F0EE`, fontFamily: MONT }}>{i + 1}</td>
-                      <td style={{ padding: "7px 12px", fontSize: "13px", color: c.name ? "#111111" : "#D1D1CB", borderBottom: `1px solid #F0F0EE`, borderLeft: `1px solid ${BORDER}`, fontFamily: MONT }}>{c.name || "—"}</td>
-                      <td style={{ padding: "7px 12px", fontSize: "13px", color: c.reason ? "#111111" : "#D1D1CB", borderBottom: `1px solid #F0F0EE`, borderLeft: `1px solid ${BORDER}`, fontFamily: MONT }}>{c.reason || "—"}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
         </div>
 
         {/* Día 3 */}
