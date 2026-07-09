@@ -89,9 +89,9 @@ export const AdminDashboardPage: React.FC = () => {
     if (priorityFilter) {
       base = base.filter((w) => {
         const s = computeLeadScore(w);
-        if (priorityFilter === "alta")   return s >= 21;
-        if (priorityFilter === "normal") return s >= 14 && s <= 20;
-        return s <= 13;
+        if (priorityFilter === "alta")   return s >= 13;
+        if (priorityFilter === "normal") return s >= 8 && s <= 12;
+        return s <= 7;
       });
     }
 
@@ -177,15 +177,15 @@ export const AdminDashboardPage: React.FC = () => {
         {/* Priority filters */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "12px", marginBottom: "20px" }}>
           {([
-            { key: "alta",   label: "PRIORIDAD ALTA",   range: "21-27 pts", dot: ACCENT,    activeBg: "rgba(38,150,106,.07)",  activeBorder: ACCENT    },
-            { key: "normal", label: "PRIORIDAD NORMAL",  range: "14-20 pts", dot: "#D97706", activeBg: "rgba(217,119,6,.07)",   activeBorder: "#D97706" },
-            { key: "baja",   label: "NO PRIORIZAR",      range: "0-13 pts",  dot: "#DC2626", activeBg: "rgba(220,38,38,.07)",   activeBorder: "#DC2626" },
+            { key: "alta",   label: "PRIORIDAD ALTA",   range: "13-15 pts", dot: ACCENT,    activeBg: "rgba(38,150,106,.07)",  activeBorder: ACCENT    },
+            { key: "normal", label: "PRIORIDAD NORMAL",  range: "8-12 pts",  dot: "#D97706", activeBg: "rgba(217,119,6,.07)",   activeBorder: "#D97706" },
+            { key: "baja",   label: "NO PRIORIZAR",      range: "0-7 pts",   dot: "#DC2626", activeBg: "rgba(220,38,38,.07)",   activeBorder: "#DC2626" },
           ] as const).map(({ key, label, range, dot, activeBg, activeBorder }) => {
             const count = workbooks.filter((w) => {
               const s = computeLeadScore(w);
-              if (key === "alta")   return s >= 21;
-              if (key === "normal") return s >= 14 && s <= 20;
-              return s <= 13;
+              if (key === "alta")   return s >= 13;
+              if (key === "normal") return s >= 8 && s <= 12;
+              return s <= 7;
             }).length;
             const active = priorityFilter === key;
             return (
