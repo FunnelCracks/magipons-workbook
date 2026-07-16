@@ -3,6 +3,11 @@ const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID;
 const BASE            = "https://services.leadconnectorhq.com";
 const TAG             = "reto3k-worbook";
 
+function normalizePhone(phone) {
+  // Strip spaces so "+34 600043904" → "+34600043904"
+  return phone.replace(/\s+/g, "");
+}
+
 async function searchContactExact(field, value, headers) {
   const res = await fetch(`${BASE}/contacts/search`, {
     method: "POST",
@@ -50,10 +55,11 @@ exports.handler = async (event) => {
   // 1. Buscar por email exacto
   let contact = await searchContactExact("email", email, headers);
 
-  // 2. Fallback: buscar por teléfono exacto
+  // 2. Fallback: buscar por teléfono exacto (normalizado sin espacios)
   if (!contact && phone) {
-    console.log(`[ghl-tag] No encontrado por email, intentando por teléfono: ${phone}`);
-    contact = await searchContactExact("phone", phone, headers);
+    const normalizedPhone = normalizePhone(phone);
+    console.log(`[ghl-tag] No encontrado por email, intentando por teléfono: ${normalizedPhone}`);
+    contact = await searchContactExact("phone", normalizedPhone, headers);
   }
 
   if (!contact) {
