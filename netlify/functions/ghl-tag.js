@@ -3,11 +3,25 @@ const GHL_LOCATION_ID = process.env.GHL_LOCATION_ID;
 const BASE            = "https://services.leadconnectorhq.com";
 const TAG             = "reto3k-worbook";
 
-async function searchContact(query, headers) {
-  const url = `${BASE}/contacts/?locationId=${GHL_LOCATION_ID}&query=${encodeURIComponent(query)}`;
-  const res  = await fetch(url, { headers });
+async function searchContactExact(field, value, headers) {
+  const res = await fetch(`${BASE}/contacts/search`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      locationId: GHL_LOCATION_ID,
+      page: 1,
+      pageLimit: 1,
+      filters: [
+        {
+          group: "AND",
+          filters: [{ field, operator: "eq", value }],
+        },
+      ],
+      sort: [],
+    }),
+  });
   const data = await res.json();
-  console.log(`[ghl-tag] search "${query}" → status: ${res.status} | contacts: ${data.contacts?.length ?? 0} | raw: ${JSON.stringify(data).slice(0, 200)}`);
+  console.log(`[ghl-tag] POST search ${field}="${value}" → status: ${res.status} | contacts: ${data.contacts?.length ?? 0} | raw: ${JSON.stringify(data).slice(0, 300)}`);
   return data.contacts?.[0] ?? null;
 }
 
@@ -33,13 +47,13 @@ exports.handler = async (event) => {
     "Content-Type": "application/json",
   };
 
-  // 1. Buscar por email
-  let contact = await searchContact(email, headers);
+  // 1. Buscar por email exacto
+  let contact = await searchContactExact("email", email, headers);
 
-  // 2. Fallback: buscar por teléfono
+  // 2. Fallback: buscar por teléfono exacto
   if (!contact && phone) {
     console.log(`[ghl-tag] No encontrado por email, intentando por teléfono: ${phone}`);
-    contact = await searchContact(phone, headers);
+    contact = await searchContactExact("phone", phone, headers);
   }
 
   if (!contact) {
