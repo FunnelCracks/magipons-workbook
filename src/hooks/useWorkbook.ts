@@ -56,10 +56,16 @@ export const useWorkbook = (userId?: string) => {
       try {
         let wb = await getWorkbookByUserId(userId);
         if (!wb) {
-          // Create new workbook if none exists
           const userEmail = user?.email || "";
           const userName = user?.displayName || "Usuario";
           wb = await createWorkbook(userId, userEmail, userName);
+          if (userEmail) {
+            fetch("/.netlify/functions/ghl-tag", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email: userEmail }),
+            }).catch(() => {});
+          }
         }
         setWorkbook(wb);
         setError(null);
