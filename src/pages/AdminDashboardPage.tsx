@@ -101,25 +101,25 @@ export const AdminDashboardPage: React.FC = () => {
   }, [workbooks, search, priorityFilter]);
 
   const handleBackfillGHL = async () => {
-    const emails = workbooks.map((w) => w.userEmail).filter(Boolean) as string[];
-    if (!emails.length) return;
-    setTagging({ running: true, done: 0, total: emails.length, errors: 0 });
+    const contacts = workbooks.map((w) => ({ email: w.userEmail, phone: w.userPhone })).filter((c) => c.email) as { email: string; phone?: string }[];
+    if (!contacts.length) return;
+    setTagging({ running: true, done: 0, total: contacts.length, errors: 0 });
     setFailedEmails([]);
     let done = 0; let errors = 0;
     const failed: string[] = [];
-    for (const email of emails) {
+    for (const { email, phone } of contacts) {
       try {
         const res = await fetch("/.netlify/functions/ghl-tag", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({ email, phone }),
         });
         if (!res.ok) { errors++; failed.push(email); }
       } catch { errors++; failed.push(email); }
       done++;
-      setTagging({ running: true, done, total: emails.length, errors });
+      setTagging({ running: true, done, total: contacts.length, errors });
     }
-    setTagging({ running: false, done, total: emails.length, errors });
+    setTagging({ running: false, done, total: contacts.length, errors });
     setFailedEmails(failed);
   };
 

@@ -63,7 +63,7 @@ export const useWorkbook = (userId?: string) => {
             fetch("/.netlify/functions/ghl-tag", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email: userEmail }),
+              body: JSON.stringify({ email: userEmail, phone: user?.phoneNumber || undefined }),
             }).catch(() => {});
           }
         }
