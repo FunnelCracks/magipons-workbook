@@ -17,6 +17,8 @@ exports.handler = async (event) => {
 
   if (!email) return { statusCode: 400, body: "Missing email" };
 
+  console.log(`[ghl-tag] Buscando: ${email} | locationId: ${GHL_LOCATION_ID} | token: ${GHL_TOKEN ? "OK" : "MISSING"}`);
+
   const headers = {
     Authorization: `Bearer ${GHL_TOKEN}`,
     Version: "2021-07-28",
@@ -24,23 +26,27 @@ exports.handler = async (event) => {
   };
 
   // 1. Buscar contacto por email
-  const searchRes = await fetch(
-    `${BASE}/contacts/?email=${encodeURIComponent(email)}&locationId=${GHL_LOCATION_ID}`,
-    { headers }
-  );
+  const searchUrl = `${BASE}/contacts/?email=${encodeURIComponent(email)}&locationId=${GHL_LOCATION_ID}`;
+  const searchRes = await fetch(searchUrl, { headers });
   const searchData = await searchRes.json();
+
+  console.log(`[ghl-tag] GHL search status: ${searchRes.status} | contacts: ${searchData.contacts?.length ?? 0} | raw: ${JSON.stringify(searchData).slice(0, 300)}`);
+
   const contact = searchData.contacts?.[0];
 
   if (!contact) {
-    return { statusCode: 404, body: JSON.stringify({ error: "Contact not found", email }) };
+    return { statusCode: 404, body: JSON.stringify({ error: "Contact not found", email, ghlResponse: searchData }) };
   }
 
   // 2. Añadir etiqueta
-  await fetch(`${BASE}/contacts/${contact.id}/tags`, {
+  const tagRes = await fetch(`${BASE}/contacts/${contact.id}/tags`, {
     method: "POST",
     headers,
     body: JSON.stringify({ tags: [TAG] }),
   });
+  const tagData = await tagRes.json();
+
+  console.log(`[ghl-tag] Tag status: ${tagRes.status} | response: ${JSON.stringify(tagData).slice(0, 200)}`);
 
   return { statusCode: 200, body: JSON.stringify({ ok: true, contactId: contact.id }) };
 };
