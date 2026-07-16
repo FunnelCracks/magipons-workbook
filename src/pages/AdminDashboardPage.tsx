@@ -72,6 +72,7 @@ export const AdminDashboardPage: React.FC = () => {
   const [priorityFilter,  setPriorityFilter]  = useState<"alta" | "normal" | "baja" | null>(null);
   const [tagging,         setTagging]         = useState<{ running: boolean; done: number; total: number; errors: number }>({ running: false, done: 0, total: 0, errors: 0 });
   const [failedEmails,    setFailedEmails]    = useState<{ email: string; phone?: string }[]>([]);
+  const [ghlStatus,       setGhlStatus]       = useState<Record<string, "ok" | "not_found">>({});
 
   useEffect(() => {
     const admin = sessionStorage.getItem("adminUser");
@@ -105,8 +106,10 @@ export const AdminDashboardPage: React.FC = () => {
     if (!contacts.length) return;
     setTagging({ running: true, done: 0, total: contacts.length, errors: 0 });
     setFailedEmails([]);
+    setGhlStatus({});
     let done = 0; let errors = 0;
     const failed: { email: string; phone?: string }[] = [];
+    const status: Record<string, "ok" | "not_found"> = {};
     for (const { email, phone } of contacts) {
       try {
         const res = await fetch("/.netlify/functions/ghl-tag", {
@@ -114,13 +117,15 @@ export const AdminDashboardPage: React.FC = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, phone }),
         });
-        if (!res.ok) { errors++; failed.push({ email, phone }); }
-      } catch { errors++; failed.push({ email, phone }); }
+        if (res.ok) { status[email] = "ok"; }
+        else { errors++; failed.push({ email, phone }); status[email] = "not_found"; }
+      } catch { errors++; failed.push({ email, phone }); status[email] = "not_found"; }
       done++;
       setTagging({ running: true, done, total: contacts.length, errors });
     }
     setTagging({ running: false, done, total: contacts.length, errors });
     setFailedEmails(failed);
+    setGhlStatus(status);
   };
 
   const handleDelete = async (id: string, email: string) => {
@@ -314,7 +319,19 @@ export const AdminDashboardPage: React.FC = () => {
                       onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = "transparent"}
                     >
                       <td style={{ padding: "14px 18px", borderBottom: `1px solid ${BORDER}`, color: "#111111", fontWeight: 700, verticalAlign: "middle" }}>
-                        {w.userEmail || <span style={{ color: "#D1D1CB" }}>—</span>}
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                          {w.userEmail || <span style={{ color: "#D1D1CB" }}>—</span>}
+                          {w.userEmail && ghlStatus[w.userEmail] === "ok" && (
+                            <span title="Contacto encontrado en GHL" style={{ display: "inline-flex", alignItems: "center", gap: "3px", padding: "2px 7px", borderRadius: "20px", fontSize: "10px", fontWeight: 800, background: "rgba(38,150,106,.1)", color: ACCENT, letterSpacing: ".04em", flexShrink: 0 }}>
+                              ✓ GHL
+                            </span>
+                          )}
+                          {w.userEmail && ghlStatus[w.userEmail] === "not_found" && (
+                            <span title="No encontrado en GHL" style={{ display: "inline-flex", alignItems: "center", gap: "3px", padding: "2px 7px", borderRadius: "20px", fontSize: "10px", fontWeight: 800, background: "rgba(220,38,38,.08)", color: "#DC2626", letterSpacing: ".04em", flexShrink: 0 }}>
+                              ✗ GHL
+                            </span>
+                          )}
+                        </div>
                       </td>
                       <td style={{ padding: "14px 18px", borderBottom: `1px solid ${BORDER}`, color: "#525252", verticalAlign: "middle" }}>
                         {fullName || <span style={{ color: "#D1D1CB" }}>—</span>}
