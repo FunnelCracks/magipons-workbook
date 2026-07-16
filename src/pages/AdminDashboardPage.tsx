@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllWorkbooks, deleteWorkbook } from "../services/firestoreService";
+import { getAllWorkbooks, deleteWorkbook, getUserPhone } from "../services/firestoreService";
 import type { Workbook } from "../services/types";
 
 const MONT   = "'Montserrat', system-ui, sans-serif";
@@ -102,7 +102,7 @@ export const AdminDashboardPage: React.FC = () => {
   }, [workbooks, search, priorityFilter]);
 
   const handleBackfillGHL = async () => {
-    const contacts = workbooks.map((w) => ({ email: w.userEmail, phone: w.userPhone })).filter((c) => c.email) as { email: string; phone?: string }[];
+    const contacts = workbooks.filter((w) => w.userEmail) as Workbook[];
     if (!contacts.length) return;
     setTagging({ running: true, done: 0, total: contacts.length, errors: 0 });
     setFailedEmails([]);
@@ -110,7 +110,13 @@ export const AdminDashboardPage: React.FC = () => {
     let done = 0; let errors = 0;
     const failed: { email: string; phone?: string }[] = [];
     const status: Record<string, "ok" | "not_found"> = {};
-    for (const { email, phone } of contacts) {
+    for (const w of contacts) {
+      const email = w.userEmail!;
+      // Use phone from workbook, or fetch from users/{uid} if missing
+      let phone = w.userPhone || undefined;
+      if (!phone && w.userId) {
+        try { phone = await getUserPhone(w.userId); } catch {}
+      }
       try {
         const res = await fetch("/.netlify/functions/ghl-tag", {
           method: "POST",

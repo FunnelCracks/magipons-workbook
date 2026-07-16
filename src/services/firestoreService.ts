@@ -187,6 +187,11 @@ export const saveUserOnboarding = async (
   }
 };
 
+export const getUserPhone = async (userId: string): Promise<string | undefined> => {
+  const snap = await getDoc(doc(db, "users", userId));
+  return snap.exists() ? (snap.data().phone as string | undefined) : undefined;
+};
+
 export const hasCompletedOnboarding = async (userId: string): Promise<boolean> => {
   try {
     const userSnap = await getDoc(doc(db, "users", userId));
