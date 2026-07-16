@@ -19,11 +19,18 @@ export const createWorkbook = async (
   userEmail: string,
   userName: string
 ): Promise<Workbook> => {
+  // Read onboarding data (phone, name) saved earlier in OnboardingPage
+  const userSnap = await getDoc(doc(db, "users", userId));
+  const userData = userSnap.exists() ? userSnap.data() : {};
+
   const newWorkbookRef = doc(db, "workbooks", userId);
   const workbookData = {
     userId,
     userEmail,
     userName,
+    userFirstName: userData.firstName || "",
+    userLastName: userData.lastName || "",
+    userPhone: userData.phone || "",
     status: "in_progress" as const,
     data: {
       day0: { motivation: "", mrh: "", idealDay: "", situacion: "", facturacionRango: "" },
