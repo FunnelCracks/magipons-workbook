@@ -70,6 +70,7 @@ export const AdminDashboardPage: React.FC = () => {
   const [adminUser,       setAdminUser]       = useState("");
   const [searchFocused,   setSearchFocused]   = useState(false);
   const [priorityFilter,  setPriorityFilter]  = useState<"alta" | "normal" | "baja" | null>(null);
+  const [tagging,         setTagging]         = useState<{ running: boolean; done: number; total: number; errors: number }>({ running: false, done: 0, total: 0, errors: 0 });
 
   useEffect(() => {
     const admin = sessionStorage.getItem("adminUser");
@@ -97,6 +98,26 @@ export const AdminDashboardPage: React.FC = () => {
 
     setFiltered(base);
   }, [workbooks, search, priorityFilter]);
+
+  const handleBackfillGHL = async () => {
+    const emails = workbooks.map((w) => w.userEmail).filter(Boolean) as string[];
+    if (!emails.length) return;
+    setTagging({ running: true, done: 0, total: emails.length, errors: 0 });
+    let done = 0; let errors = 0;
+    for (const email of emails) {
+      try {
+        const res = await fetch("/.netlify/functions/ghl-tag", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
+        if (!res.ok) errors++;
+      } catch { errors++; }
+      done++;
+      setTagging({ running: true, done, total: emails.length, errors });
+    }
+    setTagging({ running: false, done, total: emails.length, errors });
+  };
 
   const handleDelete = async (id: string, email: string) => {
     if (!window.confirm(`¿Eliminar el workbook de ${email || id}? Esta acción no se puede deshacer.`)) return;
@@ -147,6 +168,18 @@ export const AdminDashboardPage: React.FC = () => {
           <span style={{ fontSize: "13px", color: "#525252", fontWeight: 700 }}>
             {adminUser.charAt(0).toUpperCase() + adminUser.slice(1)}
           </span>
+          {/* GHL backfill button */}
+          <button
+            onClick={handleBackfillGHL}
+            disabled={tagging.running}
+            style={{ padding: "7px 14px", border: `1px solid ${tagging.running ? BORDER : "#D97706"}`, borderRadius: "8px", background: tagging.running ? "#F7F7F5" : "rgba(217,119,6,.07)", color: tagging.running ? "#A1A1AA" : "#D97706", fontSize: "12px", cursor: tagging.running ? "not-allowed" : "pointer", fontFamily: MONT, fontWeight: 700 }}
+          >
+            {tagging.running
+              ? `Etiquetando… ${tagging.done}/${tagging.total}`
+              : tagging.total > 0
+              ? `✓ ${tagging.done - tagging.errors}/${tagging.total} etiquetados`
+              : "Asignar etiquetas GHL"}
+          </button>
           <button
             onClick={() => { sessionStorage.removeItem("adminUser"); navigate("/admin"); }}
             style={{ padding: "7px 14px", border: `1px solid ${BORDER}`, borderRadius: "8px", background: "transparent", color: "#A1A1AA", fontSize: "12px", cursor: "pointer", fontFamily: MONT, fontWeight: 600, transition: "color .15s, border-color .15s" }}
