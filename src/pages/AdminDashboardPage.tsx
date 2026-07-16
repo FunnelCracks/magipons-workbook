@@ -71,6 +71,7 @@ export const AdminDashboardPage: React.FC = () => {
   const [searchFocused,   setSearchFocused]   = useState(false);
   const [priorityFilter,  setPriorityFilter]  = useState<"alta" | "normal" | "baja" | null>(null);
   const [tagging,         setTagging]         = useState<{ running: boolean; done: number; total: number; errors: number }>({ running: false, done: 0, total: 0, errors: 0 });
+  const [failedEmails,    setFailedEmails]    = useState<string[]>([]);
 
   useEffect(() => {
     const admin = sessionStorage.getItem("adminUser");
@@ -103,7 +104,9 @@ export const AdminDashboardPage: React.FC = () => {
     const emails = workbooks.map((w) => w.userEmail).filter(Boolean) as string[];
     if (!emails.length) return;
     setTagging({ running: true, done: 0, total: emails.length, errors: 0 });
+    setFailedEmails([]);
     let done = 0; let errors = 0;
+    const failed: string[] = [];
     for (const email of emails) {
       try {
         const res = await fetch("/.netlify/functions/ghl-tag", {
@@ -111,12 +114,13 @@ export const AdminDashboardPage: React.FC = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
         });
-        if (!res.ok) errors++;
-      } catch { errors++; }
+        if (!res.ok) { errors++; failed.push(email); }
+      } catch { errors++; failed.push(email); }
       done++;
       setTagging({ running: true, done, total: emails.length, errors });
     }
     setTagging({ running: false, done, total: emails.length, errors });
+    setFailedEmails(failed);
   };
 
   const handleDelete = async (id: string, email: string) => {
@@ -180,6 +184,15 @@ export const AdminDashboardPage: React.FC = () => {
               ? `✓ ${tagging.done - tagging.errors}/${tagging.total} etiquetados`
               : "Asignar etiquetas GHL"}
           </button>
+          {failedEmails.length > 0 && !tagging.running && (
+            <button
+              onClick={() => { navigator.clipboard.writeText(failedEmails.join("\n")); }}
+              title={failedEmails.join("\n")}
+              style={{ padding: "7px 14px", border: `1px solid #DC2626`, borderRadius: "8px", background: "rgba(220,38,38,.07)", color: "#DC2626", fontSize: "12px", cursor: "pointer", fontFamily: MONT, fontWeight: 700, maxWidth: "220px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+            >
+              ⚠ {failedEmails.length} sin etiquetar — copiar lista
+            </button>
+          )}
           <button
             onClick={() => { sessionStorage.removeItem("adminUser"); navigate("/admin"); }}
             style={{ padding: "7px 14px", border: `1px solid ${BORDER}`, borderRadius: "8px", background: "transparent", color: "#A1A1AA", fontSize: "12px", cursor: "pointer", fontFamily: MONT, fontWeight: 600, transition: "color .15s, border-color .15s" }}
