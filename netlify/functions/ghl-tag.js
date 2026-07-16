@@ -26,7 +26,7 @@ exports.handler = async (event) => {
   };
 
   // 1. Buscar contacto por email
-  const searchUrl = `${BASE}/contacts/search?locationId=${GHL_LOCATION_ID}&query=${encodeURIComponent(email)}`;
+  const searchUrl = `${BASE}/contacts/?locationId=${GHL_LOCATION_ID}&query=${encodeURIComponent(email)}`;
   const searchRes = await fetch(searchUrl, { headers });
   const searchData = await searchRes.json();
 
