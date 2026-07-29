@@ -14,7 +14,7 @@ export const AdminLoginPage: React.FC = () => {
 
   const handleContinue = async () => {
     if (pin === "2026") {
-      await signInAsAdmin();
+      try { await signInAsAdmin(); } catch {}
       navigate("/admin/select");
     } else {
       setError("PIN incorrecto. Intentá de nuevo.");
