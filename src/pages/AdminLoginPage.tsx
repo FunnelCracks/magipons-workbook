@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { signInAsAdmin } from "../services/authService";
 
 const MONT   = "'Montserrat', system-ui, sans-serif";
 const ACCENT = "#26966a";
@@ -11,8 +12,9 @@ export const AdminLoginPage: React.FC = () => {
   const [focused, setFocused] = useState(false);
   const navigate = useNavigate();
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     if (pin === "2026") {
+      await signInAsAdmin();
       navigate("/admin/select");
     } else {
       setError("PIN incorrecto. Intentá de nuevo.");

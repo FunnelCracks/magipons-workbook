@@ -2,8 +2,13 @@ import { auth, db } from "./firebaseConfig";
 import {
   GoogleAuthProvider,
   signInWithPopup,
+  signInAnonymously,
   signOut as firebaseSignOut,
 } from "firebase/auth";
+
+export const signInAsAdmin = async () => {
+  await signInAnonymously(auth);
+};
 import { doc, setDoc, serverTimestamp, getDoc } from "firebase/firestore";
 
 const googleProvider = new GoogleAuthProvider();
