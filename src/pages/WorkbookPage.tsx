@@ -1494,29 +1494,6 @@ export const WorkbookPage: React.FC = () => {
               <FormField label="" value={localData.day3?.landingHero || ""} onChange={(v) => handleFieldChange("day3.landingHero", v)} type="textarea" />
             </Question>
 
-            {/* Q2 Setter IA */}
-            <Question
-              number={2}
-              title="Tu setter IA: ¿cuáles serían las dos primeras preguntas que harías a un lead que entra a tu WhatsApp?"
-              hint="Lo que quieres saber primero para clasificar si esa persona encaja con tu modelo."
-            >
-              <div style={{ background: "#F7F7F5", border: "1px solid #E5E5E2", borderLeft: "3px solid rgba(38,150,106,0.4)", borderRadius: "0 10px 10px 0", padding: "16px 20px", marginBottom: "14px" }}>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>El principio del setter que funciona:</p>
-                <p style={{ fontSize: "13px", color: "#525252", margin: "0 0 14px", lineHeight: 1.65, fontFamily: INTER }}>
-                  El setter no vende, cualifica. Las preguntas iniciales no persuaden, no venden, no seducen. Recogen información que permite al closer conducir una <strong>compra premeditada</strong>, no impulsiva. Y la conversación por WhatsApp es íntima: tus preguntas tienen que sonar a persona, no a formulario de Typeform.
-                </p>
-                <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Te dejo lo que sería un buen modelo para que tomes inspiración:</p>
-                <p style={{ fontSize: "13px", fontStyle: "italic", color: "#6B6B6B", margin: "0 0 10px", lineHeight: 1.65, fontFamily: INTER }}>
-                  &ldquo;1. Cuéntame en qué punto estás ahora con [tu tema específico], ¿qué es lo que te ha traído a escribirme? 2. ¿Qué has probado antes y por qué crees que no te ha terminado de funcionar?&rdquo;
-                </p>
-                <p style={{ fontSize: "13px", color: "#525252", margin: 0, lineHeight: 1.65, fontFamily: INTER }}>
-                  La primera revela situación actual + urgencia (por qué HOY). La segunda revela fricción específica + patrones de intento anterior. Con esas dos respuestas, el closer llega a la llamada con: nivel de conciencia estimado, fatiga acumulada, objeción principal probable, y palancas emocionales. Todo en 2 turnos.
-                </p>
-              </div>
-              <p style={{ fontSize: "13px", fontWeight: 700, color: "#111111", margin: "0 0 8px", fontFamily: INTER }}>Ahora te toca a ti, ¿cuáles serían las dos primeras preguntas que harías a un lead que entra a tu WhatsApp?</p>
-              <FormField label="" value={localData.day3?.setterQuestions || ""} onChange={(v) => handleFieldChange("day3.setterQuestions", v)} type="textarea" />
-            </Question>
-
             {/* Q3 Herramientas */}
             <Question
               number={3}
