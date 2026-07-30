@@ -1494,9 +1494,9 @@ export const WorkbookPage: React.FC = () => {
               <FormField label="" value={localData.day3?.landingHero || ""} onChange={(v) => handleFieldChange("day3.landingHero", v)} type="textarea" />
             </Question>
 
-            {/* Q3 Herramientas */}
+            {/* Q2 Herramientas */}
             <Question
-              number={3}
+              number={2}
               title="Las 3 herramientas mínimas que vas a usar para arrancar:"
               hint="Cuanto más simple sea tu stack, menos tiempo pierdes orquestando y más tiempo dedicas a lo importante: hablar con clientes, mejorar tu producto, vender. La tecnología tiene que estar detrás, no delante."
             >
