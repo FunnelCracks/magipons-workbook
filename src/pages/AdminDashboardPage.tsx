@@ -140,18 +140,23 @@ export const AdminDashboardPage: React.FC = () => {
     setWorkbooks((prev) => prev.filter((w) => w.id !== id));
   };
 
+  const getWorkbookTag = (pct: number) => {
+    if (pct >= 90) return "workbookavanzado";
+    if (pct >= 10) return "workbookamedias";
+    return "workbooksincomenzar";
+  };
+
   const exportCSV = () => {
-    const headers = ["Email", "Nombre", "Apellido", "Teléfono", "Estado", "Fecha", "Completado", "Score"];
-    const rows = filtered.map((w) => [
-      w.userEmail || "",
-      w.userFirstName || w.userName || "",
-      w.userLastName || "",
-      w.userPhone || "",
-      w.status === "submitted" ? "Completado" : "En Progreso",
-      formatDate(w.createdAt),
-      `${w.completionPercentage || 0}%`,
-      `${computeLeadScore(w)}/18`,
-    ]);
+    const headers = ["Email", "Teléfono", "Porcentaje", "Etiqueta"];
+    const rows = workbooks.map((w) => {
+      const pct = w.completionPercentage || 0;
+      return [
+        w.userEmail || "",
+        w.userPhone || "",
+        `${pct}%`,
+        getWorkbookTag(pct),
+      ];
+    });
     const csv = [headers, ...rows].map((r) => r.map((c) => `"${c}"`).join(",")).join("\n");
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
