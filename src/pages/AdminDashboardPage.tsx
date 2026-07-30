@@ -147,11 +147,12 @@ export const AdminDashboardPage: React.FC = () => {
   };
 
   const exportCSV = () => {
-    const headers = ["Email", "Teléfono", "Porcentaje", "Etiqueta"];
+    const headers = ["Email", "Nombre", "Teléfono", "Porcentaje", "Etiqueta"];
     const rows = workbooks.map((w) => {
       const pct = w.completionPercentage || 0;
       return [
         w.userEmail || "",
+        `${w.userFirstName || ""} ${w.userLastName || ""}`.trim() || w.userName || "",
         w.userPhone || "",
         `${pct}%`,
         getWorkbookTag(pct),
