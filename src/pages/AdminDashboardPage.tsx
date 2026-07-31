@@ -73,6 +73,8 @@ export const AdminDashboardPage: React.FC = () => {
   const [tagging,         setTagging]         = useState<{ running: boolean; done: number; total: number; errors: number }>({ running: false, done: 0, total: 0, errors: 0 });
   const [failedEmails,    setFailedEmails]    = useState<{ email: string; phone?: string }[]>([]);
   const [ghlStatus,       setGhlStatus]       = useState<Record<string, "ok" | "not_found">>({});
+  const [briefModal,      setBriefModal]      = useState<{ workbook: Workbook; brief: string } | null>(null);
+  const [briefLoading,    setBriefLoading]    = useState<string | null>(null); // workbook id being generated
 
   useEffect(() => {
     const admin = sessionStorage.getItem("adminUser");
@@ -132,6 +134,28 @@ export const AdminDashboardPage: React.FC = () => {
     setTagging({ running: false, done, total: contacts.length, errors });
     setFailedEmails(failed);
     setGhlStatus(status);
+  };
+
+  const handleGenerateBrief = async (w: Workbook) => {
+    if (!w.id) return;
+    setBriefLoading(w.id);
+    try {
+      const res = await fetch("/.netlify/functions/correct-workbook", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ workbook: w }),
+      });
+      const data = await res.json();
+      if (res.ok && data.brief) {
+        setBriefModal({ workbook: w, brief: data.brief });
+      } else {
+        alert("Error al generar el brief: " + (data.error || "desconocido"));
+      }
+    } catch {
+      alert("Error de red al generar el brief.");
+    } finally {
+      setBriefLoading(null);
+    }
   };
 
   const handleDelete = async (id: string, email: string) => {
@@ -395,6 +419,16 @@ export const AdminDashboardPage: React.FC = () => {
                           >
                             Ver
                           </button>
+                          {ls >= 8 && (
+                            <button
+                              onClick={() => handleGenerateBrief(w)}
+                              disabled={briefLoading === w.id}
+                              title="Generar brief para el setter"
+                              style={{ padding: "6px 14px", background: briefLoading === w.id ? BG : "rgba(38,150,106,.08)", border: `1px solid ${briefLoading === w.id ? BORDER : "rgba(38,150,106,.3)"}`, borderRadius: "6px", color: briefLoading === w.id ? "#A1A1AA" : ACCENT, fontSize: "12px", fontFamily: MONT, cursor: briefLoading === w.id ? "default" : "pointer", fontWeight: 700, transition: "all .15s", whiteSpace: "nowrap" as const }}
+                            >
+                              {briefLoading === w.id ? "..." : "Brief"}
+                            </button>
+                          )}
                           <button
                             onClick={() => handleDelete(w.id!, w.userEmail || "")}
                             title="Eliminar workbook"
@@ -420,6 +454,52 @@ export const AdminDashboardPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Brief modal */}
+      {briefModal && (
+        <div
+          onClick={() => setBriefModal(null)}
+          style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.45)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: "24px" }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{ background: "#fff", borderRadius: "14px", width: "100%", maxWidth: "680px", maxHeight: "85vh", display: "flex", flexDirection: "column", overflow: "hidden", boxShadow: "0 24px 64px rgba(0,0,0,.18)" }}
+          >
+            {/* Header */}
+            <div style={{ padding: "20px 24px", borderBottom: `1px solid ${BORDER}`, display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
+              <div>
+                <div style={{ fontSize: "11px", fontWeight: 800, letterSpacing: ".1em", textTransform: "uppercase", color: ACCENT, marginBottom: "2px", fontFamily: MONT }}>Brief setter</div>
+                <div style={{ fontSize: "15px", fontWeight: 800, color: "#111111", fontFamily: MONT }}>
+                  {briefModal.workbook.userFirstName || briefModal.workbook.userName || briefModal.workbook.userEmail}
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: "8px" }}>
+                <button
+                  onClick={() => { navigator.clipboard.writeText(briefModal.brief); }}
+                  style={{ padding: "7px 16px", background: BG, border: `1px solid ${BORDER}`, borderRadius: "7px", fontSize: "12px", fontWeight: 700, cursor: "pointer", fontFamily: MONT, color: "#525252" }}
+                >
+                  Copiar
+                </button>
+                <button
+                  onClick={() => setBriefModal(null)}
+                  style={{ width: "32px", height: "32px", display: "flex", alignItems: "center", justifyContent: "center", background: "transparent", border: `1px solid ${BORDER}`, borderRadius: "7px", fontSize: "18px", cursor: "pointer", color: "#A1A1AA" }}
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+            {/* Content */}
+            <div style={{ overflowY: "auto", padding: "24px", flex: 1 }}>
+              {briefModal.brief.split("\n").map((line, i) => {
+                if (line.startsWith("## ")) return <h2 key={i} style={{ fontSize: "14px", fontWeight: 800, color: "#111111", margin: "20px 0 8px", fontFamily: MONT, letterSpacing: "-.01em" }}>{line.replace("## ", "")}</h2>;
+                if (line.startsWith("- ")) return <p key={i} style={{ fontSize: "13px", color: "#525252", margin: "0 0 6px", lineHeight: 1.65, fontFamily: MONT, paddingLeft: "12px" }}>{"· " + line.slice(2)}</p>;
+                if (line.trim() === "") return <div key={i} style={{ height: "8px" }} />;
+                return <p key={i} style={{ fontSize: "13px", color: "#525252", margin: "0 0 6px", lineHeight: 1.65, fontFamily: MONT }}>{line}</p>;
+              })}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
