@@ -1444,12 +1444,12 @@ export const WorkbookPage: React.FC = () => {
 
             {/* CTA */}
             <a
-              href="https://mp.magipons.com/corregir-workbook"
+              href="https://mp.magipons.com/reto-3k-calendario-26"
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: "inline-block", padding: "16px 40px", background: ACCENT, color: "#fff", borderRadius: "10px", fontSize: "16px", fontWeight: 800, fontFamily: INTER, textDecoration: "none", letterSpacing: ".01em" }}
             >
-              Corregir mi workbook →
+              Agendar llamada →
             </a>
           </div>
         )}
