@@ -113,7 +113,6 @@ export const calculateCompletionPercentage = (data: any): number => {
     data.day2?.migration,
     data.day2?.firstClients?.find((c: any) => c?.name?.trim())?.name ?? "",
     data.day3?.landingHero,
-    data.day3?.setterQuestions,
     data.day3?.tools?.length ? data.day3.tools[0] : "",
   ];
 
