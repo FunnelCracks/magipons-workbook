@@ -172,7 +172,7 @@ export const WorkbookPage: React.FC = () => {
   const d3Pct = Math.round(filled(d3f) / d3f.length * 100);
   const allFields = [...d1f, ...d2f, ...d3f];
   const bonusProgress = Math.round(filled(allFields) / allFields.length * 100);
-  const bonusUnlocked = bonusProgress === 100;
+  const bonusUnlocked = true; // TEMP: forzado para captura
 
   return (
     <div style={{ minHeight: "100vh", background: BG, fontFamily: INTER }}>
