@@ -1425,24 +1425,32 @@ export const WorkbookPage: React.FC = () => {
               Has sido de los primeros en terminar tu trabajo.
             </div>
 
-            {/* Cards */}
-            <div style={{ textAlign: "left", display: "flex", flexDirection: "column" as const, gap: "14px", marginBottom: "40px" }}>
-              <div style={{ background: "#fff", border: "1px solid #E5E5E5", borderLeft: `3px solid ${ACCENT}`, borderRadius: "0 10px 10px 0", padding: "18px 22px" }}>
-                <p style={{ fontSize: "15px", color: "#111111", lineHeight: 1.7, margin: 0, fontFamily: INTER }}>
-                  El <strong style={{ color: ACCENT }}>28 de julio</strong> podrás validar tu workbook en el directo con Magí y desbloquear tus bonus.
-                </p>
-              </div>
-              <div style={{ background: "#fff", border: "1px solid #E5E5E5", borderLeft: `3px solid ${ACCENT}`, borderRadius: "0 10px 10px 0", padding: "18px 22px" }}>
-                <p style={{ fontSize: "15px", color: "#111111", lineHeight: 1.7, margin: 0, fontFamily: INTER }}>
-                  Estás muy cerca de disfrutar del sabor de los ingresos recurrentes cada mes.
-                </p>
-              </div>
+            {/* Mensaje Magí */}
+            <div style={{ textAlign: "left", background: "#fff", border: "1px solid #E5E5E5", borderLeft: `3px solid ${ACCENT}`, borderRadius: "0 10px 10px 0", padding: "24px 28px", marginBottom: "32px" }}>
+              <p style={{ fontSize: "15px", color: "#111111", lineHeight: 1.8, margin: "0 0 16px", fontFamily: INTER }}>
+                Hemos abierto un cupo limitado para corregir tu Mapa 3K con nuestros consultores.
+              </p>
+              <p style={{ fontSize: "15px", color: "#111111", lineHeight: 1.8, margin: "0 0 16px", fontFamily: INTER }}>
+                Te darán feedback real y honesto de tu proyecto, y si tiene sentido, te explicarán cómo podemos acompañarte a escalarlo.
+              </p>
+              <p style={{ fontSize: "15px", color: "#111111", lineHeight: 1.8, margin: "0 0 24px", fontFamily: INTER }}>
+                Es una oportunidad única, espero que lo aproveches.
+              </p>
+              <p style={{ fontSize: "15px", color: "#111111", lineHeight: 1.8, margin: 0, fontFamily: INTER }}>
+                Abrazote,<br />
+                <strong>Magí</strong>
+              </p>
             </div>
 
-            {/* Cierre */}
-            <div style={{ fontSize: "20px", fontWeight: 900, color: "#111111", fontFamily: INTER, letterSpacing: "-.01em" }}>
-              ¡Nos vemos el <span style={{ color: ACCENT }}>28 de julio</span>!
-            </div>
+            {/* CTA */}
+            <a
+              href="https://mp.magipons.com/corregir-workbook"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: "inline-block", padding: "16px 40px", background: ACCENT, color: "#fff", borderRadius: "10px", fontSize: "16px", fontWeight: 800, fontFamily: INTER, textDecoration: "none", letterSpacing: ".01em" }}
+            >
+              Corregir mi workbook →
+            </a>
           </div>
         )}
 
