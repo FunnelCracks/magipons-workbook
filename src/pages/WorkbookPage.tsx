@@ -163,7 +163,7 @@ export const WorkbookPage: React.FC = () => {
     localData.day2?.launchStrategy, localData.day2?.migration,
   ];
   const d3f = [
-    localData.day3?.landingHero, localData.day3?.setterQuestions,
+    localData.day3?.landingHero,
     (localData.day3?.tools?.length ?? 0) > 0 ? "yes" : "",
   ];
   const filled = (arr: any[]) => arr.filter(f => f && String(f).trim() !== "").length;
