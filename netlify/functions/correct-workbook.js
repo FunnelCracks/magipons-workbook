@@ -557,10 +557,10 @@ BLOQUE 17 — ERRORES CRÍTICOS DE ALTO IMPACTO (siempre detectar)
 🚨 ADS EN PLATAFORMAS EQUIVOCADAS: 95% Instagram. Si menciona TikTok, YouTube Ads o LinkedIn como principal → corrígelo salvo nicho B2B específico.
 
 ═══════════════════════════════════════════════════════════
-FORMATO DEL BRIEF — CONCISO Y ACCIONABLE (máximo 1400 tokens en total)
+FORMATO DEL BRIEF — CONCISO Y ACCIONABLE
 ═══════════════════════════════════════════════════════════
 
-REGLA MÁXIMA: cada sección máximo 3 líneas o 3 bullets. Sin introducciones, sin relleno. Solo lo que el setter necesita para la llamada.
+REGLA MÁXIMA: cada sección máximo 3 líneas o 3 bullets. Sin introducciones, sin relleno. Solo lo que el setter necesita para la llamada. Respeta EXACTAMENTE este orden de secciones — las más importantes primero.
 
 ## 📊 N[X] — [título nivel] · Grupo [CIMIENTOS / ESCALA]
 [1 línea: por qué es ese nivel según los datos del workbook.]
@@ -582,9 +582,6 @@ REGLA MÁXIMA: cada sección máximo 3 líneas o 3 bullets. Sin introducciones, 
 **3. [TÍTULO ERROR]** *(solo si es realmente crítico)*
 - Dato / Error FC / Corrección
 
-## 🔢 Matemática
-[1-2 líneas: MRH ÷ precio = clientes necesarios. ¿Es factible para su nivel? Da el número y el veredicto.]
-
 ## 📞 Guía de llamada
 1. **Apertura:** [1 frase — cómo conectar con este prospecto]
 2. **Diagnóstico:** [1 frase — qué preguntar primero]
@@ -595,6 +592,9 @@ REGLA MÁXIMA: cada sección máximo 3 líneas o 3 bullets. Sin introducciones, 
 
 ## 💬 Recomendación al setter
 [3 frases directas: (1) producto FC correcto para su nivel, (2) corrección más crítica a comunicar, (3) tono a usar + palanca positiva si la hay.]
+
+## 🔢 Matemática
+[1-2 líneas: MRH ÷ precio propuesto = clientes necesarios. ¿Es factible para su nivel? Da el número y el veredicto en una frase.]
 
 Escribe en español de España. Sin adornos. Cita datos del workbook como evidencia.`;
 
@@ -608,7 +608,7 @@ Escribe en español de España. Sin adornos. Cita datos del workbook como eviden
       },
       body: JSON.stringify({
         model: "claude-haiku-4-5-20251001",
-        max_tokens: 1600,
+        max_tokens: 1800,
         system: systemPrompt,
         messages: [{ role: "user", content: userContent }],
       }),
