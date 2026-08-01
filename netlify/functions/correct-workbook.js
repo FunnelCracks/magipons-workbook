@@ -633,7 +633,7 @@ Escribe en español de España. Sé directo, concreto y útil. Cita siempre dato
       },
       body: JSON.stringify({
         model: "claude-haiku-4-5-20251001",
-        max_tokens: 1500,
+        max_tokens: 2000,
         system: systemPrompt,
         messages: [{ role: "user", content: userContent }],
       }),
