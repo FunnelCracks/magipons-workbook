@@ -557,71 +557,46 @@ BLOQUE 17 — ERRORES CRÍTICOS DE ALTO IMPACTO (siempre detectar)
 🚨 ADS EN PLATAFORMAS EQUIVOCADAS: 95% Instagram. Si menciona TikTok, YouTube Ads o LinkedIn como principal → corrígelo salvo nicho B2B específico.
 
 ═══════════════════════════════════════════════════════════
-FORMATO DEL BRIEF (sigue este formato exacto en markdown)
+FORMATO DEL BRIEF — CONCISO Y ACCIONABLE (máximo 1400 tokens en total)
 ═══════════════════════════════════════════════════════════
 
-## 📊 Nivel disfrutón detectado: N[X] — [título]
-[Nivel detectado + grupo CIMIENTOS o ESCALA + razonamiento en 2-3 frases basado en los datos del workbook.
-Si ambiguo, explica las opciones y por qué.]
+REGLA MÁXIMA: cada sección máximo 3 líneas o 3 bullets. Sin introducciones, sin relleno. Solo lo que el setter necesita para la llamada.
 
-[Funnel que le corresponde según FC: indica los bloques exactos de atracción, conversión, entrega y retención para su nivel. Una o dos frases.]
+## 📊 N[X] — [título nivel] · Grupo [CIMIENTOS / ESCALA]
+[1 línea: por qué es ese nivel según los datos del workbook.]
+[1 línea: funnel FC que le corresponde, muy resumido.]
 
-## 📋 Resumen del proyecto
-[2-3 frases. Quién es, qué quiere montar, a quién, cuánto quiere ganar. Lo que el setter necesita en 30 segundos.]
+## 📋 Resumen
+[2 frases máximo: quién es, qué quiere montar, MRH objetivo. Lo que el setter necesita en 20 segundos.]
 
-## ✅ Lo que está bien definido
-[3-4 bullets máximo. Cita datos EXACTOS del workbook. Sé específico: no "buen avatar" sino "avatar con característica definitoria clara y 3 puntos psicológicos identificados".]
+## 🚨 Errores críticos (máx. 3, de mayor a menor impacto)
 
-## ⚠️ Gaps y errores detectados
-[Máximo 7 bullets, ordenados de más crítico a menos. Por cada gap:
-- QUÉ está mal (citando el dato exacto del workbook)
-- POR QUÉ es un error según metodología FC
-- QUÉ debería ser correcto según FC
-Cubre: producto vs nivel, precio, avatar, promesa, primeros clientes, diferenciación, disfrutón del modelo, landing hero.]
+**1. [TÍTULO ERROR]**
+- Dato: [cita exacta del workbook que evidencia el error]
+- Error FC: [por qué es incorrecto según metodología, en 1 frase]
+- Corrección: [qué debería ser exactamente, con cifras si aplica]
 
-## 🔗 Coherencias rotas
-[Solo si las hay. Máximo 4 bullets. Contradicciones entre secciones:
-día ideal vs modelo, MRH vs precio, avatar vs promesa, facturación vs estrategia, landing hero vs killer offer, etc.
-Omitir sección si no hay incoherencias relevantes.]
+**2. [TÍTULO ERROR]**
+- Dato / Error FC / Corrección [mismo formato, 1 línea cada uno]
 
-## 🔢 Matemática del negocio
-[Si hay MRH y precio: calcula clientes necesarios. Evalúa si es factible para su nivel y da contexto temporal ("en N3 con webinar, esto es alcanzable en 3-6 meses / es irreal").
-Si faltan datos, indica qué campos debe completar.]
+**3. [TÍTULO ERROR]** *(solo si es realmente crítico)*
+- Dato / Error FC / Corrección
 
-## 🗺️ Hoja de ruta Darwin (activos que necesita construir)
-[Según el tipo de producto detectado y el grupo CIMIENTOS/ESCALA, lista los activos Darwin que tendrá que crear, en orden:
-Ejemplo N3 programa grupal: "1. Título webinar → 2. Calentamiento orgánico (10-15 guiones reels/stories) → 3. Anuncios Instagram (4-8 vídeos según presupuesto) → 4. Landing registro (una promesa, una acción, cero distracciones) → 5. Emails + WhatsApp captación → 6. Emails + WhatsApp nutrición (frecuencia escalada) → 7. Guion webinar (8 fases Magí, jueves 19h, 90-120 min) → 8. Emails + WhatsApp venta + Push manual setter (1:1 a todos los apuntados) + Q&A en directo (sábado/domingo) → (9. Membresía de continuación post-programa)."
-Esta sección ayuda al setter a explicar el trabajo que Darwin va a hacer con el prospecto.]
+## 🔢 Matemática
+[1-2 líneas: MRH ÷ precio = clientes necesarios. ¿Es factible para su nivel? Da el número y el veredicto.]
 
-## 🎯 Preguntas clave para la llamada
-[6-8 preguntas abiertas ordenadas de más a menos importante. Deben atacar los gaps detectados y verificar la coherencia disfrutón (día ideal vs modelo).
-En segunda persona, concretas. Que lleven al prospecto a reflexionar.]
+## 📞 Guía de llamada
+1. **Apertura:** [1 frase — cómo conectar con este prospecto]
+2. **Diagnóstico:** [1 frase — qué preguntar primero]
+3. **Gap:** [1 frase — cómo mostrar la distancia entre donde está y donde quiere llegar]
+4. **Presentación:** [1 frase — cómo encajar Darwin/FC en SUS gaps]
+5. **Objeción probable:** [1 frase — qué dirá y cómo responder]
+6. **Cierre:** [1 frase — cómo pedir la decisión]
 
-## 📞 Guía para la llamada (estructura FC adaptada a este prospecto)
-[Adapta las 6 fases de la llamada FC a este prospecto concreto:
-1. Apertura/rapport: cómo conectar con este prospecto específicamente
-2. Diagnóstico: qué preguntar para entender su situación real (usa sus gaps como guía)
-3. Gap: cómo hacer consciente la distancia entre dónde está y donde quiere llegar (usa MRH vs situación actual)
-4. Presentación: cómo presentar FC/Darwin como la solución a SUS gaps concretos
-5. Objeciones probables: según su perfil, qué objeciones anticipar y cómo manejarlas.
-   Perfiles típicos y sus objeciones:
-   → Prospecto con bajo precio propuesto: "no creo que alguien pague X€" → responder con matemática del negocio y casos FC
-   → Prospecto con agenda saturada: "no tengo tiempo" → mostrar que Darwin hace el trabajo, no ellos
-   → Prospecto en modo espera: "me lo pienso" → urgencia genuina + coste de no actuar ahora
-   → Prospecto en consulta: "lo hablo con mi pareja/socio" → pedir que los incluyan en la llamada o fecha de decisión clara
-   → Prospecto con miedo al fracaso: "¿y si no funciona?" → el loop FC (hipótesis → validación → data → ajuste), siempre hay data
-6. Cierre: cómo pedir la decisión para este perfil específico
-Sé breve y práctico. 1-2 frases por fase.]
+## 💬 Recomendación al setter
+[3 frases directas: (1) producto FC correcto para su nivel, (2) corrección más crítica a comunicar, (3) tono a usar + palanca positiva si la hay.]
 
-## 💬 Recomendación final para el setter
-[4-5 frases directas:
-1. Qué producto FC es el correcto para este prospecto según su nivel y grupo (CIMIENTOS/ESCALA).
-2. Cuál es la corrección más crítica que debe comunicar.
-3. Si hay contradicción entre el día ideal y el modelo → destacarla como la conversación central de la llamada.
-4. Qué tono usar (motivador, correctivo, validador, aspiracional…) según el perfil y motivación del prospecto.
-5. Si detectas algo positivo inesperado en el workbook (alta autoridad, buenas frases del cliente, primeros clientes concretos) → mencionarlo para que el setter lo use como palanca.]
-
-Escribe en español de España. Sé directo, concreto y útil. Cita siempre datos del workbook como evidencia.`;
+Escribe en español de España. Sin adornos. Cita datos del workbook como evidencia.`;
 
   try {
     const res = await fetch("https://api.anthropic.com/v1/messages", {
@@ -633,7 +608,7 @@ Escribe en español de España. Sé directo, concreto y útil. Cita siempre dato
       },
       body: JSON.stringify({
         model: "claude-haiku-4-5-20251001",
-        max_tokens: 2000,
+        max_tokens: 1400,
         system: systemPrompt,
         messages: [{ role: "user", content: userContent }],
       }),
