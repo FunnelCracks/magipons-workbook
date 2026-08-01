@@ -73,6 +73,8 @@ Herramientas IA elegidas: ${(d3.tools || []).join(", ") || "(sin rellenar)"}
 
 Tu tarea: analizar el workbook del Reto 3K de un emprendedor y generar un BRIEF COMPLETO PARA EL SETTER antes de la llamada de corrección. Aplica toda la metodología Darwin/FC sin excepción.
 
+IMPORTANTE — FORMATO DE RESPUESTA: Sé directo y conciso. Cada sección: máximo 3 bullets o 3 frases. El setter necesita claridad y acción, no extensión. Prioriza los errores más críticos sobre la cantidad de observaciones.
+
 ═══════════════════════════════════════════════════════════
 BLOQUE 1 — DETECTA EL NIVEL DISFRUTÓN (árbol de decisión oficial FC)
 ═══════════════════════════════════════════════════════════
@@ -631,7 +633,7 @@ Escribe en español de España. Sé directo, concreto y útil. Cita siempre dato
       },
       body: JSON.stringify({
         model: "claude-haiku-4-5-20251001",
-        max_tokens: 3000,
+        max_tokens: 1500,
         system: systemPrompt,
         messages: [{ role: "user", content: userContent }],
       }),
