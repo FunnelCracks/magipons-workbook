@@ -608,7 +608,7 @@ Escribe en español de España. Sin adornos. Cita datos del workbook como eviden
       },
       body: JSON.stringify({
         model: "claude-haiku-4-5-20251001",
-        max_tokens: 1400,
+        max_tokens: 1600,
         system: systemPrompt,
         messages: [{ role: "user", content: userContent }],
       }),
