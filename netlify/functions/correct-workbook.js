@@ -577,16 +577,20 @@ Si no cabe en el límite → recorta, no amplíes.
 
 ## 🚨 Errores críticos
 
+REGLA ABSOLUTA: EXACTAMENTE 3 ERRORES. Ni 4, ni 5, ni 6, ni 7. Si hay más errores, elige los 3 de mayor impacto y PARA. No escribas el error 4. Elige los 3 que más dinero le cuestan o más bloquean el negocio.
+
 **1. [TÍTULO — máx. 6 palabras]**
 - **Dato:** [cita del workbook, máx. 15 palabras]
 - **Error FC:** [por qué es incorrecto, máx. 20 palabras]
 - **Corrección:** [qué debería ser, con cifras, máx. 20 palabras]
 
 **2. [TÍTULO]**
-- **Dato / Error FC / Corrección** [mismo límite]
+- **Dato:** / **Error FC:** / **Corrección:** [mismo límite, 3 líneas]
 
-**3. [TÍTULO]** *(solo si hay un tercer error crítico real)*
-- **Dato / Error FC / Corrección**
+**3. [TÍTULO]**
+- **Dato:** / **Error FC:** / **Corrección:** [mismo límite, 3 líneas]
+
+⛔ DESPUÉS DEL ERROR 3: PASA DIRECTAMENTE A LA GUÍA DE LLAMADA. NO escribas más errores.
 
 ## 📞 Guía de llamada
 1. **Apertura:** [1 frase, máx. 20 palabras]
