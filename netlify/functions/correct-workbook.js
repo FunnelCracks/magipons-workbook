@@ -557,46 +557,55 @@ BLOQUE 17 — ERRORES CRÍTICOS DE ALTO IMPACTO (siempre detectar)
 🚨 ADS EN PLATAFORMAS EQUIVOCADAS: 95% Instagram. Si menciona TikTok, YouTube Ads o LinkedIn como principal → corrígelo salvo nicho B2B específico.
 
 ═══════════════════════════════════════════════════════════
-FORMATO DEL BRIEF — CONCISO Y ACCIONABLE
+FORMATO DEL BRIEF — ULTRA CONCISO (respeta al pie de la letra)
 ═══════════════════════════════════════════════════════════
 
-REGLA MÁXIMA: cada sección máximo 3 líneas o 3 bullets. Sin introducciones, sin relleno. Solo lo que el setter necesita para la llamada. Respeta EXACTAMENTE este orden de secciones — las más importantes primero.
+⚠️ LÍMITES ESTRICTOS DE LONGITUD — NO SOBREPASARLOS:
+- Cada bullet/línea: máximo 25 palabras.
+- Cada error crítico: exactamente 3 líneas (Dato / Error FC / Corrección). No más.
+- Guía de llamada: exactamente 1 frase por fase. No párrafos.
+- Recomendación: exactamente 3 frases. No más.
+- Matemática: exactamente 2 líneas. No más.
+Si no cabe en el límite → recorta, no amplíes.
 
-## 📊 N[X] — [título nivel] · Grupo [CIMIENTOS / ESCALA]
-[1 línea: por qué es ese nivel según los datos del workbook.]
-[1 línea: funnel FC que le corresponde, muy resumido.]
+## 📊 N[X] — [título] · [CIMIENTOS / ESCALA]
+**Por qué:** [1 línea con el dato clave del workbook que determina el nivel]
+**Funnel:** [1 línea con el funnel FC correcto para ese nivel]
 
 ## 📋 Resumen
-[2 frases máximo: quién es, qué quiere montar, MRH objetivo. Lo que el setter necesita en 20 segundos.]
+[Exactamente 2 frases: quién + qué quiere montar + MRH. Máx. 40 palabras en total.]
 
-## 🚨 Errores críticos (máx. 3, de mayor a menor impacto)
+## 🚨 Errores críticos
 
-**1. [TÍTULO ERROR]**
-- Dato: [cita exacta del workbook que evidencia el error]
-- Error FC: [por qué es incorrecto según metodología, en 1 frase]
-- Corrección: [qué debería ser exactamente, con cifras si aplica]
+**1. [TÍTULO — máx. 6 palabras]**
+- **Dato:** [cita del workbook, máx. 15 palabras]
+- **Error FC:** [por qué es incorrecto, máx. 20 palabras]
+- **Corrección:** [qué debería ser, con cifras, máx. 20 palabras]
 
-**2. [TÍTULO ERROR]**
-- Dato / Error FC / Corrección [mismo formato, 1 línea cada uno]
+**2. [TÍTULO]**
+- **Dato / Error FC / Corrección** [mismo límite]
 
-**3. [TÍTULO ERROR]** *(solo si es realmente crítico)*
-- Dato / Error FC / Corrección
+**3. [TÍTULO]** *(solo si hay un tercer error crítico real)*
+- **Dato / Error FC / Corrección**
 
 ## 📞 Guía de llamada
-1. **Apertura:** [1 frase — cómo conectar con este prospecto]
-2. **Diagnóstico:** [1 frase — qué preguntar primero]
-3. **Gap:** [1 frase — cómo mostrar la distancia entre donde está y donde quiere llegar]
-4. **Presentación:** [1 frase — cómo encajar Darwin/FC en SUS gaps]
-5. **Objeción probable:** [1 frase — qué dirá y cómo responder]
-6. **Cierre:** [1 frase — cómo pedir la decisión]
+1. **Apertura:** [1 frase, máx. 20 palabras]
+2. **Diagnóstico:** [1 frase, máx. 20 palabras]
+3. **Gap:** [1 frase, máx. 20 palabras]
+4. **Presentación:** [1 frase, máx. 20 palabras]
+5. **Objeción probable:** [1 frase — qué dirá + cómo responder, máx. 20 palabras]
+6. **Cierre:** [1 frase, máx. 15 palabras]
 
 ## 💬 Recomendación al setter
-[3 frases directas: (1) producto FC correcto para su nivel, (2) corrección más crítica a comunicar, (3) tono a usar + palanca positiva si la hay.]
+- [Frase 1: producto FC correcto para su nivel, máx. 20 palabras]
+- [Frase 2: corrección más crítica a comunicar, máx. 20 palabras]
+- [Frase 3: tono + palanca positiva del workbook, máx. 20 palabras]
 
 ## 🔢 Matemática
-[1-2 líneas: MRH ÷ precio propuesto = clientes necesarios. ¿Es factible para su nivel? Da el número y el veredicto en una frase.]
+- MRH [X]€ ÷ precio propuesto [Y]€ = [Z] clientes. [Veredicto: factible/irreal para su nivel.]
+- Precio correcto FC: [precio]€ ÷ MRH [X]€ = [N] clientes. [Factible en X meses.]
 
-Escribe en español de España. Sin adornos. Cita datos del workbook como evidencia.`;
+Escribe en español de España. Cita siempre datos exactos del workbook.`;
 
   try {
     const res = await fetch("https://api.anthropic.com/v1/messages", {
@@ -608,7 +617,7 @@ Escribe en español de España. Sin adornos. Cita datos del workbook como eviden
       },
       body: JSON.stringify({
         model: "claude-haiku-4-5-20251001",
-        max_tokens: 1800,
+        max_tokens: 2000,
         system: systemPrompt,
         messages: [{ role: "user", content: userContent }],
       }),
