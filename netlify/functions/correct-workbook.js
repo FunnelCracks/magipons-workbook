@@ -631,7 +631,7 @@ Escribe en español de España. Sé directo, concreto y útil. Cita siempre dato
       },
       body: JSON.stringify({
         model: "claude-sonnet-4-5",
-        max_tokens: 4000,
+        max_tokens: 3000,
         system: systemPrompt,
         messages: [{ role: "user", content: userContent }],
       }),
