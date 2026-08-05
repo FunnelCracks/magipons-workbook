@@ -170,6 +170,26 @@ export const AdminDashboardPage: React.FC = () => {
     return "workbooksincomenzar";
   };
 
+  const exportMotivacion = () => {
+    const filtered = workbooks.filter((w) => {
+      const motivation = w.data?.day0?.motivation?.trim();
+      const idealDay = w.data?.day0?.idealDay?.trim();
+      return motivation && idealDay;
+    });
+    const headers = ["Email", "Por qué quieres una membresía", "Día ideal en tu vida"];
+    const rows = filtered.map((w) => [
+      w.userEmail || "",
+      w.data?.day0?.motivation || "",
+      w.data?.day0?.idealDay || "",
+    ]);
+    const BOM = "﻿";
+    const csv = BOM + [headers, ...rows].map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8;" }));
+    a.download = `motivacion-dia-ideal-${new Date().toISOString().split("T")[0]}.csv`;
+    a.click();
+  };
+
   const exportCSV = () => {
     const headers = ["Nombre", "Email", "Teléfono", "Porcentaje", "Etiqueta"];
     const rows = workbooks.map((w) => {
@@ -316,6 +336,15 @@ export const AdminDashboardPage: React.FC = () => {
             placeholder="Buscar por email o nombre…"
             style={{ flex: 1, background: "#fff", border: `1px solid ${searchFocused ? ACCENT : BORDER}`, borderRadius: "8px", color: "#111111", padding: "10px 14px", fontSize: "13px", fontFamily: MONT, outline: "none", transition: "border-color .15s", caretColor: ACCENT }}
           />
+          <button
+            onClick={exportMotivacion}
+            style={{ padding: "10px 22px", background: ACCENT, border: "none", borderRadius: "8px", color: "#fff", fontSize: "13px", fontFamily: MONT, cursor: "pointer", fontWeight: 700, whiteSpace: "nowrap", transition: "background .2s" }}
+            onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.85"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
+            title="Exporta email + por qué quieren membresía + día ideal (solo los que respondieron ambas)"
+          >
+            Motivación + Día Ideal
+          </button>
           <button
             onClick={exportCSV}
             style={{ padding: "10px 22px", background: "#111111", border: "none", borderRadius: "8px", color: "#fff", fontSize: "13px", fontFamily: MONT, cursor: "pointer", fontWeight: 700, whiteSpace: "nowrap", transition: "background .2s" }}
