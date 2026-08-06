@@ -263,8 +263,9 @@ export const AdminDashboardPage: React.FC = () => {
         Array.isArray(d3.tools) ? d3.tools.join(", ") : (d3.tools || ""),
       ];
     });
+    const cell = (c: string) => `"${c.replace(/[\r\n]+/g, " ↵ ").replace(/"/g, '""')}"`;
     const BOM = "﻿";
-    const csv = BOM + [headers, ...rows].map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+    const csv = BOM + [headers, ...rows].map((r) => r.map((c) => cell(String(c))).join(",")).join("\r\n");
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8;" }));
     a.download = `workbooks-completo-${new Date().toISOString().split("T")[0]}.csv`;
