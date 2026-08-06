@@ -191,8 +191,44 @@ export const AdminDashboardPage: React.FC = () => {
   };
 
   const exportCSV = () => {
-    const headers = ["Nombre", "Email", "Teléfono", "Porcentaje", "Etiqueta"];
+    const headers = [
+      "Nombre", "Email", "Teléfono", "Porcentaje", "Etiqueta",
+      // Día 0
+      "¿Por qué quieres construir un modelo recurrente?",
+      "MRH soñado (€/mes)",
+      "¿Cómo sería tu día ideal con ese MRH?",
+      "¿Cuál es tu situación HOY?",
+      "¿En qué rango facturas hoy?",
+      // Día 1
+      "Nombre tentativo del modelo",
+      "Avatar psicológico del cliente ideal",
+      "Los 4 niveles de consciencia del cliente",
+      "3 frases que tu cliente te escribiría por WhatsApp",
+      "Tu transformación prolongada",
+      "Tu fórmula de promesa",
+      "Modelo elegido (membresía / programa / ecosistema)",
+      "¿Por qué ese modelo y no otro?",
+      "Soporte · ¿Cómo acompañarás a tus miembros?",
+      "Contenido · ¿Qué contenido entregas y cuándo?",
+      "Comunidad · ¿Cómo conectas a tus miembros entre ellos?",
+      "Progreso · ¿Cómo sabrán tus miembros que avanzan?",
+      "Precio del modelo",
+      // Día 2
+      "¿Qué cambiarías del Día 1?",
+      "¿Por qué tú? ¿Qué hace única tu propuesta?",
+      "¿Cuál será tu estrategia anual de captación?",
+      "Estrategia de lanzamiento (primera apertura)",
+      "¿Qué haces con tus clientes 1 a 1 actuales?",
+      // Día 3
+      "Tu landing en UNA frase (primer scroll)",
+      "Herramientas mínimas para arrancar",
+    ];
     const rows = workbooks.map((w) => {
+      const d = w.data || ({} as any);
+      const d0 = d.day0 || {};
+      const d1 = d.day1 || {};
+      const d2 = d.day2 || {};
+      const d3 = d.day3 || {};
       const pct = w.completionPercentage || 0;
       return [
         `${w.userFirstName || ""} ${w.userLastName || ""}`.trim() || w.userName || "",
@@ -200,12 +236,38 @@ export const AdminDashboardPage: React.FC = () => {
         w.userPhone || "",
         `${pct}%`,
         getWorkbookTag(pct),
+        d0.motivation || "",
+        d0.mrh || "",
+        d0.idealDay || "",
+        d0.situacion || "",
+        d0.facturacionRango || "",
+        d1.modelName || "",
+        d1.avatarDescription || "",
+        d1.consciousnessLevel || "",
+        d1.clientPhrases || "",
+        d1.transformation || "",
+        d1.formula || "",
+        d1.modelType || "",
+        d1.modelReason || "",
+        d1.support || "",
+        d1.content || "",
+        d1.community || "",
+        d1.progress || "",
+        d1.price || "",
+        d2.changes || "",
+        d2.uniqueProposal || "",
+        d2.annualStrategy || "",
+        d2.launchStrategy || "",
+        d2.migration || "",
+        d3.landingHero || "",
+        Array.isArray(d3.tools) ? d3.tools.join(", ") : (d3.tools || ""),
       ];
     });
-    const csv = [headers, ...rows].map((r) => r.map((c) => `"${c}"`).join(",")).join("\n");
+    const BOM = "﻿";
+    const csv = BOM + [headers, ...rows].map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
     const a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
-    a.download = `workbooks-${new Date().toISOString().split("T")[0]}.csv`;
+    a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8;" }));
+    a.download = `workbooks-completo-${new Date().toISOString().split("T")[0]}.csv`;
     a.click();
   };
 
